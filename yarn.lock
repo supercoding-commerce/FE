@@ -862,6 +862,11 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+emotion-reset@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/emotion-reset/-/emotion-reset-3.0.1.tgz#1445e66bab7e8fd9975ce0d8cd3324589981f0a6"
+  integrity sha512-v6scW83qSu+wtxg7lX1s0+/2U4EAAGFxDQMkvXE10jhKtyuXCzy3/su5/MU9ZjXeNv6ZjxZH51WktrKosKUy9g==
+
 error-ex@^1.3.1:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/error-ex/-/error-ex-1.3.2.tgz#b4ac40648107fdcdcfae242f428bea8a14d4f1bf"
@@ -1884,11 +1889,6 @@ strip-json-comments@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz#31f1281b3832630434831c310c01cccda8cbe006"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
-
-styled-reset@^4.5.1:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/styled-reset/-/styled-reset-4.5.1.tgz#631aee45dcef871cab8b25da29271eafc494f694"
-  integrity sha512-6EvFWZRwaFRFxiPYMwmnzOe33rDkw5r9jIU0eEi49bkt6VSrvjeMp2ZOw/YFbw5SVs81llIY+5fzHtR2/VBZfQ==
 
 stylis@4.2.0:
   version "4.2.0"
