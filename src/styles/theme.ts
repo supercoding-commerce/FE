@@ -5,7 +5,7 @@ export const theme = {
     black: '#000000',
     pink: '#FE4977',
     blue: '#6A8DFF',
-    orange: '#6A8DFF',
+    orange: '#F49325',
     yellow: '#FBF86A',
     green: '#55FE3A',
     brand: '#55FE3A',

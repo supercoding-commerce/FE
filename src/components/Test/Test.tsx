@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import Icon from '@/components/common/Icon.tsx';
+import { ClearIcon } from '@/components/icons/ClearIcon.tsx';
 import { theme } from '@/styles/theme.ts';
 
 function Test() {
@@ -14,6 +15,7 @@ function Test() {
         <H0>Icons</H0>
         <div>
           <H2>SIZE 기본</H2>
+          <Icon name="IconBag" size={100} color="brand" />
           <Icon name="IconSearch" />
           <Icon name="IconUser" />
           <Icon name="IconBag" />
@@ -23,6 +25,13 @@ function Test() {
           <Icon name="IconSearch" size={30} />
           <Icon name="IconUser" width={'50px'} height={'40px'} color="brand" />
           <Icon name="IconBag" size={100} />
+          <Icon
+            name="IconClear"
+            color="orange"
+            fill="orange"
+            style={{ width: '100px', height: '100px', border: '1px solid red' }}
+          />
+          <ClearIcon />
         </div>
       </div>
     </div>

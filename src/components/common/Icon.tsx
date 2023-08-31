@@ -29,7 +29,7 @@ const Icon = ({
   color,
   fill,
   style,
-  ...props
+  ...rest
 }: SVGIconProps) => {
   const SVGIcon = icon[name];
 
@@ -44,7 +44,7 @@ const Icon = ({
     }
   `;
 
-  return <SVGIcon {...props} css={IconStyles} style={style} />;
+  return <SVGIcon {...rest} css={IconStyles} style={style} />;
 };
 
 export default Icon;
