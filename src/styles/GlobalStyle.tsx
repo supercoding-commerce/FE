@@ -12,4 +12,13 @@ const styles = css`
   * {
     box-sizing: border-box;
   }
+
+  @font-face {
+    font-family: 'SUIT';
+    src: url('/fonts/SUIT-Bold.ttf');
+  }
+
+  body {
+    font-family: 'SUIT', sans-serif;
+  }
 `;
