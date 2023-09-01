@@ -11,29 +11,53 @@ export const Button = styled.button`
 
     &.variant {
         &_contained {
+          background-color: var(--background-color);
+
+          &:hover{
             background-color: var(--background-color);
+          }
+
+          &:disabled {
+            opacity: 0.7;
+          }
         }    
 
         &_outlined {
-            background-color: transparent;
-            border-color: var(--color);
-            color: var(--color);
+          background-color: transparent;
+          border-color: var(--color);
+          color: var(--color);
+
+          &:hover{
+            background-color: var(--background-color);
+          }
+
+          &:disabled {
+            opacity: 0.7;
+          }
         }
 
         &_main {
-            background-color: black;
-            color: var(--color);
+          background-color: black;
+          color: var(--color);
+
+          &:hover{
+            background-color: var(--background-color);
+          }
+
+          &:disabled {
+            opacity: 0.7;
+          }
         }
     }
 
     &.size{
         &_large {
-            width: var(--width);
-            height: 64px;
-            font-size: 18px;
+          width: var(--width);
+          height: 64px;
+          font-size: 18px;
         }
         &_medium {
-            height: 40px;
+          height: 40px;
             border-radius: 8px;
             font-size: 16px;
             padding: 12px 0px ;

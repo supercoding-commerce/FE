@@ -41,6 +41,7 @@ const Button = ({
         ['full-width']: isFullWidth,
         isDisabled
       })}
+      disabled={isDisabled}
       style={{
         '--background-color': backgroundColor,
         '--color': color,

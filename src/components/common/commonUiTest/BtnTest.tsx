@@ -12,7 +12,7 @@ const BtnTest = () => {
         width='150px'
         isCircle={false}
         isFullWidth={false}
-        isDisabled={true}
+        isDisabled={false}
       >
         장바구니
       </Button>
