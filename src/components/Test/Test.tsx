@@ -44,7 +44,7 @@ function Test() {
       </div>
       <div>
         <Rating count={ratingStar} onChange={handleChangeRating} /> <span>{ratingStar}</span>
-        <Rating readOnly count={2} />
+        <Rating readOnly count={2} size={12} />
       </div>
     </div>
   );

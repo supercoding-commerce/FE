@@ -10,7 +10,7 @@ export type IconNameType = keyof typeof icon;
 const colors = theme.color;
 const DEFAULT_SIZE = 24;
 
-interface SVGIconProps extends SVGProps<SVGSVGElement> {
+export interface IconProps extends SVGProps<SVGSVGElement> {
   /** 등록된 icon name */
   name: IconNameType;
   size?: number;
@@ -30,7 +30,7 @@ const Icon = ({
   fill,
   style,
   ...rest
-}: SVGIconProps) => {
+}: IconProps) => {
   const SVGIcon = icon[name];
 
   const IconStyles = css`

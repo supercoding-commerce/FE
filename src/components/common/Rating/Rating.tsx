@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
-import Icon from '@/components/common/Icon.tsx';
+import Icon, { IconProps } from '@/components/common/Icon.tsx';
 import * as S from './Rating.styles.tsx';
 
 type RatingProps = {
   readOnly?: boolean;
   onChange?: (count: number) => void;
   count?: number;
+  size?: IconProps['size'];
 };
 
 const RATING_ARRAY = [1, 2, 3, 4, 5];
@@ -17,7 +18,7 @@ const RATING_ARRAY = [1, 2, 3, 4, 5];
  * <Rating count={ratingStar} onChange={handleChangeRating} /> <span>{ratingStar}</span>
  * <Rating readOnly count={2} />
  */
-export function Rating({ readOnly, count, onChange }: RatingProps) {
+export function Rating({ readOnly, count, size = 24, onChange }: RatingProps) {
   const [hoverCount, setHoverCount] = useState<number>(0);
   const [clickedCount, setClickedCount] = useState<number>(count || 0);
 
@@ -34,6 +35,7 @@ export function Rating({ readOnly, count, onChange }: RatingProps) {
       {RATING_ARRAY.map((currentCount) => (
         <Icon
           name="IconRate"
+          size={size}
           key={currentCount}
           fill={clickedCount >= currentCount || hoverCount >= currentCount ? 'brand' : 'current'}
           onMouseEnter={() => !readOnly && setHoverCount(currentCount)}
