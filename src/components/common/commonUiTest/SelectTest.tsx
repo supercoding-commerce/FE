@@ -10,6 +10,7 @@ interface SampleItem {
 }
 
 const SelectTest = () => {
+  // 옵션으로 들어갈 배열
   const sampleArray = [
     '옵션1',
     '옵션2',
@@ -24,12 +25,15 @@ const SelectTest = () => {
     '옵션11',
     '옵션12',
   ];
+
+  // 결제할 또는 장바구니에 넣을 아이템의 정보들
   const [item, setItem] = useState<SampleItem>({
     productId: 123,
     quantity: 2,
     option: '',
   });
 
+  // Select컴포넌트에서 옵션이 바뀔때 마다 item의 정보를 업데이트 해줌
   const optionChangeHandler = useCallback((option: string) => {
     setItem({
       ...item,
