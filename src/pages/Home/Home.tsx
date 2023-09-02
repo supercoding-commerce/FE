@@ -1,17 +1,5 @@
-import styled from '@emotion/styled';
-
-import Header from '@/components/common/Header/Header';
-
 function Home() {
-  return (
-    <Div>
-      <Header />
-    </Div>
-  );
+  return <div></div>;
 }
 
 export default Home;
-
-const Div = styled.div`
-  width: 100%;
-`;
