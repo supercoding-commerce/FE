@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { cx } from '@emotion/css';
 
-import Icon from '@/components/common/Icon';
-import * as S from '@/components/common/SearchHeader/SearchHeader.styles';
+import * as S from '@/components/common/Header/SearchHeader.styles.tsx';
+import Icon from '@/components/common/Icon.tsx';
 
 const SearchHeader = () => {
   const [searchOpen, setSearchOpen] = useState(false);
