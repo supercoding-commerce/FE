@@ -6,15 +6,13 @@ import * as S from './Button.styles';
 interface ButtonProps extends ComponentProps<'button'> {
   variant?: ButtonVariant;
   size?: ButtonSize;
-  color?: Color | CSSProperties['color'];
+  color?: CSSProperties['color'];
   backgroundColor?: CSSProperties['backgroundColor'];
   width?: CSSProperties['width'];
   height?: CSSProperties['height'];
   isCircle?: boolean;
   isFullWidth?: boolean;
   isDisabled?: boolean;
-  font?: string;
-
   // {이 안에 기본적인 button 속성도 있음}
 }
 
@@ -24,7 +22,7 @@ const Button = ({
   isCircle = false,
   isFullWidth = false,
   isDisabled = false,
-  backgroundColor = '#55FE3A',
+  backgroundColor,
   width,
   height,
   color,
@@ -39,25 +37,27 @@ const Button = ({
       className={cx(_variant, _size, {
         ['circle']: isCircle,
         ['full-width']: isFullWidth,
-        isDisabled
+        isDisabled,
       })}
       disabled={isDisabled}
-      style={{
-        '--background-color': backgroundColor,
-        '--color': color,
-        '--width': width,
-        '--height': height,
-      } as CSSProperties}
+      style={
+        {
+          '--background-color': backgroundColor,
+          '--color': color,
+          '--background-color-hover': backgroundColor === '#FEE608' ? '#ffef60' : '#8BFE6B',
+          '--color-hover': color === '#6A8DFF' ? '#0f47ff' : '#d20035',
+          '--width': width,
+          '--height': height,
+        } as CSSProperties
+      }
       {...rest}
     >
       <span>{children}</span>
     </S.Button>
-  )
-}
+  );
+};
 
 export default Button;
 
 type ButtonVariant = 'contained' | 'outlined' | 'main';
 type ButtonSize = 'large' | 'medium' | 'small' | 'xsmall';
-type Color = 'cus_pink' | 'cus_green' | 'cus_red';
-
