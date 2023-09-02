@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { theme } from '@/styles/theme';
+import { theme } from '@/styles/theme.ts';
 
 export const SearchHeaderContainer = styled.header`
   width: 100%;
@@ -9,6 +9,7 @@ export const SearchHeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  background-color: #fff;
 `;
 
 export const IconsContainer = styled.div`
