@@ -4,6 +4,9 @@ import * as S from '@/pages/SignInPage/SignInPage.styles';
 import { theme } from '@/styles/theme';
 
 const SignInPage = () => {
+  const kakaoLogin = () => {
+    console.log('카카오 로그인 링크');
+  };
   return (
     <S.SignInContainer>
       <S.SignInLogo>로고</S.SignInLogo>
@@ -25,23 +28,33 @@ const SignInPage = () => {
             placeholder="패스워드를 입력해주세요."
           />
         </div>
-        <Button variant="contained" isFullWidth backgroundColor={theme.color.brand}>
-          로그인
+        <Button
+          variant="contained"
+          isFullWidth
+          size="large"
+          height={'64px'}
+          backgroundColor={theme.color.brand}
+        >
+          <S.FontBox>로그인</S.FontBox>
         </Button>
       </S.SignInForm>
-
-      <Button variant="contained" isFullWidth>
-        <p
-          style={{
-            width: '128px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Icon name="IconSearch" size={14} />
-          카카오 로그인
-        </p>
+      <S.OrBox>
+        <S.LineDiv />
+        <span>OR</span>
+        <S.LineDiv />
+      </S.OrBox>
+      <Button
+        variant="contained"
+        size="large"
+        height={'64px'}
+        backgroundColor="#FEE608"
+        isFullWidth
+        onClick={kakaoLogin}
+      >
+        <S.KakaoFontBox>
+          <Icon name="IconKakao" size={19} />
+          <span>카카오 로그인</span>
+        </S.KakaoFontBox>
       </Button>
     </S.SignInContainer>
   );
