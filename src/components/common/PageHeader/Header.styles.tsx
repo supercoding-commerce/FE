@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 
-export const PageHeaderContainer = styled.div`
+import { theme } from '@/styles/theme';
+
+export const HeaderContainer = styled.div`
   width: 100%;
   height: 60px;
   background-color: black;
@@ -22,5 +24,5 @@ export const IconBox = styled.div`
 export const Title = styled.h1`
   font-size: 18px;
   font-weight: 500;
-  color: #55fe3a;
+  color: ${theme.color.brand};
 `;
