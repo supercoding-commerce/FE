@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 
 import DefaultHeader from '@/components/common/Header/DefaultHeader.tsx';
 import SearchHeader from '@/components/common/Header/SearchHeader.tsx';
+import { RoutePath } from '@/pages/routes.tsx';
 
 /**
  * @desc Header 컴포넌트에 URL 별로 그에 맞는 헤더를 반환
@@ -12,7 +13,7 @@ export function Header() {
 
   const isNoHeader = NO_HEADER_URL.includes(pathname);
   const isSearchHeader =
-    SEARCH_HEADER_URL.includes(pathname) || PRODUCT_DETAIL_REGEX.test(pathname);
+    PRODUCT_DETAIL_REGEX.test(pathname) || SEARCH_HEADER_URL.includes(pathname);
 
   if (isNoHeader) {
     return null;
@@ -23,10 +24,10 @@ export function Header() {
   return <DefaultHeader text={HEADER_TITLE[pathname] || ''} />;
 }
 
-const NO_HEADER_URL = ['/signup', '/signup/seller', '/signup/buyer', '/signin'];
-const SEARCH_HEADER_URL = ['/', '/category', '/product'];
-const PRODUCT_DETAIL_REGEX = /\/product\/\d+/g;
-const HEADER_TITLE: { [key: string]: string } = {
+const NO_HEADER_URL: RoutePath[] = ['/signup', '/signup/seller', '/signup/buyer', '/signin'];
+const SEARCH_HEADER_URL: RoutePath[] = ['/', '/category'];
+const PRODUCT_DETAIL_REGEX = new RegExp(/\/product\/\d+/);
+const HEADER_TITLE: { [key: RoutePath]: string } = {
   '/mycart': 'My Cart',
   '/pay': 'Order/Payment',
   '/new/product': 'Add Products',

@@ -4,6 +4,7 @@ import { cx } from '@emotion/css';
 import * as S from '@/components/common/Header/SearchHeader.styles.tsx';
 import Icon from '@/components/common/Icon.tsx';
 
+// GYU-TODO: Search Header 보니깐, Category UI 동일하게 있음, 해당 컴포넌트에 넣어도 될듯!
 const SearchHeader = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [inputOpen, setInputOpen] = useState(false);
