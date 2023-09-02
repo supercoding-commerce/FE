@@ -5,3 +5,4 @@ export { ReactComponent as IconClear } from './Clear.svg';
 export { ReactComponent as IconArrowDown } from './ArrowDown.svg';
 export { ReactComponent as IconArrowUp } from './ArrowUp.svg';
 export { ReactComponent as IconRate } from './Rate.svg';
+export { ReactComponent as IconArrowLeft } from './ArrowLeft.svg';

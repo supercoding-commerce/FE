@@ -14,9 +14,8 @@ export const PageHeaderContainer = styled.div`
 export const IconBox = styled.div`
   position: absolute;
   left: 40px;
-  width: 6px;
-  height: 12px;
-  background-color: aliceblue;
+  width: 24px;
+  height: 24px;
 `;
 
 // TODO-yukddong : theme 스타일 추가되면 적용예정

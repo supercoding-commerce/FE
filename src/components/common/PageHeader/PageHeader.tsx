@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
+import Icon from '@/components/common/Icon';
 import * as S from './PageHeader.styles';
 
 interface PageHeaderProps {
@@ -15,7 +16,9 @@ function PageHeader({ text }: PageHeaderProps) {
   };
   return (
     <S.PageHeaderContainer>
-      <S.IconBox onClick={goToBack} />
+      <S.IconBox onClick={goToBack}>
+        <Icon name="IconArrowLeft" color="brand" />
+      </S.IconBox>
       <S.Title>{text}</S.Title>
     </S.PageHeaderContainer>
   );
