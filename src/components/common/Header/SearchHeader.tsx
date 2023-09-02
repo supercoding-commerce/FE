@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { cx } from '@emotion/css';
 
-import * as S from '@/components/common/Header/Header.styles';
+import * as S from '@/components/common/Header/SearchHeader.styles';
 import Icon from '@/components/common/Icon';
 
-const Header = () => {
+const SearchHeader = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [inputOpen, setInputOpen] = useState(false);
 
   return (
-    <S.HeaderContainer>
+    <S.SearchHeaderContainer>
       {/* 로고나오면 로고로 대체 */}
       <h1>로고자리</h1>
       <S.IconsContainer>
@@ -46,8 +46,8 @@ const Header = () => {
         <Icon name="IconUser" />
         <Icon name="IconBag" />
       </S.IconsContainer>
-    </S.HeaderContainer>
+    </S.SearchHeaderContainer>
   );
 };
 
-export default Header;
+export default SearchHeader;

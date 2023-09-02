@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { theme } from '@/styles/theme';
 
-export const HeaderContainer = styled.header`
+export const SearchHeaderContainer = styled.header`
   width: 100%;
   height: 60px;
   display: flex;
