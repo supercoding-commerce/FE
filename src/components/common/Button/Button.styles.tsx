@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import { theme } from '@/styles/theme.ts';
+
 export const Button = styled.button`
   display: inline-flex;
   align-items: center;
@@ -8,6 +10,7 @@ export const Button = styled.button`
   padding: 0.5rem;
   border: 1px solid black;
   cursor: pointer;
+  height: var(--height);
 
   &.variant {
     &_contained {
@@ -46,8 +49,8 @@ export const Button = styled.button`
 
     &_main {
       background-color: black;
-      color: var(--color);
-
+      color: ${theme.color.brand};
+      border-radius: 8px;
       &:hover {
         color: yellow;
       }
