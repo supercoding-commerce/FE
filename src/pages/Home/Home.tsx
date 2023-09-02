@@ -1,7 +1,5 @@
-import BtnTest from "@/components/common/commonUiTest/BtnTest";
-
 function Home() {
-  return <div><BtnTest /></div>;
+  return <div>Home입니다</div>;
 }
 
 export default Home;
