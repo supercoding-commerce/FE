@@ -6,7 +6,7 @@ import { RoutePath } from '@/pages/routes.tsx';
 import * as S from './MyPage.styles.tsx';
 
 export function MyPage() {
-  const isBuyer = false;
+  const isBuyer = true;
   const mainItemList: MainItem[] = isBuyer ? BUYER_MAIN_ITEMS : SELLER_MAIN_ITEMS;
 
   const handleClickMyInfo = () => {
@@ -19,8 +19,8 @@ export function MyPage() {
       <S.UserInfoSection>
         <S.UserInfoContainer>
           <S.Nickname>{isBuyer && '[등급]'} 닉네임</S.Nickname>
-          <Button variant="main" onClick={handleClickMyInfo} height="26px">
-            {isBuyer ? '내정보' : '스토어 정보'}{' '}
+          <Button variant="main" size="small" onClick={handleClickMyInfo}>
+            {isBuyer ? '내정보' : '스토어 정보'}
           </Button>
         </S.UserInfoContainer>
       </S.UserInfoSection>

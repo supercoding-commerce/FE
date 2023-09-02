@@ -32,6 +32,8 @@ const Button = ({
   const _variant = `variant_${variant}`;
   const _size = `size_${size}`;
 
+  console.log('height', height);
+
   return (
     <S.Button
       className={cx(_variant, _size, {
