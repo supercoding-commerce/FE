@@ -2,7 +2,6 @@ import { createBrowserRouter, useLocation } from 'react-router-dom';
 
 import Test from '@/components/Test/Test.tsx';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
-import { DesktopLayout } from '@/pages/DesktopLayout/DesktopLayout.tsx';
 import Home from '@/pages/Home/Home.tsx';
 
 // GYU-TODO: DELETE
@@ -17,12 +16,13 @@ export const router = createBrowserRouter([
     element: <DefaultLayout />,
     // errorElement: <div>Not Found Page</div>,
     children: [
+      // 제품 및 검색
       {
         index: true,
         element: <Home />,
       },
       {
-        path: '/products/:id',
+        path: '/product/:id',
         element: <TestCompoennt />,
       },
       {
@@ -30,6 +30,7 @@ export const router = createBrowserRouter([
         element: <TestCompoennt />,
       },
 
+      // 회원가입 / 로그인
       {
         path: '/signup',
         element: <TestCompoennt />,
@@ -51,6 +52,7 @@ export const router = createBrowserRouter([
         element: <TestCompoennt />,
       },
 
+      // 마이페이지 및 결제 등
       {
         path: '/mycart',
         element: <TestCompoennt />,
@@ -60,28 +62,64 @@ export const router = createBrowserRouter([
         element: <TestCompoennt />,
       },
       {
+        path: '/mypage',
+        element: <TestCompoennt />,
+      },
+      {
+        path: '/new/product',
+        element: (
+          <>
+            <span>new test</span>
+            <TestCompoennt />
+          </>
+        ),
+      },
+      {
+        path: '/update/product',
+        element: (
+          <>
+            <span>update test</span>
+            <TestCompoennt />
+          </>
+        ),
+      },
+      {
         path: 'test',
         element: <Test />,
       },
     ],
   },
-  //   Desktop Layout 을 사용하는 UI (현재, 공통적인 특징이 없어 개별적으로 처리)
   {
     path: '/new/product',
     element: (
-      <DesktopLayout>
+      <>
         <span>new test</span>
         <TestCompoennt />
-      </DesktopLayout>
+      </>
     ),
   },
   {
     path: '/update/product',
     element: (
-      <DesktopLayout>
+      <>
         <span>update test</span>
         <TestCompoennt />
-      </DesktopLayout>
+      </>
     ),
   },
 ]);
+
+export type RoutePath =
+  | '/signup'
+  | '/signup/seller'
+  | '/signup/buyer'
+  | '/signin'
+  | '/'
+  | '/product/:id'
+  | '/category'
+  | '/mycart'
+  | '/pay'
+  | '/mypage'
+  | '/new/product'
+  | '/update/product'
+  | string;

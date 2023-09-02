@@ -1,27 +1,35 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-import Icon from '@/components/common/Icon';
-import * as S from './Header.styles';
+import DefaultHeader from '@/components/common/Header/DefaultHeader.tsx';
+import SearchHeader from '@/components/common/Header/SearchHeader.tsx';
 
-interface HeaderProps {
-  text: string;
+/**
+ * @desc Header 컴포넌트에 URL 별로 그에 맞는 헤더를 반환
+ */
+export function Header() {
+  const location = useLocation();
+  const { pathname } = location;
+
+  const isNoHeader = NO_HEADER_URL.includes(pathname);
+  const isSearchHeader =
+    SEARCH_HEADER_URL.includes(pathname) || PRODUCT_DETAIL_REGEX.test(pathname);
+
+  if (isNoHeader) {
+    return null;
+  }
+  if (isSearchHeader) {
+    return <SearchHeader />;
+  }
+  return <DefaultHeader text={HEADER_TITLE[pathname] || ''} />;
 }
 
-function Header({ text }: HeaderProps) {
-  // props로 받은 text를 Title 안에 넣어줌
-  const navigate = useNavigate();
-  const goToBack = () => {
-    // 뒤로가기 버튼 클릭시 이전 페이지로 이동
-    navigate(-1);
-  };
-  return (
-    <S.HeaderContainer>
-      <S.IconBox onClick={goToBack}>
-        <Icon name="IconArrowLeft" color="brand" />
-      </S.IconBox>
-      <S.Title>{text}</S.Title>
-    </S.HeaderContainer>
-  );
-}
-
-export default Header;
+const NO_HEADER_URL = ['/signup', '/signup/seller', '/signup/buyer', '/signin'];
+const SEARCH_HEADER_URL = ['/', '/category', '/product'];
+const PRODUCT_DETAIL_REGEX = /\/product\/\d+/g;
+const HEADER_TITLE: { [key: string]: string } = {
+  '/mycart': 'My Cart',
+  '/pay': 'Order/Payment',
+  '/new/product': 'Add Products',
+  '/update/product': 'Update Products',
+  '/mypage': 'My Page',
+};
