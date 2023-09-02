@@ -1,5 +1,17 @@
+import styled from '@emotion/styled';
+
+import Header from '@/components/common/Header/Header';
+
 function Home() {
-  return <div>Home입니다</div>;
+  return (
+    <Div>
+      <Header />
+    </Div>
+  );
 }
 
 export default Home;
+
+const Div = styled.div`
+  width: 100%;
+`;
