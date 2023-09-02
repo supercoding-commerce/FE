@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 
+import Footer from '@/components/common/Footer/Footer.tsx';
 import { Header } from '@/components/common/Header/Header.tsx';
 import { RoutePath } from '@/pages/routes.tsx';
 import * as S from './DefaultLayout.styles.tsx';
@@ -18,6 +19,7 @@ export function DefaultLayout() {
     <S.DefaultLayoutWrapper onlyDesktop={onlyDesktop}>
       <Header />
       <Outlet />
+      <Footer />
     </S.DefaultLayoutWrapper>
   );
 }
