@@ -3,6 +3,7 @@ import { createBrowserRouter, useLocation } from 'react-router-dom';
 import Test from '@/components/Test/Test.tsx';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import Home from '@/pages/Home/Home.tsx';
+import { MyPage } from '@/pages/MyPage/MyPage.tsx';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 
 // GYU-TODO: DELETE
@@ -48,10 +49,6 @@ export const router = createBrowserRouter([
         path: '/signin',
         element: <SignInPage />,
       },
-      {
-        path: '/signup',
-        element: <TestCompoennt />,
-      },
 
       // 마이페이지 및 결제 등
       {
@@ -64,7 +61,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/mypage',
-        element: <TestCompoennt />,
+        element: <MyPage />,
       },
       {
         path: '/new/product',
