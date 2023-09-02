@@ -44,8 +44,6 @@ const Button = ({
         {
           '--background-color': backgroundColor,
           '--color': color,
-          '--background-color-hover': backgroundColor === '#FEE608' ? '#ffef60' : '#8BFE6B',
-          '--color-hover': color === '#6A8DFF' ? '#0f47ff' : '#d20035',
           '--width': width,
           '--height': height,
         } as CSSProperties
