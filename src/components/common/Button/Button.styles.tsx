@@ -16,10 +16,6 @@ export const Button = styled.button`
       background-color: var(--background-color);
       color: var(--color);
 
-      &:hover {
-        background-color: var(--background-color-hover);
-      }
-
       &:disabled,
       &:disabled:hover {
         opacity: 0.4;
@@ -31,11 +27,6 @@ export const Button = styled.button`
       background-color: transparent;
       border-color: var(--color);
       color: var(--color);
-
-      &:hover {
-        color: var(--color-hover);
-        border-color: var(--color-hover);
-      }
 
       &:disabled,
       &:disabled:hover {
@@ -49,9 +40,6 @@ export const Button = styled.button`
       background-color: black;
       color: ${theme.color.brand};
       border-radius: 8px;
-      &:hover {
-        color: yellow;
-      }
 
       &:disabled,
       &:hover:disabled {
