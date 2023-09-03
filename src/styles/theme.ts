@@ -12,6 +12,9 @@ export const theme = {
     brandHover: '#8BFE6B',
     brandActive: '#34DA2A',
     backgroundColor: '#F5F5F5',
+
+    // svg 를 위한 처리
+    current: 'current',
   },
   font: {
     mainTitle: css``,

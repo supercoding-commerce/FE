@@ -1,10 +1,18 @@
+import { useState } from 'react';
 import styled from '@emotion/styled';
 
 import Icon from '@/components/common/Icon.tsx';
+import { Rating } from '@/components/common/Rating/Rating.tsx';
 import { ClearIcon } from '@/components/icons/ClearIcon.tsx';
 import { theme } from '@/styles/theme.ts';
 
 function Test() {
+  // TODO: 별점 레이팅 UI 예제
+  const [ratingStar, setRatingStar] = useState(0);
+  const handleChangeRating = (count: number) => {
+    setRatingStar(count);
+  };
+
   return (
     <div>
       하이
@@ -33,6 +41,10 @@ function Test() {
           />
           <ClearIcon />
         </div>
+      </div>
+      <div>
+        <Rating count={ratingStar} onChange={handleChangeRating} /> <span>{ratingStar}</span>
+        <Rating readOnly count={2} size={12} />
       </div>
     </div>
   );
