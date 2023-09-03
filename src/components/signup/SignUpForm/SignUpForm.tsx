@@ -104,7 +104,7 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
           </S.TextFieldWrapper>
           <S.InputWrapper>
             <label htmlFor="shopAddress">
-              배송지
+              <span>쇼핑몰 주소</span>
               <Button variant="outlined" size="xsmall" color={theme.color.blue} height={'25px'}>
                 주소추가
               </Button>
@@ -116,9 +116,25 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
               placeholder="쇼핑몰 주소를 추가해주세요"
             />
           </S.InputWrapper>
+          <S.ImageInputWrapper>
+            <label htmlFor="shopLogo">
+              <span>쇼핑몰 로고</span>
+              <Button variant="outlined" size="xsmall" color={theme.color.blue} height={'25px'}>
+                파일선택
+              </Button>
+            </label>
+            <input type="file" id="shopLogo" name="shopLogo" />
+            <S.ImageBox></S.ImageBox>
+          </S.ImageInputWrapper>
         </>
       )}
-      <Button size="large" variant="contained" backgroundColor={theme.color.brand} height={'64px'}>
+      <Button
+        size="large"
+        variant="contained"
+        backgroundColor={theme.color.brand}
+        height={'64px'}
+        isFullWidth
+      >
         회원가입
       </Button>
     </S.SignUpFormContainer>
