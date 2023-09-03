@@ -23,6 +23,10 @@ export function ImageUploader({ images, setImages }: ImageUploaderProps) {
     }
   };
 
+  const handleDeleteImage = (selectedIndex: number) => {
+    setImages(() => images.filter((_, index) => index !== selectedIndex));
+  };
+
   return (
     <S.ImageUploadWrapper>
       <S.ImageInput
@@ -41,6 +45,7 @@ export function ImageUploader({ images, setImages }: ImageUploaderProps) {
         {images.map((image, index) => (
           <S.ImageWrapper key={index}>
             <S.Image src={URL.createObjectURL(image)} alt="image" />
+            <S.DeleteIcon onClick={() => handleDeleteImage(index)} />
           </S.ImageWrapper>
         ))}
       </S.ImagePreviewWrapper>
