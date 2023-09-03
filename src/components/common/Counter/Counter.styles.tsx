@@ -8,6 +8,7 @@ export const Counter = styled.span`
   height: 34px;
   border: 1px solid black;
   border-radius: 4px;
+  background-color: #e7e7e7;
 `;
 
 export const MinusBtn = styled.div`
@@ -54,6 +55,7 @@ export const InputContainer = styled.div`
       outline: none;
     }
     ${theme.font.body2}
+    background-color:transparent;
     padding: 0;
     text-align: center;
     width: 30px;
