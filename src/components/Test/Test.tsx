@@ -1,35 +1,70 @@
-import { Input } from '@/components/common/Input/Input';
+import { useState } from 'react';
+import styled from '@emotion/styled';
+
+import Icon from '@/components/common/Icon.tsx';
+import { Rating } from '@/components/common/Rating/Rating.tsx';
+import { ClearIcon } from '@/components/icons/ClearIcon.tsx';
+import { theme } from '@/styles/theme.ts';
 
 function Test() {
+  // TODO: 별점 레이팅 UI 예제
+  const [ratingStar, setRatingStar] = useState(0);
+  const handleChangeRating = (count: number) => {
+    setRatingStar(count);
+  };
+
   return (
-    <>
-      <Input type="text" isFullWidth error placeholder="상품 설명을 입력하세요." />
-      <Input type="text" size="md" error placeholder="상품 설명을 입력하세요." />
-      <Input
-        type="text"
-        size="sm"
-        error
-        placeholder="이름을 입력해주세요."
-        variant="underline"
-        errorMessage="에러 발생! 입력값이 유효하지 않습니다."
-      />
-      <Input type="text" size="md" placeholder="이름을 입력해주세요." variant="underline" />
-      <Input type="text" size="md" placeholder="이름을 입력해주세요." />
-      <Input
-        type="text"
-        size="sm"
-        placeholder="상품 설명을 입력하세요."
-        style={{ width: '350px', height: '45px' }}
-      />
-      <Input
-        type="text"
-        size="md"
-        placeholder="상품 설명을 입력하세요."
-        error
-        errorMessage="에러 발생! 입력값이 유효하지 않습니다."
-      />
-    </>
+    <div>
+      하이
+      <H0>Title</H0>
+      <H1>Title</H1>
+      <Body0>Title</Body0>
+      <div>
+        <H0>Icons</H0>
+        <div>
+          <H2>SIZE 기본</H2>
+          <Icon name="IconBag" size={100} color="brand" />
+          <Icon name="IconSearch" />
+          <Icon name="IconUser" />
+          <Icon name="IconBag" />
+        </div>
+        <div>
+          <H2>SIZE Custom & Color Custom</H2>
+          <Icon name="IconSearch" size={30} />
+          <Icon name="IconUser" width={'50px'} height={'40px'} color="brand" />
+          <Icon name="IconBag" size={100} />
+          <Icon
+            name="IconClear"
+            color="orange"
+            fill="orange"
+            style={{ width: '100px', height: '100px', border: '1px solid red' }}
+          />
+          <ClearIcon />
+        </div>
+      </div>
+      <div>
+        <Rating count={ratingStar} onChange={handleChangeRating} /> <span>{ratingStar}</span>
+        <Rating readOnly count={2} size={12} />
+      </div>
+    </div>
   );
 }
 
 export default Test;
+
+const H0 = styled.h1`
+  ${theme.font.h0}
+  color: ${theme.color.brand}
+`;
+
+const H1 = styled.h2`
+  ${theme.font.h1}
+`;
+
+const H2 = styled.h3`
+  ${theme.font.h2}
+`;
+
+const Body0 = styled.span`
+  ${theme.font.body0}
+`;

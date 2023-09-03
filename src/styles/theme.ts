@@ -14,6 +14,8 @@ export const theme = {
     backgroundColor: '#F5F5F5',
     error: '#fe4977',
     borderColor: '#9ba5b7',
+    // svg 를 위한 처리
+    current: 'current',
   },
   font: {
     mainTitle: css``,
