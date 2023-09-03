@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 
+import { theme } from '@/styles/theme';
+
 export const Counter = styled.span`
   display: flex;
   width: 90px;
-  height: 33px;
+  height: 34px;
   border: 1px solid black;
   border-radius: 4px;
 `;
@@ -17,14 +19,19 @@ export const MinusBtn = styled.div`
   border-right: 1px solid black;
   border-radius: 4px 0 0 4px;
   cursor: pointer;
+  ${theme.font.body0}
 
-  div {
+  & div {
+    &:hover {
+      color: ${theme.color.brandHover};
+      transition: 0.15s ease-in-out;
+    }
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 3px;
-    width: 11px;
-    height: 20px;
+    padding-bottom: 2px;
+    width: 20px;
+    height: 25px;
   }
 `;
 export const InputContainer = styled.div`
@@ -46,6 +53,7 @@ export const InputContainer = styled.div`
     &:focus {
       outline: none;
     }
+    ${theme.font.body2}
     padding: 0;
     text-align: center;
     width: 30px;
@@ -60,12 +68,17 @@ export const PlusBtn = styled.div`
   height: 33px;
   border-left: 1px solid black;
   cursor: pointer;
+  ${theme.font.body1}
+
   div {
+    &:hover {
+      color: ${theme.color.brandHover};
+      transition: 0.15s ease-in-out;
+    }
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 3px;
-    width: 11px;
-    height: 20px;
+    width: 20px;
+    height: 25px;
   }
 `;
