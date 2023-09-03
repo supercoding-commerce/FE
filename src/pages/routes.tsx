@@ -1,6 +1,7 @@
 import { createBrowserRouter, useLocation } from 'react-router-dom';
 
 import Test from '@/components/Test/Test.tsx';
+import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import Home from '@/pages/Home/Home.tsx';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
@@ -68,12 +69,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/new/product',
-        element: (
-          <>
-            <span>new test</span>
-            <TestCompoennt />
-          </>
-        ),
+        element: <AddProduct />,
       },
       {
         path: '/update/product',
@@ -89,24 +85,6 @@ export const router = createBrowserRouter([
         element: <Test />,
       },
     ],
-  },
-  {
-    path: '/new/product',
-    element: (
-      <>
-        <span>new test</span>
-        <TestCompoennt />
-      </>
-    ),
-  },
-  {
-    path: '/update/product',
-    element: (
-      <>
-        <span>update test</span>
-        <TestCompoennt />
-      </>
-    ),
   },
 ]);
 
