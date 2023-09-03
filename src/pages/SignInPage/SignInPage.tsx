@@ -1,12 +1,28 @@
+import { useState } from 'react';
+
 import Button from '@/components/common/Button/Button';
 import Icon from '@/components/common/Icon';
+import { Input } from '@/components/common/Input/Input';
 import * as S from '@/pages/SignInPage/SignInPage.styles';
 import { theme } from '@/styles/theme';
 
 const SignInPage = () => {
+  const [loginInput, setLoginInput] = useState({
+    email: '',
+    password: '',
+  });
+
+  const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginInput({
+      ...loginInput,
+      [e.target.name]: e.target.value,
+    });
+  };
   const kakaoLogin = () => {
     console.log('카카오 로그인 링크');
   };
+
+  console.log(loginInput);
   return (
     <S.SignInContainer>
       <S.SignInLogo>로고</S.SignInLogo>
@@ -17,14 +33,27 @@ const SignInPage = () => {
       >
         <div>
           <label htmlFor="email">ID</label>
-          <input type="email" id="email" name="email" placeholder="아이디를 입력해주세요." />
+          <Input
+            onChange={inputChangeHandler}
+            value={loginInput.email}
+            name="email"
+            id="email"
+            type="email"
+            variant="underline"
+            isFullWidth
+            placeholder="아이디를 입력해주세요."
+          />
         </div>
         <div>
           <label htmlFor="password">PW</label>
-          <input
-            type="password"
-            id="password"
+          <Input
+            onChange={inputChangeHandler}
+            value={loginInput.password}
             name="password"
+            id="password"
+            type="password"
+            variant="underline"
+            isFullWidth
             placeholder="패스워드를 입력해주세요."
           />
         </div>
