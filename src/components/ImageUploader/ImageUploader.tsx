@@ -1,13 +1,13 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 import Icon from '@/components/common/Icon.tsx';
 import * as S from './ImageUploader.styles.tsx';
 
-interface ImageUploadProps {}
-
-export function ImageUploader({}: ImageUploadProps) {
-  const [images, setImages] = useState<File[]>([]);
-
+type ImageUploaderProps = {
+  images: File[];
+  setImages: Dispatch<SetStateAction<File[]>>;
+};
+export function ImageUploader({ images, setImages }: ImageUploaderProps) {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     const enrolledImageCount = images.length || 0;
