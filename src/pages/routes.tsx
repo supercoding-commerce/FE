@@ -6,6 +6,7 @@ import Home from '@/pages/Home/Home.tsx';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
+import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
 
 // GYU-TODO: DELETE
 function TestCompoennt() {
@@ -40,11 +41,11 @@ export const router = createBrowserRouter([
       },
       {
         path: '/signup/seller',
-        element: <TestCompoennt />,
+        element: <SignUpUserPage />,
       },
       {
         path: '/signup/buyer',
-        element: <TestCompoennt />,
+        element: <SignUpUserPage />,
       },
       {
         path: '/signin',
