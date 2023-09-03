@@ -2,6 +2,7 @@ import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 import Icon from '@/components/common/Icon.tsx';
 import * as S from './ImageUploader.styles.tsx';
+import { ThumbnailTitle } from './ImageUploader.styles.tsx';
 
 type ImageUploaderProps = {
   images: File[];
@@ -46,6 +47,7 @@ export function ImageUploader({ images, setImages }: ImageUploaderProps) {
           <S.ImageWrapper key={index}>
             <S.Image src={URL.createObjectURL(image)} alt="image" />
             <S.DeleteIcon onClick={() => handleDeleteImage(index)} />
+            {index === 0 && <ThumbnailTitle>대표이미지</ThumbnailTitle>}
           </S.ImageWrapper>
         ))}
       </S.ImagePreviewWrapper>

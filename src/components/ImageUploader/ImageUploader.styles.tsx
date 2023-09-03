@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import { DeleteIcon as _DeleteIcon } from '@/components/icons/DeleteIcon.tsx';
+import { theme } from '@/styles/theme.ts';
 
 export const ImageUploadWrapper = styled.div`
   display: flex;
@@ -46,4 +47,14 @@ export const DeleteIcon = styled(_DeleteIcon)`
   top: -12px;
   right: -12px;
   cursor: pointer;
+`;
+
+export const ThumbnailTitle = styled.div`
+  position: absolute;
+  padding: 0.5rem;
+  background-color: black;
+  color: ${theme.color.brand};
+  text-align: center;
+  width: 100%;
+  bottom: 0;
 `;
