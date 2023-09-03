@@ -4,6 +4,7 @@ import Test from '@/components/Test/Test.tsx';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import Home from '@/pages/Home/Home.tsx';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
+import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 
 // GYU-TODO: DELETE
@@ -47,11 +48,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/signin',
-        element: <TestCompoennt />,
-      },
-      {
-        path: '/signup',
-        element: <TestCompoennt />,
+        element: <SignInPage />,
       },
 
       // 마이페이지 및 결제 등
