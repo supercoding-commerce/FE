@@ -1,49 +1,44 @@
-import { ComponentProps, CSSProperties, HTMLInputTypeAttribute, ReactNode } from 'react';
+import { ComponentProps, CSSProperties, ReactNode } from 'react';
 import { cx } from '@emotion/css';
 
 import * as S from './Input.styles';
 
-interface InputProps extends Omit<ComponentProps<'input'>, 'size'> {
+interface InputProps extends Omit<ComponentProps<'input'>, 'size' | 'style'> {
   size?: 'md' | 'sm';
-  type?: HTMLInputTypeAttribute;
   isFullWidth?: boolean;
   error?: boolean;
+  errorMessage?: string;
   rightSlot?: ReactNode;
-  placeholder?: string;
-  isTextField?: boolean;
-  isFieldError?: boolean;
-  message?: boolean;
   style?: CSSProperties;
+  variant?: 'outline' | 'underline';
 }
 
 export function Input({
-  type = 'text',
+  variant = 'outline',
   size = 'md',
   isFullWidth = false,
   error,
+  errorMessage,
   rightSlot,
-  placeholder,
-  isTextField,
-  isFieldError,
-  message,
   style,
   ...rest
 }: InputProps) {
   const _size = `size_${size}`;
+  const _variant = `variant_${variant}`;
 
   return (
-    <S.InputWrapper
-      style={style}
-      className={cx(_size, {
-        ['full-width']: isFullWidth,
-        error,
-        'text-field': isTextField,
-        'text-fieldError': isFieldError,
-        'input-radius': message,
-      })}
-    >
-      <S.Input type={type} placeholder={placeholder} {...rest} />
-      {rightSlot}
-    </S.InputWrapper>
+    <div>
+      <S.InputWrapper
+        className={cx(_size, _variant, {
+          ['full-width']: isFullWidth,
+          error,
+        })}
+        style={style}
+      >
+        <S.Input {...rest} />
+        {rightSlot}
+      </S.InputWrapper>
+      {error && errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
+    </div>
   );
 }

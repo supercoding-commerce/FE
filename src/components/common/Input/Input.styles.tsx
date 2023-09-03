@@ -2,28 +2,48 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { theme } from '@/styles/theme';
+
 const inputWrapperStyle = css`
-  padding: 8px;
+  margin: 15px;
+  padding: 10px;
   display: inline-flex;
   align-items: center;
   color: #333;
   background-color: transparent;
-  border: 2px solid #9ba5b7;
-  border-radius: 0.5rem;
-  gap: 12px;
+  border: none;
 
+  border-radius: 0.5rem;
   &:focus-within {
     border: 2px solid black;
   }
 
   &.size {
     &_md {
-      font-size: 1rem;
       height: 38px;
     }
     &_sm {
-      font-size: 14px;
-      height: 36px;
+      height: 30px;
+    }
+  }
+
+  &.variant {
+    &_outline {
+      height: 45px;
+      background-color: transparent;
+      border-radius: 25px;
+      border: 2px solid ${theme.color.borderColor};
+      &:focus-within {
+        border: 2px solid black;
+      }
+    }
+
+    &_underline {
+      height: 34px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      border-bottom: 2px solid ${theme.color.borderColor};
     }
   }
 
@@ -32,28 +52,15 @@ const inputWrapperStyle = css`
   }
 
   &.error {
-    border: 2px solid #fe4977;
+    border-color: ${theme.color.error};
   }
+`;
 
-  &.text-field {
-    border: 0;
-    border-radius: 0;
-    border-bottom: 2px solid #9ba5b7;
-  }
-  &.text-fieldError {
-    border: 0;
-    border-radius: 0;
-    border-bottom: 2px solid #fe4977;
-  }
-
-  &.input-radius {
-    background-color: transparent;
-    border-radius: 20px;
-    border: 2px solid #9ba5b7;
-    &:focus-within {
-      border: 2px solid black;
-    }
-  }
+export const ErrorMessage = styled.span`
+  display: block;
+  padding-left: 15px;
+  color: #fe4977;
+  font-size: 0.7rem;
 `;
 
 export const InputWrapper = styled.span<{
@@ -67,11 +74,10 @@ export const InputWrapper = styled.span<{
 export const Input = styled.input`
   outline: none;
   border: none;
-
   width: 100%;
-  padding: 0;
   color: #333;
   font: inherit;
+  font-size: 0.85rem;
   text-overflow: ellipsis;
   background-color: transparent;
 
