@@ -7,9 +7,11 @@ import * as S from './Category.styles';
 export type CategoryBoxProps = {
   icon: IconNameType;
   title: string;
-  optionTitle?: subOption[] | undefined;
+  onClick?: () => void;
+  optionTitle?: subOption[];
+
   /** { onclick?: () => void }[] : options 배열의 각 요소가 onclick 함수를 가질 수 있지만, onclick이 없는 경우도 허용 */
-  options?: { onclick?: () => void }[] | undefined;
+  // options?: { onclick?: () => void }[] | undefined;
 };
 
 export type subOption = {
@@ -19,14 +21,15 @@ export type subOption = {
 };
 
 /** 상위 카테고리에서 하위 카테고리 여는 로직 이외의 기능이 필요하다면 말씀해주세요*/
-const Category = ({ icon, title, optionTitle, options }: CategoryBoxProps) => {
+const Category = ({ icon, title, optionTitle, options, onClick }: CategoryBoxProps) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const clickHandle = () => {
     setIsClicked((prevIsClicked) => !prevIsClicked);
-    if (options && options.length > 0 && options[0].onclick) {
-      options[0].onclick();
-    }
+    onClick && onClick();
+    // if (options && options.length > 0 && options[0].onclick) {
+    //   options[0].onclick();
+    // }
   };
 
   return (
@@ -35,9 +38,7 @@ const Category = ({ icon, title, optionTitle, options }: CategoryBoxProps) => {
         className={cx({
           ['active']: isClicked,
         })}
-        onClick={() => {
-          clickHandle();
-        }}
+        onClick={() => clickHandle()}
       >
         <div className="left">
           <div className="category_icon">
