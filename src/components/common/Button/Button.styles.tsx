@@ -53,20 +53,20 @@ export const Button = styled.button`
     &_large {
       width: var(--width);
       height: 64px;
-      font-style: ${theme.font.body0};
+      ${theme.font.body0};
       padding: 10px 12px;
     }
     &_medium {
       height: 40px;
       border-radius: 8px;
-      font-style: ${theme.font.body1};
+      ${theme.font.body1};
       padding: 8px 12px;
       width: var(--width);
     }
     &_small {
       height: 26px;
       border-radius: 20px;
-      font-style: ${theme.font.body3};
+      ${theme.font.body3};
       padding: 7px 12px;
       width: var(--width);
     }
@@ -74,7 +74,7 @@ export const Button = styled.button`
       height: 20px;
       border-radius: 3px;
       padding: 2px;
-      font-style: ${theme.font.body3};
+      ${theme.font.body3};
     }
   }
 
