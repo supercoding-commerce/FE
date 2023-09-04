@@ -1,11 +1,17 @@
 import Category, { CategoryBoxProps } from '@/components/common/Category/Category';
 
 const CategoryTest = () => {
+  const test = () => {
+    //필요하신 추가 로직을 넣어주세요
+    alert('되나용?');
+  };
+
   const topOptions: CategoryBoxProps[] = [
     {
       icon: 'IconBag',
       title: 'bag',
-      options: [{ onclick: () => alert('IconBag') }],
+      /** 이렇게 함수로 로직을 전달해주셔도 될 것 같습니다. */
+      options: [{ onclick: test }],
       optionTitle: [
         {
           icon: 'IconPaper',
