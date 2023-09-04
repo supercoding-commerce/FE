@@ -1,9 +1,18 @@
 import { useState } from 'react';
 
-const useInputs = (initialValue = {}) => {
+import useValid from '@/hooks/useValid';
+
+export interface userInfoProps {
+  email: string;
+  password: string;
+}
+
+const useInputs = (initialValue: userInfoProps) => {
   const [form, setForm] = useState(initialValue);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useValid(form);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
 
@@ -13,7 +22,11 @@ const useInputs = (initialValue = {}) => {
     });
   };
 
-  return { form, handleChange };
+  const onReset = () => {
+    setForm(initialValue);
+  };
+
+  return { form, onChange, onReset };
 };
 
 export default useInputs;

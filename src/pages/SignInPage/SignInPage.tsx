@@ -1,46 +1,65 @@
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/common/Button/Button';
 import Icon from '@/components/common/Icon';
 import { Input } from '@/components/common/Input/Input';
 import useInputs from '@/hooks/useInputs';
+import useValid from '@/hooks/useValid';
 import * as S from '@/pages/SignInPage/SignInPage.styles';
 import { theme } from '@/styles/theme';
 
 const SignInPage = () => {
-  const { form: loginInput, handleChange: inputChangeHandler } = useInputs({
+  const navigate = useNavigate();
+
+  // 임시 로그인을 위한 유저 데이터 - 삭제 예정
+  const seller = {
+    email: 'seller@naver.com',
+    password: 'qwer1234',
+  };
+  const buyer = {
+    email: 'buyer@naver.com',
+    password: 'qwer1234',
+  };
+
+  const {
+    form: { email, password },
+    onChange: inputChangeHandler,
+  } = useInputs({
     email: '',
     password: '',
   });
-  // const [loginInput, setLoginInput] = useState({
-  //   email: '',
-  //   password: '',
-  // });
 
-  // const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setLoginInput({
-  //     ...loginInput,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
+  const { isValid } = useValid({ email, password });
+
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // 임시 로그인 성공 테스트 - 삭제 예정
+    if (seller.email === email && seller.password === password) {
+      alert('판매자 로그인 성공');
+      navigate('/');
+      return;
+    }
+
+    if (buyer.email === email && buyer.password === password) {
+      alert('구매자 로그인 성공');
+      navigate('/');
+      return;
+    }
+  };
+
   const kakaoLogin = () => {
     console.log('카카오 로그인 링크');
   };
 
-  console.log(loginInput);
   return (
     <S.SignInContainer>
       <S.SignInLogo>로고</S.SignInLogo>
-      <S.SignInForm
-        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-          e.preventDefault();
-        }}
-      >
+      <S.SignInForm onSubmit={submitHandler}>
         <div>
           <label htmlFor="email">ID</label>
           <Input
             onChange={inputChangeHandler}
-            value={loginInput.email}
+            value={email}
             name="email"
             id="email"
             type="email"
@@ -53,7 +72,7 @@ const SignInPage = () => {
           <label htmlFor="password">PW</label>
           <Input
             onChange={inputChangeHandler}
-            value={loginInput.password}
+            value={password}
             name="password"
             id="password"
             type="password"
@@ -67,6 +86,7 @@ const SignInPage = () => {
           isFullWidth
           size="large"
           height={'64px'}
+          disabled={!isValid.isEmail || !isValid.isPassword}
           backgroundColor={theme.color.brand}
         >
           <S.FontBox>로그인</S.FontBox>
