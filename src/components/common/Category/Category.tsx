@@ -22,8 +22,6 @@ export type subOption = {
 const Category = ({ icon, title, optionTitle, options }: CategoryBoxProps) => {
   const [isClicked, setIsClicked] = useState(false);
 
-  const _click = `click_${isClicked}`;
-
   const clickHandle = () => {
     setIsClicked((prevIsClicked) => !prevIsClicked);
     if (options && options.length > 0 && options[0].onclick) {
@@ -34,7 +32,9 @@ const Category = ({ icon, title, optionTitle, options }: CategoryBoxProps) => {
   return (
     <>
       <S.Category
-        className={cx(_click)}
+        className={cx({
+          ['active']: isClicked,
+        })}
         onClick={() => {
           clickHandle();
         }}
@@ -43,7 +43,13 @@ const Category = ({ icon, title, optionTitle, options }: CategoryBoxProps) => {
           <div className="category_icon">
             {isClicked ? <Icon name={icon} color="green" /> : <Icon name={icon} color="black" />}
           </div>
-          <div className={cx(_click, 'category_title')}>{title}</div>
+          <div
+            className={cx('category_title', {
+              ['active']: isClicked,
+            })}
+          >
+            {title}
+          </div>
         </div>
         <div className="right">
           <div className="category_arrow">
