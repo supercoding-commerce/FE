@@ -89,7 +89,7 @@ const SignInPage = () => {
           disabled={!isValid.isEmail || !isValid.isPassword}
           backgroundColor={theme.color.brand}
         >
-          <S.FontBox>로그인</S.FontBox>
+          로그인
         </Button>
       </S.SignInForm>
       <S.OrBox>
