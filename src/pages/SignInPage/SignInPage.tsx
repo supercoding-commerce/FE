@@ -3,21 +3,26 @@ import { useState } from 'react';
 import Button from '@/components/common/Button/Button';
 import Icon from '@/components/common/Icon';
 import { Input } from '@/components/common/Input/Input';
+import useInputs from '@/hooks/useInputs';
 import * as S from '@/pages/SignInPage/SignInPage.styles';
 import { theme } from '@/styles/theme';
 
 const SignInPage = () => {
-  const [loginInput, setLoginInput] = useState({
+  const { form: loginInput, handleChange: inputChangeHandler } = useInputs({
     email: '',
     password: '',
   });
+  // const [loginInput, setLoginInput] = useState({
+  //   email: '',
+  //   password: '',
+  // });
 
-  const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginInput({
-      ...loginInput,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setLoginInput({
+  //     ...loginInput,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
   const kakaoLogin = () => {
     console.log('카카오 로그인 링크');
   };
