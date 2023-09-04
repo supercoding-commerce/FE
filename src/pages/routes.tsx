@@ -5,6 +5,9 @@ import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import Home from '@/pages/Home/Home.tsx';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
+import SignInPage from '@/pages/SignInPage/SignInPage';
+import SignUpPage from '@/pages/SignUpPage/SignUpPage';
+import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
 
 // GYU-TODO: DELETE
 function TestCompoennt() {
@@ -35,23 +38,19 @@ export const router = createBrowserRouter([
       // 회원가입 / 로그인
       {
         path: '/signup',
-        element: <TestCompoennt />,
+        element: <SignUpPage />,
       },
       {
         path: '/signup/seller',
-        element: <TestCompoennt />,
+        element: <SignUpUserPage />,
       },
       {
         path: '/signup/buyer',
-        element: <TestCompoennt />,
+        element: <SignUpUserPage />,
       },
       {
         path: '/signin',
-        element: <TestCompoennt />,
-      },
-      {
-        path: '/signup',
-        element: <TestCompoennt />,
+        element: <SignInPage />,
       },
 
       // 마이페이지 및 결제 등
