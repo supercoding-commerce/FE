@@ -7,15 +7,17 @@ import { ThumbnailTitle } from './ImageUploader.styles.tsx';
 type ImageUploaderProps = {
   images: File[];
   setImages: Dispatch<SetStateAction<File[]>>;
+  /** 등록할 수 있는 최대 이미지 수 */
+  max?: number;
 };
-export function ImageUploader({ images, setImages }: ImageUploaderProps) {
+export function ImageUploader({ images, setImages, max = 1 }: ImageUploaderProps) {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     const enrolledImageCount = images.length || 0;
     const addedImageCount = files?.length || 0;
 
-    if (enrolledImageCount + addedImageCount > 5) {
-      alert('이미지는 최대 5개만 가능합니다.');
+    if (enrolledImageCount + addedImageCount > max) {
+      alert(`이미지는 최대 ${max}개만 가능합니다.`);
       return;
     }
 
@@ -39,7 +41,9 @@ export function ImageUploader({ images, setImages }: ImageUploaderProps) {
       />
       <S.ImageLabel htmlFor="inpuit-upload">
         <Icon name="IconCamera" size={50} />
-        <p>{images?.length || 0}/5</p>
+        <p>
+          {images?.length || 0} / {max}
+        </p>
       </S.ImageLabel>
 
       <S.ImagePreviewWrapper>

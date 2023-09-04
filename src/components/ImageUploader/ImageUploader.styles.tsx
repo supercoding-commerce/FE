@@ -5,7 +5,7 @@ import { theme } from '@/styles/theme.ts';
 
 export const ImageUploadWrapper = styled.div`
   display: flex;
-  padding: 1rem;
+  padding: 1rem 0;
   gap: 1rem;
 `;
 
