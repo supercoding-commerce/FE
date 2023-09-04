@@ -1,4 +1,4 @@
-import Category, { CategoryBoxProps } from '@/components/common/Category/Category';
+import Category, { CategoryProps } from '@/components/common/Category/Category';
 
 const CategoryTest = () => {
   const test = () => {
@@ -6,34 +6,35 @@ const CategoryTest = () => {
     alert('되나용?');
   };
 
-  const topOptions: CategoryBoxProps[] = [
+  const topOptions: CategoryProps[] = [
     {
       icon: 'IconBag',
       title: 'bag',
       /** 이렇게 함수로 로직을 전달해주셔도 될 것 같습니다. */
-      options: [{ onclick: test }],
-      optionTitle: [
+      // options: [{ onclick: test }],
+      onClick: test,
+      options: [
         {
           icon: 'IconPaper',
           title: 'paper',
-          subOptions: [{ onclick: () => alert('IconPaper') }],
+          onClick: () => alert('IconPaper'),
         },
         {
           icon: 'IconCreditCard',
           title: 'creditCard',
-          subOptions: [{ onclick: () => alert('IconCreditCard') }],
+          onClick: () => alert('IconCreditCard'),
         },
       ],
     },
     {
       icon: 'IconHeart',
       title: 'heart',
-      options: [{ onclick: () => alert('IconBag') }],
-      optionTitle: [
+      onClick: () => alert('IconBag'),
+      options: [
         {
           icon: 'IconClear',
           title: 'clear',
-          subOptions: [{ onclick: () => alert('IconClear') }],
+          onClick: () => alert('IconClear'),
         },
       ],
     },
@@ -47,7 +48,7 @@ const CategoryTest = () => {
             key={idx}
             icon={item.icon}
             title={item.title}
-            optionTitle={item.optionTitle}
+            onClick={item.onClick}
             options={item.options}
           />
         );

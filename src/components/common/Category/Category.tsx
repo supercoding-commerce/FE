@@ -4,32 +4,25 @@ import { cx } from '@emotion/css';
 import Icon, { IconNameType } from '@/components/common/Icon';
 import * as S from './Category.styles';
 
-export type CategoryBoxProps = {
+export type CategoryProps = {
   icon: IconNameType;
   title: string;
   onClick?: () => void;
-  optionTitle?: subOption[];
-
-  /** { onclick?: () => void }[] : options 배열의 각 요소가 onclick 함수를 가질 수 있지만, onclick이 없는 경우도 허용 */
-  // options?: { onclick?: () => void }[] | undefined;
+  options?: Option[];
 };
 
-export type subOption = {
+export type Option = {
   icon: IconNameType;
   title: string;
-  subOptions?: { onclick?: () => void }[] | undefined;
+  onClick?: () => void;
 };
 
-/** 상위 카테고리에서 하위 카테고리 여는 로직 이외의 기능이 필요하다면 말씀해주세요*/
-const Category = ({ icon, title, optionTitle, options, onClick }: CategoryBoxProps) => {
+const Category = ({ icon, title, options, onClick }: CategoryProps) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const clickHandle = () => {
     setIsClicked((prevIsClicked) => !prevIsClicked);
     onClick && onClick();
-    // if (options && options.length > 0 && options[0].onclick) {
-    //   options[0].onclick();
-    // }
   };
 
   return (
@@ -62,32 +55,29 @@ const Category = ({ icon, title, optionTitle, options, onClick }: CategoryBoxPro
           </div>
         </div>
       </S.Category>
-      {isClicked && optionTitle !== undefined
-        ? optionTitle?.map((item, idx) => {
-            return (
-              <S.CategoryOption
-                onClick={() => {
-                  if (item.subOptions && item.subOptions.length > 0 && item.subOptions[0].onclick) {
-                    item.subOptions[0].onclick();
-                  }
-                }}
-                key={idx}
-              >
-                <div className="left">
-                  <div className="category_icon">
-                    <Icon name={item.icon} color="black" />
-                  </div>
-                  <div className="category_title">{item.title}</div>
+      {isClicked &&
+        options?.map((item, idx) => {
+          return (
+            <S.CategoryOption
+              onClick={() => {
+                item.onClick && item.onClick();
+              }}
+              key={idx}
+            >
+              <div className="left">
+                <div className="category_icon">
+                  <Icon name={item.icon} color="black" />
                 </div>
-                <div className="right">
-                  <div className="category_arrow">
-                    <Icon name="IconArrowRight" color="black" />
-                  </div>
+                <div className="category_title">{item.title}</div>
+              </div>
+              <div className="right">
+                <div className="category_arrow">
+                  <Icon name="IconArrowRight" color="black" />
                 </div>
-              </S.CategoryOption>
-            );
-          })
-        : null}
+              </div>
+            </S.CategoryOption>
+          );
+        })}
     </>
   );
 };
