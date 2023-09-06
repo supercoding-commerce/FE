@@ -4,9 +4,14 @@ import Button from '@/components/common/Button/Button';
 import Icon from '@/components/common/Icon';
 import { Input } from '@/components/common/Input/Input';
 import useInputs from '@/hooks/useInputs';
-import useValid from '@/hooks/useValid';
 import * as S from '@/pages/SignInPage/SignInPage.styles';
 import { theme } from '@/styles/theme';
+import { validateEmail, validatePassword } from '@/utils/validate';
+
+export interface userInfoProps {
+  email: string;
+  password: string;
+}
 
 const SignInPage = () => {
   const navigate = useNavigate();
@@ -21,26 +26,23 @@ const SignInPage = () => {
     password: 'qwer1234',
   };
 
-  const {
-    form: { email, password },
-    onChange: inputChangeHandler,
-  } = useInputs({
+  const { form, onChange: inputChangeHandler } = useInputs<userInfoProps>({
     email: '',
     password: '',
   });
 
-  const { isValid } = useValid({ email, password });
+  const isValid = validateEmail(form.email) && validatePassword(form.password);
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 임시 로그인 성공 테스트 - 삭제 예정
-    if (seller.email === email && seller.password === password) {
+    if (seller.email === form.email && seller.password === form.password) {
       alert('판매자 로그인 성공');
       navigate('/');
       return;
     }
 
-    if (buyer.email === email && buyer.password === password) {
+    if (buyer.email === form.email && buyer.password === form.password) {
       alert('구매자 로그인 성공');
       navigate('/');
       return;
@@ -59,7 +61,7 @@ const SignInPage = () => {
           <label htmlFor="email">ID</label>
           <Input
             onChange={inputChangeHandler}
-            value={email}
+            value={form.email}
             name="email"
             id="email"
             type="email"
@@ -72,7 +74,7 @@ const SignInPage = () => {
           <label htmlFor="password">PW</label>
           <Input
             onChange={inputChangeHandler}
-            value={password}
+            value={form.password}
             name="password"
             id="password"
             type="password"
@@ -86,7 +88,7 @@ const SignInPage = () => {
           isFullWidth
           size="large"
           height={'64px'}
-          disabled={!isValid.isEmail || !isValid.isPassword}
+          disabled={!isValid}
           backgroundColor={theme.color.brand}
         >
           로그인

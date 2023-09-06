@@ -1,16 +1,7 @@
 import { useState } from 'react';
 
-import useValid from '@/hooks/useValid';
-
-export interface userInfoProps {
-  email: string;
-  password: string;
-}
-
-const useInputs = (initialValue: userInfoProps) => {
+const useInputs = <T>(initialValue: T) => {
   const [form, setForm] = useState(initialValue);
-
-  useValid(form);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
