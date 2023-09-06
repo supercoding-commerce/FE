@@ -1,10 +1,10 @@
 import { Outlet, useLocation } from 'react-router-dom';
 
 import Footer from '@/components/common/Footer/Footer.tsx';
+import CategoryHeader from '@/components/common/Header/CategoryHeader.tsx';
 import { Header } from '@/components/common/Header/Header.tsx';
 import { RoutePath } from '@/pages/routes.tsx';
 import * as S from './DefaultLayout.styles.tsx';
-
 const ONLY_DESKTOP_URL: RoutePath[] = ['/new/product', '/update/product'];
 
 export function DefaultLayout() {
@@ -18,6 +18,7 @@ export function DefaultLayout() {
   return (
     <S.DefaultLayoutWrapper onlyDesktop={onlyDesktop}>
       <Header />
+      <CategoryHeader />
       <Outlet />
       <Footer />
     </S.DefaultLayoutWrapper>

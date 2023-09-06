@@ -47,6 +47,12 @@ export const theme = {
       font-weight: 500;
       line-height: normal;
     `,
+    body0ExtraBold: css`
+      font-family: SUITE;
+      font-size: 18px;
+      font-weight: 800;
+      line-height: normal;
+    `,
     body1: css`
       font-family: SUITE;
       font-size: 16px;
@@ -59,6 +65,13 @@ export const theme = {
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
+      line-height: normal;
+    `,
+    body2Bold: css`
+      font-family: SUITE;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
       line-height: normal;
     `,
     body3: css`
