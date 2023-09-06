@@ -14,3 +14,5 @@ export { ReactComponent as IconPaper } from './Paper.svg';
 export { ReactComponent as IconTicket } from './Ticket.svg';
 export { ReactComponent as IconBox } from './Box.svg';
 export { ReactComponent as IconKakao } from './SymbolKakao.svg';
+export { ReactComponent as IconAdd } from './Add.svg';
+export { ReactComponent as IconAirplane } from './Airplane.svg';
