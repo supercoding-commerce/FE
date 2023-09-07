@@ -61,9 +61,9 @@ export const OptionUl = styled.ul`
     align-items: center;
     padding: 0 15px;
     text-overflow: ellipsis;
+    background-color: white;
     cursor: pointer;
     &:hover {
-      /* background-color: #f1f1f1; */
       background-color: ${theme.color.black};
       color: ${theme.color.brand};
     }
