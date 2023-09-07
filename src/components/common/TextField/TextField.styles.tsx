@@ -4,7 +4,7 @@ import { theme } from '@/styles/theme';
 
 export const TextField = styled.div`
   width: 100%;
-  margin: 5px 0;
+  margin-top: 20px;
 `;
 
 export const TextFieldLabel = styled.div`
