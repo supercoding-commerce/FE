@@ -1,27 +1,45 @@
-// default
-// required
-//margin r/l 30px
-
 import { ReactNode } from 'react';
 
+import { theme } from '@/styles/theme';
 import * as S from './TextField.styles';
 
 interface TextFieldProps {
+  labelId: string;
   label: ReactNode;
-  placeholder?: string;
-  isError?: boolean;
-  isRequired?: boolean;
+  children?: ReactNode;
+  error?: boolean;
+  required?: boolean;
+  rightSlot?: ReactNode;
+  help?: ReactNode;
 }
 
-const TextField = ({ label, isError = false, isRequired = false }: TextFieldProps) => {
+const TextField = ({
+  labelId,
+  label,
+  error = false,
+  required = false,
+  children,
+  rightSlot,
+  help,
+}: TextFieldProps) => {
+  const errorStyle = error ? { color: `${theme.color.pink}` } : {};
   return (
-    <>
-      <S.TextField>
-        <S.Label>
-          {label}
-          {isRequired && <S.Required> *</S.Required>}
-        </S.Label>
-      </S.TextField>
-    </>
+    <S.TextField>
+      <S.TextFieldLabel>
+        <S.LabelWrapper>
+          <S.Label htmlFor={labelId} style={errorStyle}>
+            {label}
+          </S.Label>
+          {help && <S.Help>{help}</S.Help>}
+        </S.LabelWrapper>
+        {required && <S.Required>*</S.Required>}
+      </S.TextFieldLabel>
+      <S.ChildrenWrapper>
+        {children}
+        {rightSlot && <S.RightSlot>{rightSlot}</S.RightSlot>}
+      </S.ChildrenWrapper>
+    </S.TextField>
   );
 };
+
+export default TextField;
