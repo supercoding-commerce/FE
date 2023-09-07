@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import Button from '@/components/common/Button/Button';
-import DefaultHeader from '@/components/common/Header/DefaultHeader';
+// import DefaultHeader from '@/components/common/Header/DefaultHeader';
 import { CartItem } from './CartItem';
 import * as S from './CartPage.styles';
 
@@ -55,9 +55,9 @@ export function CartPage() {
     );
   };
 
-  const optionChangeHandler = (index: number, newOpt: string) => {
+  const optionChangeHandler = (index: number, newOption: string) => {
     setCartItems(
-      cartItems.map((item, idx) => (idx === index ? { ...item, option: newOpt } : item)),
+      cartItems.map((item, idx) => (idx === index ? { ...item, option: newOption } : item)),
     );
   };
 
@@ -87,7 +87,7 @@ export function CartPage() {
 
   return (
     <S.CartPageContainer>
-      <DefaultHeader text={'Cart'} />
+      {/* <DefaultHeader text={'Cart'} /> */}
       <S.AllDelete>
         <p onClick={handleDeleteAll}>전체삭제</p>
       </S.AllDelete>
@@ -99,16 +99,23 @@ export function CartPage() {
       />
       <S.PriceWrapper>
         <S.AllPrice>
-          <S.AllPriceTitle>총 상품 금액</S.AllPriceTitle>
-          <S.AllPriceValue>{totalPrice.toLocaleString()}원</S.AllPriceValue>
+          <p>총 상품 금액</p>
+          <p>{totalPrice.toLocaleString()}원</p>
         </S.AllPrice>
         <S.DeliveryPrice>
-          <S.DeliveryPriceTitle>배송비</S.DeliveryPriceTitle>
-          <S.DeliveryPriceValue>{deliveryPrice}</S.DeliveryPriceValue>
+          <p>배송비</p>
+          <p>{deliveryPrice}</p>
         </S.DeliveryPrice>
         <S.Coupon>
-          <S.CouponTitle>쿠폰</S.CouponTitle>
-          <Button variant="contained" size="small" color="#6A8DFF">
+          <p>쿠폰</p>
+          <Button
+            variant="outlined"
+            size="xsmall"
+            width="50px"
+            color="#6A8DFF"
+            isCircle={false}
+            isFullWidth={false}
+          >
             쿠폰
           </Button>
         </S.Coupon>
@@ -118,7 +125,7 @@ export function CartPage() {
           <S.FinalPriceTitle>총 결제 금액</S.FinalPriceTitle>
           <S.FinalPriceValue>{finalTotalPrice.toLocaleString()}원</S.FinalPriceValue>
         </S.FinalPrice>
-        <Button variant="main" size="large">
+        <Button variant="main" size="large" isFullWidth>
           구매하기({cartItems.length})
         </Button>
       </S.GoToPay>

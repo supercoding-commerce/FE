@@ -85,6 +85,7 @@ export const ItemOptionSelectContainer = styled.div`
 `;
 export const ItemOptionSelect = styled.div`
   width: 365px;
+  z-index: 1;
 `;
 
 export const ItemTotalPrice = styled.div`
