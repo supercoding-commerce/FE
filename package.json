@@ -35,7 +35,6 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react-swc": "^3.3.2",
-    "add": "^2.0.6",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
@@ -45,7 +44,6 @@
     "prettier": "^3.0.2",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
-    "vite-tsconfig-paths": "^4.2.0",
-    "yarn": "^1.22.19"
+    "vite-tsconfig-paths": "^4.2.0"
   }
 }
