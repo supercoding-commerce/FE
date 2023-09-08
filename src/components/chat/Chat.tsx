@@ -14,6 +14,7 @@ const stompClient = new Client({
   brokerURL: 'ws://52.79.195.235:8080/chat',
 });
 
+const role = 'user';
 const Chat = () => {
   // const [data, setData] = useState<Message>();
   // const [isConnect, setIsConnect] = useState<boolean>(false);
@@ -22,7 +23,21 @@ const Chat = () => {
   const seller = { sellerId: 2, shopName: '테스트판매자2' };
   const user = { userId: 3, userName: '테스트유저3' };
   const product = { productId: 4, productName: '테스트상품4' };
-  // const customRoomId = createCustomRoomId(seller.sellerId, product.productId, user.userId);
+  const customRoomId = createCustomRoomId(seller.sellerId, product.productId, user.userId);
+
+  /** createCustomRoomId() : 소켓 방 열때 필요한 roomId 조합생성 */
+  function createCustomRoomId(sellerId: number, productId: number, userId: number) {
+    // userId, sellerId, productId를 6자리 문자열로 변환
+    const userIdStr = String(userId).padStart(6, '0');
+    const sellerIdStr = String(sellerId).padStart(6, '0');
+    const productIdStr = String(productId).padStart(6, '0');
+
+    // customRoomId를 조합
+    const customRoomId = sellerIdStr + productIdStr + userIdStr;
+    console.log(customRoomId);
+
+    return customRoomId;
+  }
 
   const handleSendMessage = () => {
     stompClient.publish({
@@ -47,9 +62,26 @@ const Chat = () => {
     });
   };
 
+  // input 보내기 버튼 누를때(onClick)
+  const sendMessage = (text: string) => {
+    const messageContent = text;
+    if (messageContent && stompClient) {
+      const chatMessage = {
+        customRoomId: customRoomId,
+        sender: role === 'user' ? user.userName : seller.shopName,
+        content: messageContent,
+        type: 'CHAT',
+      };
+      stompClient.publish({
+        destination: `/app/chat.sendMessage/${seller.sellerId}/${product.productId}/${user.userId}`,
+        body: JSON.stringify(chatMessage),
+      });
+    }
+  };
+
   useEffect(() => {
     const joinMessage = {
-      // customRoomId : customRoomId,
+      customRoomId: customRoomId,
       shopName: seller.shopName,
       userName: user.userName,
       role: 'user', //웹소켓 세션 연결이 브라우저마다 각자 독립적으로 메모리를 다루기 때문에 //role : seller or user
@@ -110,7 +142,7 @@ const Chat = () => {
       <ChatBody /> */}
       <ChatDetailHeader />
       <ChatDetailBody />
-      <ChatSend />
+      <ChatSend sendMessage={sendMessage} />
       <button onClick={handleSendMessage}>상담버튼</button>
       <button onClick={handleLeave}>나가기</button>
     </S.Chat>

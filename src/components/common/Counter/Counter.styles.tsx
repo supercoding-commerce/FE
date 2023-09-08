@@ -8,7 +8,7 @@ export const Counter = styled.span`
   height: 34px;
   border: 1px solid black;
   border-radius: 4px;
-  background-color: #e7e7e7;
+  background-color: ${theme.color.backgroundColor};
 `;
 
 export const MinusBtn = styled.div`
