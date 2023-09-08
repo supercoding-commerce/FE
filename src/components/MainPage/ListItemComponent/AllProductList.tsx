@@ -1,12 +1,12 @@
 import * as S from '../ListItemComponent/AllProductList.styles';
-
+//TODO: *추후 추가 할 import*
 // import React, { useEffect } from 'react';
 // import { useRecoilState } from 'recoil';
 
 // import { productListState } from './recoilState';
 
 const AllProductList: React.FC = () => {
-  //  *백엔드와 통신 할때 로직*
+  // TODO:*백엔드와 통신 할때 로직*
 
   //   const [productList, setProductList] = useRecoilState(productListState);
   //   interface Product {
@@ -64,7 +64,7 @@ const AllProductList: React.FC = () => {
           <S.DetailDescription>Tension나일론 밴딩...</S.DetailDescription>
         </S.Description>
       </S.ProductContainer>
-      {/* 백엔드 통신 시 변경 할 로직
+      {/* TODO:백엔드 통신 시 변경 할 로직
         {productList.map((product) => (
           <li key={product.id}>
             <img src={product.imageUrl} alt={product.productName} />

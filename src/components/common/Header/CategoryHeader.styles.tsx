@@ -9,4 +9,5 @@ export const NavBar = styled.nav`
   height: 46px;
   line-height: 46px;
   background-color: black;
+  border-bottom: 1px solid white;
 `;

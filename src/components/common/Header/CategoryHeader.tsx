@@ -13,7 +13,7 @@ const CategoryHeader = () => {
     <>
       <S.NavBar>
         <StyledLink to="/">Home</StyledLink>
-        <StyledLink to="">Category</StyledLink>
+        <StyledLink to="/category">Category</StyledLink>
         <StyledLink to="">Product</StyledLink>
       </S.NavBar>
     </>
