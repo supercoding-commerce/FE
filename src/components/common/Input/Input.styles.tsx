@@ -5,7 +5,6 @@ import styled from '@emotion/styled';
 import { theme } from '@/styles/theme';
 
 const inputWrapperStyle = css`
-  margin: 15px;
   padding: 10px;
   display: inline-flex;
   align-items: center;
@@ -48,7 +47,7 @@ const inputWrapperStyle = css`
   }
 
   &.full-width {
-    width: 100%;
+    width: 100% !important;
   }
 
   &.error {

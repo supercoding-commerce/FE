@@ -27,7 +27,7 @@ export function Input({
   const _variant = `variant_${variant}`;
 
   return (
-    <div>
+    <>
       <S.InputWrapper
         className={cx(_size, _variant, {
           ['full-width']: isFullWidth,
@@ -39,6 +39,6 @@ export function Input({
         {rightSlot}
       </S.InputWrapper>
       {error && errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
-    </div>
+    </>
   );
 }
