@@ -35,11 +35,11 @@ export function ImageUploader({ images, setImages, max = 1 }: ImageUploaderProps
       <S.ImageInput
         type="file"
         accept="image/*"
-        id="inpuit-upload"
+        id="image-upload"
         multiple
         onChange={handleChange}
       />
-      <S.ImageLabel htmlFor="inpuit-upload">
+      <S.ImageLabel htmlFor="image-upload">
         <Icon name="IconCamera" size={50} />
         <p>
           {images?.length || 0} / {max}

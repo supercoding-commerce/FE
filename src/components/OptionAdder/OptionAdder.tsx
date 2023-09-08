@@ -1,5 +1,6 @@
 import { Dispatch, FormEvent, SetStateAction } from 'react';
 
+import { Input } from '@/components/common/Input/Input.tsx';
 import { OptionItem } from '@/components/OptionItem/OptionItem.tsx';
 import { useInput } from '@/hooks/useInput.ts';
 import * as S from './OptionAdder.styles';
@@ -35,15 +36,13 @@ export function OptionAdder({ options, setOptions }: OptionAdderProps) {
 
   return (
     <S.OptionAdderWrapper onSubmit={handleSubmit}>
-      <label htmlFor="">
-        <span>컬러 / 사이즈 등록</span>
-        <input
-          type="text"
-          placeholder={'컬러 / 사이즈 형태로 지정 후 Enter 를 입려해주세요'}
-          value={value}
-          onChange={onChange}
-        />
-      </label>
+      <Input
+        type="text"
+        placeholder={'컬러 / 사이즈 형태로 지정 후 Enter 를 입려해주세요'}
+        value={value}
+        onChange={onChange}
+        isFullWidth
+      />
       <S.OptionList>
         {options.map((option, index) => (
           <OptionItem key={option} option={option} onClick={() => handleDelete(index)} />
