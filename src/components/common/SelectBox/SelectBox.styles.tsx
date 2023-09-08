@@ -50,6 +50,7 @@ export const OptionBox = styled.div`
 `;
 
 export const OptionUl = styled.ul`
+  position: relative;
   width: 100%;
   height: auto;
   transition: all ease-in-out 1s;
