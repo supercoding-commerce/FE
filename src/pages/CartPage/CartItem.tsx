@@ -41,7 +41,9 @@ export function CartItem({ cartItems, onDelete, onQuantityChange, onOptionChange
                 </S.ItemNameWrapper>
                 <S.PriceAndCount>
                   <S.ItemSaleContainer>
-                    <S.ItemOriginalPrice>{item.price.toLocaleString()}원</S.ItemOriginalPrice>
+                    {item.salePercent === 0 ? null : (
+                      <S.ItemOriginalPrice>{item.price.toLocaleString()}원</S.ItemOriginalPrice>
+                    )}
                     <S.ItemSalePrice>
                       {(item.price - item.price * item.salePercent).toLocaleString()}원
                     </S.ItemSalePrice>
