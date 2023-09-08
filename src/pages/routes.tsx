@@ -56,7 +56,7 @@ export const router = createBrowserRouter([
       // 마이페이지 및 결제 등
       {
         path: '/mycart',
-        element: <TestCompoennt />,
+        element: <CartPage />,
       },
       {
         path: '/pay',
@@ -87,10 +87,6 @@ export const router = createBrowserRouter([
       {
         path: 'test',
         element: <Test />,
-      },
-      {
-        path: 'cart',
-        element: <CartPage />,
       },
     ],
   },

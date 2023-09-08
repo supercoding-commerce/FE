@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import Button from '@/components/common/Button/Button';
-// import DefaultHeader from '@/components/common/Header/DefaultHeader';
 import { CartItem } from './CartItem';
 import * as S from './CartPage.styles';
 
@@ -10,8 +9,8 @@ type CartItem = {
   mainImage: string;
   name: string;
   option: string;
-  price1: number;
-  price2: number;
+  price: number;
+  salePercent: number;
   maxQuantity: number;
   quantity: number;
   optionList: string[];
@@ -25,8 +24,8 @@ export function CartPage() {
         'https://cdn.eqlstore.com/goods/EQBR/23/08/29/GPEB23082930667_0_ORGINL_1693900884820.jpg?RS=389',
       name: 'Gothic Stalk Jacquard Knit',
       option: 'Cocoa(M)',
-      price1: 109000,
-      price2: 98100,
+      price: 109000,
+      salePercent: 0.1,
       maxQuantity: 7,
       quantity: 1,
       optionList: ['Cocoa(M)', 'Cocoa(L)', 'Khaki(M)', 'Khaki(L)', 'Cream(M)', 'Cream(L)'],
@@ -37,8 +36,8 @@ export function CartPage() {
         'https://cdn.eqlstore.com/goods/EQBR/23/08/29/GQ0G23082930545_0_ORGINL_1693299492553.jpg?RS=389',
       name: 'Slit Layered Knit Bustier',
       option: 'Wine Brown(FREE)',
-      price1: 89000,
-      price2: 76900,
+      price: 89000,
+      salePercent: 0.15,
       maxQuantity: 100,
       quantity: 1,
       optionList: [
@@ -47,6 +46,18 @@ export function CartPage() {
         'Charcoal Gray(FREE)',
         'Light Lavender(FREE)',
       ],
+    },
+    {
+      brand: 'AMOMENTO WOMEN',
+      mainImage:
+        'https://cdn.eqlstore.com/goods/EQBR/23/08/29/GM0023082930872_0_ORGINL_1693298972937.jpg?RS=1300',
+      name: 'CROCHET KNIT DRESS',
+      option: 'Black(OS)',
+      price: 229000,
+      salePercent: 0,
+      maxQuantity: 14,
+      quantity: 2,
+      optionList: ['Black(OS)', 'Beige(OS)'],
     },
   ]);
   const quantityChangeHandler = (index: number, newQuantity: number) => {
@@ -69,7 +80,10 @@ export function CartPage() {
     setCartItems([]);
   };
 
-  const totalPrice = cartItems.reduce((total, item) => total + item.price2 * item.quantity, 0);
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + (item.price - item.price * item.salePercent) * item.quantity,
+    0,
+  );
 
   let deliveryPrice;
   if (totalPrice === 0) {
@@ -87,7 +101,6 @@ export function CartPage() {
 
   return (
     <S.CartPageContainer>
-      {/* <DefaultHeader text={'Cart'} /> */}
       <S.AllDelete>
         <p onClick={handleDeleteAll}>전체삭제</p>
       </S.AllDelete>

@@ -8,6 +8,7 @@ export const CartItemContainer = styled.div`
 `;
 export const CartItem = styled.div`
   width: 100%;
+  height: 300px;
 `;
 export const CartItemHeader = styled.span`
   display: flex;
@@ -69,12 +70,13 @@ export const ItemOriginalPrice = styled.div`
 
 export const ItemSalePrice = styled.div`
   font: ${theme.font.body1};
+  width: 80px;
 `;
 
 export const CounterContainer = styled.div`
   flex-direction: column;
   display: flex;
-  margin-left: 45px;
+  margin-left: 30px;
 `;
 
 export const ItemOptionSelectContainer = styled.div`

@@ -4,8 +4,12 @@ import { theme } from '@/styles/theme';
 
 export const CartPageContainer = styled.div`
   width: 420px;
-  height: 100%;
+  height: calc(100vh - 60px - 110px);
   background-color: ${theme.color.backgroundColor};
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const AllDelete = styled.div`
@@ -32,7 +36,6 @@ export const PriceWrapper = styled.div`
   align-items: center;
   border-bottom: 1px solid #d8d8d8;
   padding: 0 30px 0 30px;
-  margin-bottom: 300px;
 `;
 
 export const AllPrice = styled.div`
@@ -48,11 +51,13 @@ export const Coupon = styled(AllPrice)``;
 
 export const GoToPay = styled.div`
   background-color: ${theme.color.backgroundColor};
+  border-top: 1px solid #efefef;
   position: fixed;
   bottom: 0;
   width: 420px;
   height: 110px;
   padding: 0 12px 0 12px;
+  z-index: 2;
 `;
 
 export const FinalPrice = styled.span`

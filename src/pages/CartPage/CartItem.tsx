@@ -8,8 +8,8 @@ type CartItemType = {
   mainImage: string;
   name: string;
   option: string;
-  price1: number;
-  price2: number;
+  price: number;
+  salePercent: number;
   maxQuantity: number;
   quantity: number;
   optionList: string[];
@@ -41,8 +41,10 @@ export function CartItem({ cartItems, onDelete, onQuantityChange, onOptionChange
                 </S.ItemNameWrapper>
                 <S.PriceAndCount>
                   <S.ItemSaleContainer>
-                    <S.ItemOriginalPrice>{item.price1.toLocaleString()}원</S.ItemOriginalPrice>
-                    <S.ItemSalePrice>{item.price2.toLocaleString()}원</S.ItemSalePrice>
+                    <S.ItemOriginalPrice>{item.price.toLocaleString()}원</S.ItemOriginalPrice>
+                    <S.ItemSalePrice>
+                      {(item.price - item.price * item.salePercent).toLocaleString()}원
+                    </S.ItemSalePrice>
                   </S.ItemSaleContainer>
                   <S.CounterContainer>
                     {onQuantityChange ? (
@@ -73,7 +75,7 @@ export function CartItem({ cartItems, onDelete, onQuantityChange, onOptionChange
           <S.ItemTotalPrice>
             <S.ItemTotalPriceTitle>상품 총액</S.ItemTotalPriceTitle>
             <S.ItemTotalPriceValue>
-              {(item.price2 * item.quantity).toLocaleString()}원
+              {((item.price - item.price * item.salePercent) * item.quantity).toLocaleString()}원
             </S.ItemTotalPriceValue>
           </S.ItemTotalPrice>
         </S.CartItem>
