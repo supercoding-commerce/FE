@@ -10,8 +10,7 @@ export const DefaultLayoutWrapper = styled.main<{ onlyDesktop: boolean }>`
   position: relative;
 
   // 구현하다가 막히면 이 부분 수정해도됨
-  min-height: 100vh;
-  height: 100%;
+  height: 100vh;
 
   ${({ onlyDesktop }) =>
     onlyDesktop &&
