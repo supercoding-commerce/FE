@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-// import * as SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 
 import ChatDetailBody from '@/components/chat/chatDetail/ChatDetailBody';
@@ -9,17 +8,13 @@ import ChatSend from '@/components/chat/chatDetail/ChatSend';
 // import ChatHeader from '@/components/chat/chatList/ChatHeader';
 import * as S from './Chat.styles';
 
-// 서버랑 연결할 클라이언트 객체 생성
+/** stompClient() : 서버랑 연결할 클라이언트 객체 생성 */
 const stompClient = new Client({
   brokerURL: 'ws://52.79.195.235:8080/chat',
 });
 
 const role = 'user';
 const Chat = () => {
-  // const [data, setData] = useState<Message>();
-  // const [isConnect, setIsConnect] = useState<boolean>(false);
-  // 상태 또는 ref 로
-
   const seller = { sellerId: 2, shopName: '테스트판매자2' };
   const user = { userId: 3, userName: '테스트유저3' };
   const product = { productId: 4, productName: '테스트상품4' };
@@ -27,42 +22,16 @@ const Chat = () => {
 
   /** createCustomRoomId() : 소켓 방 열때 필요한 roomId 조합생성 */
   function createCustomRoomId(sellerId: number, productId: number, userId: number) {
-    // userId, sellerId, productId를 6자리 문자열로 변환
     const userIdStr = String(userId).padStart(6, '0');
     const sellerIdStr = String(sellerId).padStart(6, '0');
     const productIdStr = String(productId).padStart(6, '0');
 
-    // customRoomId를 조합
     const customRoomId = sellerIdStr + productIdStr + userIdStr;
-    console.log(customRoomId);
 
     return customRoomId;
   }
 
-  const handleSendMessage = () => {
-    stompClient.publish({
-      destination: `/topic/${seller.sellerId}/${product.productId}/${user.userId}`,
-      body: JSON.stringify({
-        message: 'custom message',
-        shopName: seller.shopName,
-        userName: user.userName,
-        type: 'chat',
-      }),
-    });
-  };
-
-  const handleLeave = () => {
-    stompClient.publish({
-      destination: `/topic/${seller.sellerId}/${product.productId}/${user.userId}`,
-      body: JSON.stringify({
-        shopName: seller.shopName,
-        userName: user.userName,
-        type: 'LEAVE',
-      }),
-    });
-  };
-
-  // input 보내기 버튼 누를때(onClick)
+  /** sendMessage() : 유저가 상대방에게 메세지 보낼때 */
   const sendMessage = (text: string) => {
     const messageContent = text;
     if (messageContent && stompClient) {
@@ -79,16 +48,29 @@ const Chat = () => {
     }
   };
 
+  /** handleLeave() : 유저가 채팅방을 떠날 때 */
+  const handleLeave = () => {
+    stompClient.publish({
+      destination: `/topic/${seller.sellerId}/${product.productId}/${user.userId}`,
+      body: JSON.stringify({
+        shopName: seller.shopName,
+        userName: user.userName,
+        type: 'LEAVE',
+      }),
+    });
+  };
+
   useEffect(() => {
     const joinMessage = {
       customRoomId: customRoomId,
       shopName: seller.shopName,
       userName: user.userName,
-      role: 'user', //웹소켓 세션 연결이 브라우저마다 각자 독립적으로 메모리를 다루기 때문에 //role : seller or user
+      // role : seller or user (웹소켓 세션 연결이 브라우저마다 각자 독립적으로 메모리를 다루기 때문에)
+      role: 'user',
       type: 'JOIN',
     };
 
-    // 연결이 된 경우 어떻게 동작할지 정의 - 콜백함수 호출
+    // 연결이 된 경우 콜백함수 호출(어떻게 동작할지 정의)
     stompClient.onConnect = (frame) => {
       console.log('연결 되었습니다.', frame);
 
@@ -103,12 +85,12 @@ const Chat = () => {
           if (message.type === 'JOIN') {
             //
           } else if (message.type === 'LEAVE') {
-            // 방떠날때 연관된 로직...
+            // TODO: 방떠날때 연관된 로직...
           } else if (message.type === 'CHAT') {
-            // 메시지 수신과 관련된 로직
-            // 메세지 UI 그리기
+            // TODO: 메시지 수신과 관련된 로직
+            // TODO: 메세지 UI 그리기
           } else if (message.type === 'TERMINATE') {
-            // 유저, 셀러 전부 떠났을때
+            // TODO: 유저, 셀러 전부 떠났을때
           }
         },
       );
@@ -122,6 +104,7 @@ const Chat = () => {
 
     // 에러가 나오는 경우 어떻게 동작할지 정의 - 콜백함수 호출
     stompClient.onStompError = (frame) => {
+      // TODO: 어떻게 에러를 유저에게 안내해줄지 고민
       console.log('연결 실패', frame);
     };
 
@@ -143,7 +126,6 @@ const Chat = () => {
       <ChatDetailHeader />
       <ChatDetailBody />
       <ChatSend sendMessage={sendMessage} />
-      <button onClick={handleSendMessage}>상담버튼</button>
       <button onClick={handleLeave}>나가기</button>
     </S.Chat>
   );
