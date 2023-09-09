@@ -20,8 +20,8 @@ type ProductFormProps = {
   productForm: ProductFormType;
 };
 export function ProductForm({ productForm }: ProductFormProps) {
-  const [images, setImages] = useState<File[]>([]);
-  const [options, setOptions] = useState<string[]>([]);
+  const [images, setImages] = useState<File[]>(productForm.imageFiles || []);
+  const [options, setOptions] = useState<string[]>(productForm.options || []);
 
   const { form, onChange, onChangeForm } = useInputs<ProductFormType>(productForm);
 
