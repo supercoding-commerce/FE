@@ -1,6 +1,7 @@
 import { createBrowserRouter, useLocation } from 'react-router-dom';
 
 import Test from '@/components/Test/Test.tsx';
+import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import Home from '@/pages/Home/Home.tsx';
@@ -9,6 +10,7 @@ import { Payment } from '@/pages/Payment/Payment.tsx';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
+import { UpdateProduct } from '@/pages/UpdateProduct/UpdateProduct.tsx';
 
 // GYU-TODO: DELETE
 function TestCompoennt() {
@@ -69,45 +71,17 @@ export const router = createBrowserRouter([
       },
       {
         path: '/new/product',
-        element: (
-          <>
-            <span>new test</span>
-            <TestCompoennt />
-          </>
-        ),
+        element: <AddProduct />,
       },
       {
         path: '/update/product',
-        element: (
-          <>
-            <span>update test</span>
-            <TestCompoennt />
-          </>
-        ),
+        element: <UpdateProduct />,
       },
       {
         path: 'test',
         element: <Test />,
       },
     ],
-  },
-  {
-    path: '/new/product',
-    element: (
-      <>
-        <span>new test</span>
-        <TestCompoennt />
-      </>
-    ),
-  },
-  {
-    path: '/update/product',
-    element: (
-      <>
-        <span>update test</span>
-        <TestCompoennt />
-      </>
-    ),
   },
 ]);
 

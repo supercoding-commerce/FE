@@ -13,6 +13,7 @@ export { ReactComponent as IconHeart } from './Heart.svg';
 export { ReactComponent as IconPaper } from './Paper.svg';
 export { ReactComponent as IconTicket } from './Ticket.svg';
 export { ReactComponent as IconBox } from './Box.svg';
+export { ReactComponent as IconCamera } from './Cameta.svg';
 export { ReactComponent as IconKakao } from './SymbolKakao.svg';
 export { ReactComponent as IconX } from './X.svg';
 export { ReactComponent as IconAdd } from './Add.svg';
