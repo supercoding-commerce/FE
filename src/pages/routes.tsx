@@ -2,6 +2,7 @@ import { createBrowserRouter, useLocation } from 'react-router-dom';
 
 import Test from '@/components/Test/Test.tsx';
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
+import { CartPage } from '@/pages/CartPage/CartPage';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import Home from '@/pages/Home/Home.tsx';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
@@ -57,7 +58,7 @@ export const router = createBrowserRouter([
       // 마이페이지 및 결제 등
       {
         path: '/mycart',
-        element: <TestCompoennt />,
+        element: <CartPage />,
       },
       {
         path: '/pay',
