@@ -27,6 +27,7 @@ export const SelectedBox = styled.div`
 `;
 
 export const OptionBox = styled.div`
+  position: relative;
   width: 100%;
   max-height: 150px;
   overflow-y: scroll;
