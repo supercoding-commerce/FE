@@ -27,6 +27,7 @@ const Button = ({
   height,
   color,
   children,
+  style,
   ...rest
 }: PropsWithChildren<ButtonProps>) => {
   const _variant = `variant_${variant}`;
@@ -46,6 +47,7 @@ const Button = ({
           '--color': color,
           '--width': width,
           '--height': height,
+          ...style,
         } as CSSProperties
       }
       {...rest}

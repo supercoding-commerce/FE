@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 import Icon from '@/components/common/Icon.tsx';
 import { Rating } from '@/components/common/Rating/Rating.tsx';
-import { ClearIcon } from '@/components/icons/ClearIcon.tsx';
+import { DeleteIcon } from '@/components/icons/DeleteIcon.tsx';
 import { theme } from '@/styles/theme.ts';
 
 function Test() {
@@ -39,7 +39,7 @@ function Test() {
             fill="orange"
             style={{ width: '100px', height: '100px', border: '1px solid red' }}
           />
-          <ClearIcon />
+          <DeleteIcon />
         </div>
       </div>
       <div>
