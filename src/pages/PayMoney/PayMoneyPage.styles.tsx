@@ -11,13 +11,13 @@ export const PayMoneyContainer = styled.div`
 
 export const PayMoney = styled.div`
   width: 365px;
-  height: 145px;
+  height: auto;
   background-color: white;
   margin-top: 45px;
   border-radius: 13px;
   display: flex;
   flex-direction: column;
-  padding: 25px 25px;
+  padding: 25px;
 `;
 
 export const PayMoneyInfo = styled.div`
@@ -40,14 +40,10 @@ export const ButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
+export const MoneyInputContainer = styled.div``;
+
 export const ChargeBtn = styled.div`
+  width: 100%;
   margin-top: 30px;
   margin-bottom: 13px;
-`;
-
-export const MoneyInputContainer = styled.div`
-  width: 365px;
-  height: auto;
-  background-color: white;
-  padding: 0 25px;
 `;

@@ -4,6 +4,7 @@ import Button from '@/components/common/Button/Button';
 import Icon from '@/components/common/Icon';
 import { Input } from '@/components/common/Input/Input';
 import TextField from '@/components/common/TextField/TextField';
+import { CardSwiper } from '@/pages/PayMoney/CardSwiper';
 import * as S from './PayMoneyPage.styles';
 
 type PayMoney = {
@@ -46,35 +47,36 @@ export function PayMoneyPage() {
               충전
             </Button>
           </S.ButtonWrapper>
+          {isVisible && (
+            <S.MoneyInputContainer>
+              <TextField labelId="m" label="충전금액">
+                <Input
+                  id="m"
+                  size="sm"
+                  required
+                  isFullWidth
+                  variant="underline"
+                  placeholder="충전할 금액을 입력해주세요."
+                />
+              </TextField>
+              <S.ChargeBtn>
+                <Button
+                  variant="main"
+                  onClick={() => alert('충전완료')}
+                  size="medium"
+                  height="40px"
+                  color="#55FE3A"
+                  isFullWidth
+                  isCircle={false}
+                >
+                  충전하기
+                </Button>
+              </S.ChargeBtn>
+            </S.MoneyInputContainer>
+          )}
         </S.PayMoney>
       ))}
-      {isVisible && (
-        <S.MoneyInputContainer>
-          <TextField labelId="m" label="충전금액">
-            <Input
-              id="m"
-              size="sm"
-              required
-              isFullWidth
-              variant="underline"
-              placeholder="충전할 금액을 입력해주세요."
-            />
-          </TextField>
-          <S.ChargeBtn>
-            <Button
-              variant="main"
-              onClick={() => alert('충전완료')}
-              size="medium"
-              height="40px"
-              color="#55FE3A"
-              isFullWidth
-              isCircle={false}
-            >
-              충전하기
-            </Button>
-          </S.ChargeBtn>
-        </S.MoneyInputContainer>
-      )}
+      <CardSwiper />
     </S.PayMoneyContainer>
   );
 }

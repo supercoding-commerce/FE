@@ -19,3 +19,6 @@ export { ReactComponent as IconX } from './X.svg';
 export { ReactComponent as IconAdd } from './Add.svg';
 export { ReactComponent as IconAirplane } from './Airplane.svg';
 export { ReactComponent as IconPCoin } from './PCoin.svg';
+export { ReactComponent as IconCard1 } from './Card1.svg';
+export { ReactComponent as IconCard2 } from './Card2.svg';
+export { ReactComponent as IconCard3 } from './Card3.svg';
