@@ -6,6 +6,7 @@ import { CartPage } from '@/pages/CartPage/CartPage';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import Home from '@/pages/Home/Home.tsx';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
+import PayMoney, { PayMoneyPage } from '@/pages/PayMoney/PayMoneyPage';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
@@ -67,6 +68,10 @@ export const router = createBrowserRouter([
       {
         path: '/mypage',
         element: <MyPage />,
+      },
+      {
+        path: '/paymoney',
+        element: <PayMoneyPage />,
       },
       {
         path: '/new/product',
