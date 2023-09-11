@@ -15,8 +15,6 @@ const ChatSend = ({ sendMessage }: sendMessageProps) => {
     setText(e);
   };
 
-  console.log(text);
-
   return (
     <S.ChatInput>
       <Input

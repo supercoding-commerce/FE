@@ -4,7 +4,9 @@ import { theme } from '@/styles/theme';
 
 export const TextField = styled.div`
   width: 100%;
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 `;
 
 export const TextFieldLabel = styled.div`
@@ -18,6 +20,15 @@ export const Label = styled.label`
   font: ${theme.font.body1};
   display: flex;
   flex-direction: column;
+  gap: 12px;
+
+  &.medium {
+    gap: 16px;
+    color: #000;
+    font-family: SUITE;
+    font-size: 28px;
+    font-weight: 500;
+  }
 `;
 
 export const Help = styled.div`
