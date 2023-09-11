@@ -12,7 +12,8 @@ import { userState } from '@/recoil/userState';
 import { theme } from '@/styles/theme';
 import { getItem } from '@/utils/localstorage';
 import { parseJwt } from '@/utils/parseJwt';
-import { validateEmail, validatePassword } from '@/utils/validate';
+// TODO-YD: 버튼 활성화유지를 위해 잠시 주석처리
+// import { validateEmail, validatePassword } from '@/utils/validate';
 
 export interface userInfoProps {
   email: string;
@@ -28,7 +29,8 @@ const SignInPage = () => {
     password: '',
   });
 
-  const isValid = validateEmail(form.email) && validatePassword(form.password);
+  // TODO-YD: 버튼 활성화유지를 위해 잠시 주석처리
+  // const isValid = validateEmail(form.email) && validatePassword(form.password);
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
