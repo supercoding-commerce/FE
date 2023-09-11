@@ -1,5 +1,6 @@
 type ResponseUserData = {
-  auth: string;
+  // TODO-YD: admin 계정의 auth 가 어떻게 내려오는지 확인 후 추가예정
+  auth: 'USER' | 'SELLER' | '';
   exp: number;
   iat: number;
   sub: string;

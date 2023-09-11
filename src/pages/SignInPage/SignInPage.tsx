@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 
 import { signIn } from '@/apis/user';
 import Button from '@/components/common/Button/Button';
@@ -8,6 +8,7 @@ import { Input } from '@/components/common/Input/Input';
 import { localStorageKey } from '@/constants';
 import useInputs from '@/hooks/useInputs';
 import * as S from '@/pages/SignInPage/SignInPage.styles';
+import { userState } from '@/recoil/userState';
 import { theme } from '@/styles/theme';
 import { getItem } from '@/utils/localstorage';
 import { parseJwt } from '@/utils/parseJwt';
@@ -20,6 +21,7 @@ export interface userInfoProps {
 
 const SignInPage = () => {
   const navigate = useNavigate();
+  const setUser = useSetRecoilState(userState);
 
   const { form, onChange: inputChangeHandler } = useInputs<userInfoProps>({
     email: '',
@@ -35,6 +37,12 @@ const SignInPage = () => {
         const accessToken = getItem<string>(localStorageKey.auth);
         if (accessToken) {
           const userData = parseJwt(accessToken);
+          console.log(userData);
+          setUser({
+            email: userData.sub,
+            role: userData.auth,
+          });
+          navigate('/');
         }
       }
     });
