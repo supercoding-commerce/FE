@@ -1,11 +1,16 @@
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import { signIn } from '@/apis/user';
 import Button from '@/components/common/Button/Button';
 import Icon from '@/components/common/Icon';
 import { Input } from '@/components/common/Input/Input';
+import { localStorageKey } from '@/constants';
 import useInputs from '@/hooks/useInputs';
 import * as S from '@/pages/SignInPage/SignInPage.styles';
 import { theme } from '@/styles/theme';
+import { getItem } from '@/utils/localstorage';
+import { parseJwt } from '@/utils/parseJwt';
 import { validateEmail, validatePassword } from '@/utils/validate';
 
 export interface userInfoProps {
@@ -16,16 +21,6 @@ export interface userInfoProps {
 const SignInPage = () => {
   const navigate = useNavigate();
 
-  // 임시 로그인을 위한 유저 데이터 - 삭제 예정
-  const seller = {
-    email: 'seller@naver.com',
-    password: 'qwer1234',
-  };
-  const buyer = {
-    email: 'buyer@naver.com',
-    password: 'qwer1234',
-  };
-
   const { form, onChange: inputChangeHandler } = useInputs<userInfoProps>({
     email: '',
     password: '',
@@ -35,18 +30,14 @@ const SignInPage = () => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // 임시 로그인 성공 테스트 - 삭제 예정
-    if (seller.email === form.email && seller.password === form.password) {
-      alert('판매자 로그인 성공');
-      navigate('/');
-      return;
-    }
-
-    if (buyer.email === form.email && buyer.password === form.password) {
-      alert('구매자 로그인 성공');
-      navigate('/');
-      return;
-    }
+    signIn(form).then((result) => {
+      if (result.status === 200) {
+        const accessToken = getItem<string>(localStorageKey.auth);
+        if (accessToken) {
+          const userData = parseJwt(accessToken);
+        }
+      }
+    });
   };
 
   const kakaoLogin = () => {
@@ -88,7 +79,8 @@ const SignInPage = () => {
           isFullWidth
           size="large"
           height={'64px'}
-          disabled={!isValid}
+          // TODO-YD : 현재 테스트용 계정의 비밀번호가 유효성검사를 통과하지 않아서 임시로 disabled를 풀어놨습니다.
+          // disabled={!isValid}
           backgroundColor={theme.color.brand}
         >
           로그인
