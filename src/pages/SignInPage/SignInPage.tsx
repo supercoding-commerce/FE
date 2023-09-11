@@ -37,7 +37,6 @@ const SignInPage = () => {
         const accessToken = getItem<string>(localStorageKey.auth);
         if (accessToken) {
           const userData = parseJwt(accessToken);
-          console.log(userData);
           setUser({
             email: userData.sub,
             role: userData.auth,
