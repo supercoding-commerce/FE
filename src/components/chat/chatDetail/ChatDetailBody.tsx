@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Msg } from '@/components/chat/Chat';
 import ChatDetailIntro from '@/components/chat/chatDetail/ChatDetailIntro';
 import ChatLeftBox from '@/components/chat/chatDetail/ChatLeftBox';
