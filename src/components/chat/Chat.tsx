@@ -198,12 +198,13 @@ const Chat = () => {
     <S.Chat>
       {/* <ChatHeader />
       <ChatBody /> */}
-      <ChatDetailHeader handleLeave={handleLeave} />
+      <ChatDetailHeader handleLeave={handleLeave} shopName={seller.shopName} />
       <ChatDetailBody
         prevMsg={prevMsg}
         msg={msg}
         nickName={role === 'user' ? user.userName : seller.shopName}
         leaveUser={leaveUser}
+        shopName={seller.shopName}
       />
       <ChatSend sendMessage={sendMessage} />
     </S.Chat>

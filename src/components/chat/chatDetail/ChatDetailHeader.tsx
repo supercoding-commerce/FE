@@ -3,9 +3,10 @@ import * as S from '../Chat.styles';
 
 type headerProps = {
   handleLeave: () => void;
+  shopName: string;
 };
 
-const ChatDetailHeader = ({ handleLeave }: headerProps) => {
+const ChatDetailHeader = ({ handleLeave, shopName }: headerProps) => {
   return (
     <S.ChatDetailHeader>
       <div className="arrow_btn_wrapper">
@@ -21,7 +22,7 @@ const ChatDetailHeader = ({ handleLeave }: headerProps) => {
         />
       </div>
       <div className="detail_title_wrapper">
-        <span>어쩌구 쇼핑</span>
+        <span>{shopName}</span>
       </div>
     </S.ChatDetailHeader>
   );
