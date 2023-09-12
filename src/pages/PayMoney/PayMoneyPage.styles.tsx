@@ -40,10 +40,22 @@ export const ButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-export const MoneyInputContainer = styled.div``;
+export const MoneyInputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const ErrorMessage = styled.div`
+  width: 100%;
+  color: #fe4977;
+  font: ${theme.font.body3};
+  justify-content: flex-start;
+`;
 
 export const ChargeBtn = styled.div`
   width: 100%;
-  margin-top: 30px;
+  margin-top: 10px;
   margin-bottom: 13px;
 `;
