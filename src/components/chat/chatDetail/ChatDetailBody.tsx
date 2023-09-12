@@ -10,16 +10,17 @@ type MsgProps = {
   prevMsg: Msg[];
   nickName: string;
   leaveUser: string;
+  shopName: string;
 };
 
-const ChatDetailBody = ({ prevMsg, msg, nickName, leaveUser }: MsgProps) => {
+const ChatDetailBody = ({ prevMsg, msg, nickName, leaveUser, shopName }: MsgProps) => {
   console.log('msgArray', msg);
   console.log('nickName', nickName);
   console.log('leaveUser', leaveUser.length);
 
   return (
     <S.ChatDetailBody>
-      <ChatDetailIntro />
+      <ChatDetailIntro shopName={shopName} />
       {prevMsg.map((item, idx) => {
         return nickName === item.sender ? (
           <ChatRightBox key={idx} content={item.content} />
