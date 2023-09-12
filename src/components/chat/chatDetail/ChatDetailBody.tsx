@@ -1,5 +1,6 @@
 import { Msg } from '@/components/chat/Chat';
 import ChatDetailIntro from '@/components/chat/chatDetail/ChatDetailIntro';
+import ChatLeaveBox from '@/components/chat/chatDetail/ChatLeaveBox';
 import ChatLeftBox from '@/components/chat/chatDetail/ChatLeftBox';
 import ChatRightBox from '@/components/chat/chatDetail/ChatRightBox';
 import * as S from '../Chat.styles';
@@ -8,11 +9,13 @@ type MsgProps = {
   msg: Msg[];
   prevMsg: Msg[];
   nickName: string;
+  leaveUser: string;
 };
 
-const ChatDetailBody = ({ prevMsg, msg, nickName }: MsgProps) => {
+const ChatDetailBody = ({ prevMsg, msg, nickName, leaveUser }: MsgProps) => {
   console.log('msgArray', msg);
   console.log('nickName', nickName);
+  console.log('leaveUser', leaveUser.length);
 
   return (
     <S.ChatDetailBody>
@@ -31,6 +34,7 @@ const ChatDetailBody = ({ prevMsg, msg, nickName }: MsgProps) => {
           <ChatLeftBox key={idx} content={item.content} />
         );
       })}
+      {leaveUser.length > 0 ? <ChatLeaveBox content={leaveUser} /> : null}
     </S.ChatDetailBody>
   );
 };
