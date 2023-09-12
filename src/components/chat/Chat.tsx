@@ -43,7 +43,7 @@ const Chat = () => {
   });
 
   const ACCESS_TOKEN =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MkB0ZXN0LmNvbSIsImF1dGgiOiJTRUxMRVIiLCJleHAiOjE2OTQ0NTc4MjAsImlhdCI6MTY5NDQ1NDIyMH0.JDi_UFPqustltIDJtm-7SpLaqIngEBxRB4Wpd0Ck7c0';
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0M0B0ZXN0LmNvbSIsImF1dGgiOiJVU0VSIiwiZXhwIjoxNjk0NTM3NzM4LCJpYXQiOjE2OTQ1MzQxMzh9.1mK-4pkbFBEwABg-DyeXzRr6BfV_BSQyEOOYi1bdmY0';
 
   const customRoomId = createCustomRoomId(seller.sellerId, product.productId, user.userId);
   /** createCustomRoomId() : 소켓 방 열때 필요한 roomId 조합생성 */
@@ -60,7 +60,7 @@ const Chat = () => {
   const loadPrevChat: () => Promise<void> = async () => {
     await axios
       .get(`https://pet-commerce.shop/v1/api/chat/${customRoomId}`, {
-        headers: { Authorization: `Bearer ${ACCESS_TOKEN}` },
+        headers: { ACCESS_TOKEN: `Bearer ${ACCESS_TOKEN}` },
       })
       .then((res) => {
         const prev = res.data.chats;
