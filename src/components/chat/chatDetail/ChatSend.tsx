@@ -21,7 +21,7 @@ const ChatSend = ({ sendMessage }: sendMessageProps) => {
         type="text"
         size="sm"
         placeholder="메시지를 입력해주세요."
-        style={{ width: '350px', height: '40px' }}
+        style={{ width: '350px', height: '45px', borderRadius: '999px' }}
         rightSlot={<Icon name="IconAirplane" onClick={() => sendMessage(text)} />}
         onChange={(e) => inputHandle(e.target.value)}
       />
