@@ -1,7 +1,11 @@
 import Icon from '@/components/common/Icon';
 import * as S from '../Chat.styles';
 
-const ChatHeader = () => {
+type ChatHeaderProps = {
+  shopName: string;
+};
+
+const ChatHeader = ({ shopName }: ChatHeaderProps) => {
   return (
     <S.ChatHeader>
       <div className="header_img_wrapper">
@@ -9,7 +13,7 @@ const ChatHeader = () => {
       </div>
       <div className="header_title_container">
         <div className="title_wrapper">
-          <span>어쩌구 쇼핑</span>
+          <span>{shopName}</span>
         </div>
         <div className="subtitle_wrapper">
           <Icon name={'IconRate'} fill={'green'} width="16px" height="16px" />
