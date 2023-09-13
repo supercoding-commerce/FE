@@ -21,7 +21,13 @@ const ChatHeader = ({ shopName }: ChatHeaderProps) => {
         </div>
       </div>
       <div className="header_startBtn_wrapper">
-        <Icon name={'IconAdd'} width="35px" height="35px" cursor={'pointer'} />
+        <Icon
+          className="startBtn_icon"
+          name={'IconAdd'}
+          width="35px"
+          height="35px"
+          cursor={'pointer'}
+        />
       </div>
     </S.ChatHeader>
   );

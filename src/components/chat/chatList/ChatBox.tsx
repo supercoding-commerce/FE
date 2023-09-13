@@ -4,12 +4,11 @@ import Icon from '@/components/common/Icon';
 import * as S from '../Chat.styles';
 
 type ChatBoxProps = {
-  shopName: string;
   lastChat: string;
   sender: string;
 };
 
-const ChatBox = ({ shopName, lastChat, sender }: ChatBoxProps) => {
+const ChatBox = ({ lastChat, sender }: ChatBoxProps) => {
   const [textCut, setTextCut] = useState<string>('');
 
   /** textLengthCut20() : 마지막 채팅 미리보기 20글자까지만 보이게 */
@@ -36,7 +35,8 @@ const ChatBox = ({ shopName, lastChat, sender }: ChatBoxProps) => {
           <div className="box_subtitle_wrapper">
             <Icon name={'IconRate'} fill={'green'} width="10px" height="10px" />
             <span>12분 전</span>
-            <span>| {sender}</span>
+            <span className="gray_line">|</span>
+            <span>{sender}</span>
           </div>
         </div>
         <div className="box_text_wrapper">
