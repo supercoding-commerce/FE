@@ -47,11 +47,30 @@ export const MoneyInputContainer = styled.div`
   flex-direction: column;
 `;
 
+export const Input = styled.div`
+  width: 100%;
+  input {
+    ::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    ::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    border-width: 0;
+    &:focus {
+      outline: none;
+    }
+  }
+`;
+
 export const ErrorMessage = styled.div`
   width: 100%;
   color: #fe4977;
   font: ${theme.font.body3};
   justify-content: flex-start;
+  padding-left: 3px;
 `;
 
 export const ChargeBtn = styled.div`

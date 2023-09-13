@@ -88,18 +88,20 @@ export function PayMoneyPage() {
           {isVisible && (
             <S.MoneyInputContainer>
               <TextField labelId="m" label="충전금액">
-                <Input
-                  id="m"
-                  size="sm"
-                  type="number"
-                  required
-                  isFullWidth
-                  variant="underline"
-                  placeholder="충전할 금액을 입력해주세요."
-                  value={inputValue}
-                  onChange={InputChangeHandler}
-                  onBlur={inputBlurHandler}
-                />
+                <S.Input>
+                  <Input
+                    id="m"
+                    size="sm"
+                    type="number"
+                    required
+                    isFullWidth
+                    variant="underline"
+                    placeholder="충전할 금액을 입력해주세요."
+                    value={inputValue}
+                    onChange={InputChangeHandler}
+                    onBlur={inputBlurHandler}
+                  />
+                </S.Input>
               </TextField>
               {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
               <CardSwiper />
