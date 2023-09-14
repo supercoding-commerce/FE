@@ -119,26 +119,13 @@ export function CartPage() {
           <p>배송비</p>
           <p>{deliveryPrice}</p>
         </S.DeliveryPrice>
-        <S.Coupon>
-          <p>쿠폰</p>
-          <Button
-            variant="outlined"
-            size="xsmall"
-            width="50px"
-            color="#6A8DFF"
-            isCircle={false}
-            isFullWidth={false}
-          >
-            쿠폰
-          </Button>
-        </S.Coupon>
       </S.PriceWrapper>
       <S.GoToPay>
         <S.FinalPrice>
           <S.FinalPriceTitle>총 결제 금액</S.FinalPriceTitle>
           <S.FinalPriceValue>{finalTotalPrice.toLocaleString()}원</S.FinalPriceValue>
         </S.FinalPrice>
-        <Button variant="main" size="large" isFullWidth>
+        <Button variant="main" size="medium" isFullWidth>
           구매하기({cartItems.length})
         </Button>
       </S.GoToPay>
