@@ -18,3 +18,24 @@ export { ReactComponent as IconKakao } from './SymbolKakao.svg';
 export { ReactComponent as IconX } from './X.svg';
 export { ReactComponent as IconAdd } from './Add.svg';
 export { ReactComponent as IconAirplane } from './Airplane.svg';
+
+export { ReactComponent as IconArrowRightFill } from './ArrowRightFill.svg';
+
+export { ReactComponent as IconTop } from './Top.svg';
+export { ReactComponent as IconPants } from './Pants.svg';
+export { ReactComponent as IconDress } from './Dress.svg';
+export { ReactComponent as IconAccessories } from './Accessories.svg';
+export { ReactComponent as IconShoes } from './Shoes.svg';
+export { ReactComponent as IconMuffler } from './Muffler.svg';
+export { ReactComponent as IconJeans } from './Jeans.svg';
+export { ReactComponent as IconShorts } from './Shorts.svg';
+export { ReactComponent as IconTraining } from './Training.svg';
+export { ReactComponent as IconLeggings } from './Leggings.svg';
+export { ReactComponent as IconSweat } from './Sweat.svg';
+export { ReactComponent as IconKnit } from './Knit.svg';
+export { ReactComponent as IconHood } from './Hood.svg';
+export { ReactComponent as IconSleeveless } from './Sleeveless.svg';
+export { ReactComponent as IconGloves } from './Gloves.svg';
+export { ReactComponent as IconCap } from './Cap.svg';
+export { ReactComponent as IconShortDress } from './ShortDress.svg';
+export { ReactComponent as IconLongDress } from './LongDress.svg';

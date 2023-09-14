@@ -1,11 +1,16 @@
 import { createBrowserRouter, useLocation } from 'react-router-dom';
 
 import Test from '@/components/Test/Test.tsx';
+
+import Menu from '@/pages/Category/Menu';
+
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
+
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import Home from '@/pages/Home/Home.tsx';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
+import { Payment } from '@/pages/Payment/Payment.tsx';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
@@ -34,7 +39,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/category',
-        element: <TestCompoennt />,
+        element: <Menu />,
       },
 
       // 회원가입 / 로그인
@@ -62,7 +67,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/pay',
-        element: <TestCompoennt />,
+        element: <Payment />,
       },
       {
         path: '/mypage',

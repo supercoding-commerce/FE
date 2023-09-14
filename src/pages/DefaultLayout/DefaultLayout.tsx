@@ -4,7 +4,6 @@ import Footer from '@/components/common/Footer/Footer.tsx';
 import { Header } from '@/components/common/Header/Header.tsx';
 import { RoutePath } from '@/pages/routes.tsx';
 import * as S from './DefaultLayout.styles.tsx';
-
 const ONLY_DESKTOP_URL: RoutePath[] = ['/new/product', '/update/product'];
 
 export function DefaultLayout() {
