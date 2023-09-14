@@ -1,13 +1,11 @@
 import { createBrowserRouter, useLocation } from 'react-router-dom';
 
 import Test from '@/components/Test/Test.tsx';
-
-import Menu from '@/pages/Category/Menu';
-
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
-
+import Menu from '@/pages/Category/Menu';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
+import DetailPage from '@/pages/DetailPage/DetailPage';
 import Home from '@/pages/Home/Home.tsx';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
 import SignInPage from '@/pages/SignInPage/SignInPage';
@@ -39,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: '/category',
         element: <Menu />,
+      },
+      {
+        path: '/detail',
+        element: <DetailPage />,
       },
 
       // 회원가입 / 로그인
