@@ -12,6 +12,8 @@ export type list = {
   userId: number;
   shopName: string;
   userName: string;
+  productName: string;
+  imageUrl: string;
   chats: null | string;
   lastChat: {
     sender: string;
@@ -25,13 +27,13 @@ const ChatList = () => {
   const [list, setList] = useState<list[]>([]);
 
   const ACCESS_TOKEN =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0M0B0ZXN0LmNvbSIsImF1dGgiOiJVU0VSIiwiZXhwIjoxNjk0NjMyMzUzLCJpYXQiOjE2OTQ2Mjg3NTN9.RmNY7yAFfGD7GLDaQpGnbc_HXXJgXzqZJnNzVmnuZ6o';
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0M0B0ZXN0LmNvbSIsImF1dGgiOiJVU0VSIiwiZXhwIjoxNjk0NzA1OTA1LCJpYXQiOjE2OTQ3MDIzMDV9.BWmF17NdsjpIymz3PGG23KiJGP32y7vi0S-_p2MdSVc';
 
   const loadChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;
     console.log(sellerId);
     await axios
-      .get(`https://pet-commerce.shop/v1/api/chat/${sellerId}`, {
+      .get(`https://pet-commerce.shop/v1/api/chat/user/${sellerId}`, {
         // 셀러 아이디 받아와야함
         headers: { ACCESS_TOKEN: `Bearer ${ACCESS_TOKEN}` },
       })

@@ -11,7 +11,15 @@ const ChatBody = ({ chatList }: ChatBodyProps) => {
   return (
     <S.ChatBody>
       {chatList?.map((item, idx) => {
-        return <ChatBox key={idx} lastChat={item.lastChat.content} sender={item.lastChat.sender} />;
+        return (
+          <ChatBox
+            key={idx}
+            lastChat={item.lastChat.content}
+            sender={item.lastChat.sender}
+            productName={item.productName}
+            image={item.imageUrl}
+          />
+        );
       })}
     </S.ChatBody>
   );
