@@ -8,6 +8,7 @@ import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import DetailPage from '@/pages/DetailPage/DetailPage';
 import Home from '@/pages/Home/Home.tsx';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
+import { Payment } from '@/pages/Payment/Payment.tsx';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
@@ -68,7 +69,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/pay',
-        element: <TestCompoennt />,
+        element: <Payment />,
       },
       {
         path: '/mypage',
