@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Client } from '@stomp/stompjs';
 
 import ChatDetailBody from '@/components/chat/chatDetail/ChatDetailBody';
@@ -8,18 +9,43 @@ import ChatSend from '@/components/chat/chatDetail/ChatSend';
 // import ChatHeader from '@/components/chat/chatList/ChatHeader';
 import * as S from './Chat.styles';
 
+export type Msg = {
+  sender: string;
+  content: string;
+};
+
 /** stompClient() : 서버랑 연결할 클라이언트 객체 생성 */
 const stompClient = new Client({
   brokerURL: 'ws://52.79.195.235:8080/chat',
 });
 
-const role = 'user';
 const Chat = () => {
+  /** TODO: 디테일 페이지에서 props로 받아올 것 */
   const seller = { sellerId: 2, shopName: '테스트판매자2' };
+  /** TODO: 로그인할때 유저정보에서 받아올 것. 리코일 쓰나? */
   const user = { userId: 3, userName: '테스트유저3' };
+  /** TODO: 디테일 페이지에서 props로 받아올 것 */
   const product = { productId: 4, productName: '테스트상품4' };
-  const customRoomId = createCustomRoomId(seller.sellerId, product.productId, user.userId);
+  /** TODO: 임시, 원래는 상세페이지에서 props로 받아야함.
+   * 상세페이지를 클릭했을때 본인이 user인지 seller인지 boolean값으로 들어옴*/
+  const isSeller = true;
+  const role = isSeller ? 'seller' : 'user';
+  // 지금부터 보낼 메세지 담기
+  const [msg, setMsg] = useState<Msg[]>([]);
+  // 이전의 메세지 기록 담기
+  const [prevMsg, setPrevMsg] = useState<Msg[]>([]);
+  // 떠난 판매자 또는 유저 name
+  const [leaveUser, setLeaveUser] = useState<string>('');
+  // 판매자, 유저 전부 채팅방 떠났는지 확인
+  const [userStatus, setUserStatus] = useState({
+    [user.userName]: false,
+    [seller.shopName]: false,
+  });
 
+  const ACCESS_TOKEN =
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0M0B0ZXN0LmNvbSIsImF1dGgiOiJVU0VSIiwiZXhwIjoxNjk0NTM3NzM4LCJpYXQiOjE2OTQ1MzQxMzh9.1mK-4pkbFBEwABg-DyeXzRr6BfV_BSQyEOOYi1bdmY0';
+
+  const customRoomId = createCustomRoomId(seller.sellerId, product.productId, user.userId);
   /** createCustomRoomId() : 소켓 방 열때 필요한 roomId 조합생성 */
   function createCustomRoomId(sellerId: number, productId: number, userId: number) {
     const userIdStr = String(userId).padStart(6, '0');
@@ -30,6 +56,25 @@ const Chat = () => {
 
     return customRoomId;
   }
+
+  const loadPrevChat: () => Promise<void> = async () => {
+    await axios
+      .get(`https://pet-commerce.shop/v1/api/chat/${customRoomId}`, {
+        headers: { ACCESS_TOKEN: `Bearer ${ACCESS_TOKEN}` },
+      })
+      .then((res) => {
+        const prev = res.data.chats;
+        const msgArray: Msg[] = Object.values(prev);
+        setPrevMsg([...msgArray]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    loadPrevChat();
+  }, []);
 
   /** sendMessage() : 유저가 상대방에게 메세지 보낼때 */
   const sendMessage = (text: string) => {
@@ -55,42 +100,75 @@ const Chat = () => {
       body: JSON.stringify({
         shopName: seller.shopName,
         userName: user.userName,
+        sender: role === 'user' ? user.userName : seller.shopName,
         type: 'LEAVE',
+      }),
+    });
+    //TODO: 창 닫기 적용하기
+  };
+
+  /** handleTerminate() : 유저, 셀러 전부 떠났을때 */
+  const handleTerminate = () => {
+    stompClient.publish({
+      destination: `/topic/${seller.sellerId}/${product.productId}/${user.userId}`,
+      body: JSON.stringify({
+        shopName: seller.shopName,
+        userName: user.userName,
+        type: 'TERMINATE',
       }),
     });
   };
 
   useEffect(() => {
+    if (userStatus[user.userName] && userStatus[seller.shopName]) {
+      handleTerminate();
+    }
+  }, [userStatus]);
+
+  /** handleDisConnect() : 소켓 객체 비활성화(끊기) */
+  const handleDisConnect = () => {
+    if (stompClient.connected) {
+      // 전역에 만들어진 클라이언트 소켓 객체를 연결 종료하고 삭제.
+      stompClient.deactivate();
+      console.log('연결이 끊겼습니다.');
+    }
+  };
+
+  // 처음 들어왔을때 joinMessage를 보내서 stompClient연결
+  useEffect(() => {
     const joinMessage = {
       customRoomId: customRoomId,
       shopName: seller.shopName,
       userName: user.userName,
-      // role : seller or user (웹소켓 세션 연결이 브라우저마다 각자 독립적으로 메모리를 다루기 때문에)
-      role: 'user',
+      role: role,
       type: 'JOIN',
     };
 
     // 연결이 된 경우 콜백함수 호출(어떻게 동작할지 정의)
-    stompClient.onConnect = (frame) => {
-      console.log('연결 되었습니다.', frame);
-
+    stompClient.onConnect = () => {
       // 구독하기(메세지 받음)
       stompClient.subscribe(
         `/topic/${seller.sellerId}/${product.productId}/${user.userId}`,
         (body) => {
           // message -> 백엔드랑 논의 완료 (백엔드에서 어떻게 보내주는지)
           const message = JSON.parse(body.body);
-          console.log('realBody', message);
 
           if (message.type === 'JOIN') {
-            //
+            console.log('연결되었습니다.');
           } else if (message.type === 'LEAVE') {
-            // TODO: 방떠날때 연관된 로직...
-          } else if (message.type === 'CHAT') {
-            // TODO: 메시지 수신과 관련된 로직
-            // TODO: 메세지 UI 그리기
+            const leave = message.sender;
+            setLeaveUser(leave);
+            setUserStatus((prevUserStatus) => ({
+              ...prevUserStatus,
+              [message.sender]: true, // 해당 유저의 상태를 입장으로 설정
+            }));
           } else if (message.type === 'TERMINATE') {
-            // TODO: 유저, 셀러 전부 떠났을때
+            handleDisConnect();
+          } else {
+            const msgContent = message.content;
+            const msgSender = message.sender;
+            const msg1 = { content: msgContent, sender: msgSender };
+            setMsg((prev) => [...prev, msg1]);
           }
         },
       );
@@ -112,10 +190,7 @@ const Chat = () => {
     stompClient.activate();
 
     return () => {
-      if (stompClient.connected) {
-        // 전역에 만들어진 클라이언트 소켓 객체 비활성화(끊기)
-        stompClient.deactivate();
-      }
+      handleDisConnect();
     };
   }, []);
 
@@ -123,10 +198,15 @@ const Chat = () => {
     <S.Chat>
       {/* <ChatHeader />
       <ChatBody /> */}
-      <ChatDetailHeader />
-      <ChatDetailBody />
+      <ChatDetailHeader handleLeave={handleLeave} shopName={seller.shopName} />
+      <ChatDetailBody
+        prevMsg={prevMsg}
+        msg={msg}
+        nickName={role === 'user' ? user.userName : seller.shopName}
+        leaveUser={leaveUser}
+        shopName={seller.shopName}
+      />
       <ChatSend sendMessage={sendMessage} />
-      <button onClick={handleLeave}>나가기</button>
     </S.Chat>
   );
 };

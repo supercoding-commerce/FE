@@ -225,7 +225,6 @@ export const ChatDetailBody = styled.div`
   width: 100%;
   height: 642px;
   overflow: scroll;
-  box-shadow: 0px 5px 15px 2px #f3f3f3;
 `;
 
 export const ChatDetailIntro = styled.div`
@@ -268,14 +267,14 @@ export const ChatLeftBox = styled.div`
   justify-content: left;
   align-items: start;
   width: 85%;
-  margin: 15px 0px;
+  margin: 10px 0px;
 
   .leftbox_img_wrapper {
     width: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
+    /* margin-top: 10px; */
 
     img {
       width: 35px;
@@ -289,6 +288,7 @@ export const ChatLeftBox = styled.div`
     display: flex;
     justify-content: left;
     align-items: center;
+    max-width: 70%;
     border-radius: 10px;
     margin-left: 10px;
     background-color: ${theme.color.backgroundColor};
@@ -305,12 +305,14 @@ export const ChatRightBox = styled.div`
   justify-content: right;
   align-items: start;
   width: 85%;
+  margin: 10px 0px;
 
   .rightbox_wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    max-width: 70%;
 
     background-color: ${theme.color.black};
 
@@ -322,10 +324,34 @@ export const ChatRightBox = styled.div`
   }
 `;
 
+export const ChatLeaveBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  width: 85%;
+  margin: 10px 0px;
+
+  .reavebox_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+
+    background-color: ${theme.color.current};
+
+    span {
+      margin: 10px;
+      ${theme.font.body3};
+      color: ${theme.color.black};
+    }
+  }
+`;
+
 export const ChatInput = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: white;
+  margin: 20px 0px;
+  background-color: ${theme.color.white};
 `;
