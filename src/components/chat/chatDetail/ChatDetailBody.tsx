@@ -1,4 +1,4 @@
-import { Msg } from '@/components/chat/Chat';
+import { Msg } from '@/components/chat/ChatDetail';
 import ChatDetailIntro from '@/components/chat/chatDetail/ChatDetailIntro';
 import ChatLeaveBox from '@/components/chat/chatDetail/ChatLeaveBox';
 import ChatLeftBox from '@/components/chat/chatDetail/ChatLeftBox';
