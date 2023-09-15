@@ -89,7 +89,14 @@ export const ChatHeader = styled.div`
     flex-direction: column;
     width: 89px;
     height: 130px;
-    padding-bottom: 40px;
+    padding-bottom: 0px;
+
+    .startBtn_icon:hover {
+      width: 40px;
+      height: 40px;
+      background-color: ${theme.color.backgroundColor};
+      border-radius: 30px;
+    }
   }
 `;
 
@@ -101,6 +108,9 @@ export const ChatBody = styled.div`
   width: 100%;
   height: 620px;
   overflow: scroll;
+  padding-top: 10px;
+  padding-bottom: 25px;
+  box-sizing: border-box;
 `;
 
 export const ChatBox = styled.div`
@@ -162,11 +172,21 @@ export const ChatBox = styled.div`
         align-items: center;
         width: 100%;
         height: 18px;
+        margin-top: 2px;
+        margin-bottom: 4px;
 
         span {
           ${theme.font.body3};
           color: ${theme.color.brandActive};
           margin-top: 2px;
+          margin-right: 4px;
+        }
+
+        .gray_line {
+          ${theme.font.body3};
+          color: ${theme.color.borderColor};
+          margin-top: 2px;
+          margin-right: 4px;
         }
       }
     }
