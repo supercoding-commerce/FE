@@ -5,7 +5,7 @@ import * as S from './ProductOption.styles';
 
 type ProductType = {
   productId: number;
-  mainImage: string;
+  thumbnailUrl: string;
   shopName: string;
   name: string;
   leftAmount: number;
@@ -13,8 +13,11 @@ type ProductType = {
   star: number;
   reviewer: number;
   price: number;
-  optionList: string[];
-  option: string;
+  optionList: {
+    orderId: number;
+    orderOption: string;
+  }[];
+  options: string;
 };
 
 type ProductProps = {
@@ -32,15 +35,15 @@ const ProductOption = ({ product, onOptionChange, onQuantityChange }: ProductPro
             <p>Option</p>
             {onOptionChange ? (
               <SelectBox
-                optionList={p.optionList}
-                value={p.option}
+                optionList={p.optionList.map((o) => o.orderOption)}
+                value={p.options}
                 onChange={(newOption) => onOptionChange(idx, newOption)}
               />
             ) : null}
           </S.Options>
-          {p.option ? (
+          {p.options ? (
             <S.SelectedOptionContainer>
-              <S.SelectedOption>{p.option}</S.SelectedOption>
+              <S.SelectedOption>{p.options}</S.SelectedOption>
               {onQuantityChange ? (
                 <Counter
                   quantity={p.quantity}
