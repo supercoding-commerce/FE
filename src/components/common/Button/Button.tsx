@@ -1,6 +1,7 @@
 import { ComponentProps, CSSProperties, PropsWithChildren } from 'react';
 import { cx } from '@emotion/css';
 
+import Icon, { IconNameType } from '@/components/common/Icon';
 import * as S from './Button.styles';
 
 interface ButtonProps extends ComponentProps<'button'> {
@@ -13,6 +14,7 @@ interface ButtonProps extends ComponentProps<'button'> {
   isCircle?: boolean;
   isFullWidth?: boolean;
   isDisabled?: boolean;
+  icon?: IconNameType;
   // {이 안에 기본적인 button 속성도 있음}
 }
 
@@ -27,6 +29,7 @@ const Button = ({
   height,
   color,
   children,
+  icon,
   ...rest
 }: PropsWithChildren<ButtonProps>) => {
   const _variant = `variant_${variant}`;
@@ -51,6 +54,7 @@ const Button = ({
       {...rest}
     >
       <span>{children}</span>
+      {icon && <Icon name={icon} color="black" />}
     </S.Button>
   );
 };

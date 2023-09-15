@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import ListItem from '@/components/MainPage/ListItemComponent/ListItem';
-import * as S from '../ListItemComponent/AllProductList.styles';
+import * as S from '../../components/MainPage/ListItemComponent/AllProductList.styles';
 
 interface Product {
   productId: number;
@@ -13,14 +13,18 @@ interface Product {
   shopName: string;
 }
 
-const AllProductList: React.FC = () => {
+interface CategoryListProps {
+  category: string | null;
+}
+
+const CategoryList: React.FC<CategoryListProps> = ({ category }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [page, setPage] = useState<number>(1);
   const [ref, inView] = useInView();
 
   const productFetch = async () => {
     await axios
-      .get(`https://pet-commerce.shop/v1/api/product?pageNumber=${page}`)
+      .get(`https://pet-commerce.shop/v1/api/product/${category}?pageNumber=${page}`)
       .then((res) => {
         console.log(res.data);
         setProducts((prevProducts) => [...prevProducts, ...res.data]);
@@ -53,4 +57,4 @@ const AllProductList: React.FC = () => {
   );
 };
 
-export default AllProductList;
+export default CategoryList;
