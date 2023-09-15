@@ -4,8 +4,7 @@ import { theme } from '@/styles/theme';
 
 export const DetailHeaderContainer = styled.div`
   width: 100%;
-  padding: 0 30px;
-  border-bottom: 1px solid#d8d8d8;
+  height: auto;
 `;
 
 export const DetailHeader = styled.div``;
@@ -14,9 +13,11 @@ export const Image = styled.img`
   width: 100%;
   height: 400px;
   margin-top: 13px;
+  padding: 0 30px;
 `;
 export const ProductInfo1 = styled.div`
-  margin-top: 30px;
+  margin-top: 20px;
+  padding: 0 30px;
 `;
 
 export const Brand = styled.p`
@@ -30,21 +31,24 @@ export const ProductName = styled.p`
 `;
 
 export const ProductInfo2 = styled.span`
+  height: 50px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
+  padding: 0 30px;
+  border-bottom: 1px solid#d8d8d8;
 `;
 
 export const Rating = styled.span`
   display: flex;
   align-items: center;
-`;
-
-export const Reviewer = styled.p`
-  color: 1D1F22;
-  font: ${theme.font.body2};
+  p {
+    color: #1d1f22;
+    font: ${theme.font.body2};
+  }
 `;
 
 export const Price = styled.p`
   font: ${theme.font.body1};
+  display: flex;
+  align-items: Center;
 `;
