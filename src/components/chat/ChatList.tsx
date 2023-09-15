@@ -25,6 +25,7 @@ const ChatList = () => {
   /** TODO: 디테일 페이지에서 props로 받아올 것 */
   const seller = { sellerId: 2, shopName: '테스트판매자2' };
   const [list, setList] = useState<list[]>([]);
+
   const [shopImg, setShopImg] = useState<string>('');
 
   const ACCESS_TOKEN =

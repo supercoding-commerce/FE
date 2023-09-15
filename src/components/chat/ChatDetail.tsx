@@ -22,7 +22,7 @@ const ChatDetail = () => {
   /** TODO: 로그인할때 유저정보에서 받아올 것. 리코일 쓰나? */
   const user = { userId: 3, userName: '테스트유저3' };
   /** TODO: 디테일 페이지에서 props로 받아올 것 */
-  const product = { productId: 9, productName: '테스트상품9' };
+  const product = { productId: 5, productName: '테스트상품4' };
   /** TODO: 임시, 원래는 상세페이지에서 props로 받아야함.
    * 상세페이지를 클릭했을때 본인이 user인지 seller인지 boolean값으로 들어옴*/
   const isSeller = false;
@@ -55,6 +55,7 @@ const ChatDetail = () => {
   }
 
   const loadPrevChat: () => Promise<void> = async () => {
+
     const url = import.meta.env.VITE_API_BASE_URL;
     await axios
       .get(`${url}/v1/api/chat/detail/${customRoomId}`, {
