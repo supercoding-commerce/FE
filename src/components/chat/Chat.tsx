@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import ChatButton from '@/components/chat/ChatButton';
 import ChatDetail from '@/components/chat/ChatDetail';
 import ChatList from '@/components/chat/ChatList';
 import * as S from './Chat.styles';
@@ -57,7 +58,8 @@ const Chat = () => {
 
   return (
     <>
-      {!isModalOpen && (
+      <ChatButton handleOpen={handleOpen} />
+      {isModalOpen && (
         <S.Chat>
           {!isCustomRoomId ? (
             <ChatList clickListBox={clickListBox} />
