@@ -22,7 +22,7 @@ const ChatDetail = () => {
   /** TODO: 로그인할때 유저정보에서 받아올 것. 리코일 쓰나? */
   const user = { userId: 3, userName: '테스트유저3' };
   /** TODO: 디테일 페이지에서 props로 받아올 것 */
-  const product = { productId: 5, productName: '테스트상품4' };
+  const product = { productId: 9, productName: '테스트상품9' };
   /** TODO: 임시, 원래는 상세페이지에서 props로 받아야함.
    * 상세페이지를 클릭했을때 본인이 user인지 seller인지 boolean값으로 들어옴*/
   const isSeller = false;
@@ -40,7 +40,7 @@ const ChatDetail = () => {
   });
 
   const ACCESS_TOKEN =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0M0B0ZXN0LmNvbSIsImF1dGgiOiJVU0VSIiwiZXhwIjoxNjk0NjEyNjYwLCJpYXQiOjE2OTQ2MDkwNjB9.YB1msBJBBO3sOnZT7Eyoa7yOe64oyPAxiBlMwBOGAWI';
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0M0B0ZXN0LmNvbSIsImF1dGgiOiJVU0VSIiwiZXhwIjoxNjk0Nzc3MjI5LCJpYXQiOjE2OTQ3NzM2Mjl9.5_85cprdrA23ZdqcDMPZzIVMkPCmeWEiTd6tW9xlJjA';
 
   const customRoomId = createCustomRoomId(seller.sellerId, product.productId, user.userId);
   /** createCustomRoomId() : 소켓 방 열때 필요한 roomId 조합생성 */
@@ -55,8 +55,9 @@ const ChatDetail = () => {
   }
 
   const loadPrevChat: () => Promise<void> = async () => {
+    const url = import.meta.env.VITE_API_BASE_URL;
     await axios
-      .get(`https://pet-commerce.shop/v1/api/chat/detail/${customRoomId}`, {
+      .get(`${url}/v1/api/chat/detail/${customRoomId}`, {
         headers: { ACCESS_TOKEN: `Bearer ${ACCESS_TOKEN}` },
       })
       .then((res) => {

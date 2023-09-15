@@ -109,6 +109,8 @@ export const ChatBody = styled.div`
   height: 620px;
   overflow: scroll;
   padding-top: 10px;
+  padding-bottom: 25px;
+  box-sizing: border-box;
 `;
 
 export const ChatBox = styled.div`

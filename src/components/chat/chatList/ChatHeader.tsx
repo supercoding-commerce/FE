@@ -3,13 +3,14 @@ import * as S from '../Chat.styles';
 
 type ChatHeaderProps = {
   shopName: string;
+  shopImg: string;
 };
 
-const ChatHeader = ({ shopName }: ChatHeaderProps) => {
+const ChatHeader = ({ shopName, shopImg }: ChatHeaderProps) => {
   return (
     <S.ChatHeader>
       <div className="header_img_wrapper">
-        <img src="" alt="고객센터 이미지" />
+        <img src={shopImg} alt="고객센터 이미지" />
       </div>
       <div className="header_title_container">
         <div className="title_wrapper">
