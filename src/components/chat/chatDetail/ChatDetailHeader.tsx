@@ -3,10 +3,11 @@ import * as S from '../Chat.styles';
 
 type headerProps = {
   handleLeave: () => void;
+  clickPrevButton: () => void;
   shopName: string;
 };
 
-const ChatDetailHeader = ({ handleLeave, shopName }: headerProps) => {
+const ChatDetailHeader = ({ handleLeave, clickPrevButton, shopName }: headerProps) => {
   return (
     <S.ChatDetailHeader>
       <div className="arrow_btn_wrapper">
@@ -18,6 +19,7 @@ const ChatDetailHeader = ({ handleLeave, shopName }: headerProps) => {
           height="30px"
           onClick={() => {
             handleLeave();
+            clickPrevButton();
           }}
         />
       </div>

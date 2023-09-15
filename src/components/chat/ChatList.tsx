@@ -21,7 +21,11 @@ export type list = {
   };
 };
 
-const ChatList = () => {
+type chatProps = {
+  clickListBox: (customRoomId: string) => void;
+};
+
+const ChatList = ({ clickListBox }: chatProps) => {
   /** TODO: 디테일 페이지에서 props로 받아올 것 */
   const seller = { sellerId: 2, shopName: '테스트판매자2' };
   const [list, setList] = useState<list[]>([]);
@@ -29,7 +33,7 @@ const ChatList = () => {
   const [shopImg, setShopImg] = useState<string>('');
 
   const ACCESS_TOKEN =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0M0B0ZXN0LmNvbSIsImF1dGgiOiJVU0VSIiwiZXhwIjoxNjk0Nzc3MjI5LCJpYXQiOjE2OTQ3NzM2Mjl9.5_85cprdrA23ZdqcDMPZzIVMkPCmeWEiTd6tW9xlJjA';
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0M0B0ZXN0LmNvbSIsImF1dGgiOiJVU0VSIiwiZXhwIjoxNjk0NzkxODY5LCJpYXQiOjE2OTQ3ODgyNjl9.Brl5Ah1y2Vvb7hxDhOsdU_HlWKcGytwhqXRd6sbUBYY';
 
   const loadChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;
@@ -62,7 +66,7 @@ const ChatList = () => {
   return (
     <div>
       <ChatHeader shopName={seller.shopName} shopImg={shopImg} />
-      <ChatBody chatList={list} />
+      <ChatBody chatList={list} clickListBox={clickListBox} />
     </div>
   );
 };
