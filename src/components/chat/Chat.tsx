@@ -16,6 +16,7 @@ const Chat = () => {
 
   const [customRoomId, setCustomRoomId] = useState<string>(roomId);
   const [isCustomRoomId, setIsCustomRoomId] = useState<boolean>(true);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   /** createCustomRoomId() : 소켓 방 열때 필요한 roomId 조합생성 */
   function createCustomRoomId(sellerId: number, productId: number, userId: number) {
@@ -44,6 +45,10 @@ const Chat = () => {
     setCustomRoomId(customRoomId);
   };
 
+  const handleOpen = () => {
+    setIsModalOpen((prev) => !prev);
+  };
+
   useEffect(() => {
     if (customRoomId.length === 0) {
       setIsCustomRoomId((prev) => !prev);
@@ -51,20 +56,25 @@ const Chat = () => {
   }, [customRoomId]);
 
   return (
-    <S.Chat>
-      {!isCustomRoomId ? (
-        <ChatList clickListBox={clickListBox} />
-      ) : (
-        <ChatDetail
-          customRoomId={customRoomId}
-          role={role}
-          seller={seller}
-          user={user}
-          product={product}
-          clickPrevButton={clickPrevButton}
-        />
+    <>
+      {!isModalOpen && (
+        <S.Chat>
+          {!isCustomRoomId ? (
+            <ChatList clickListBox={clickListBox} />
+          ) : (
+            <ChatDetail
+              customRoomId={customRoomId}
+              role={role}
+              seller={seller}
+              user={user}
+              product={product}
+              clickPrevButton={clickPrevButton}
+              handleOpen={handleOpen}
+            />
+          )}
+        </S.Chat>
       )}
-    </S.Chat>
+    </>
   );
 };
 

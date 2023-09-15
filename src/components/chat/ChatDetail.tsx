@@ -33,6 +33,7 @@ type ChatUserProps = {
   user: UserInfo;
   product: ProductInfo;
   clickPrevButton: () => void;
+  handleOpen: () => void;
 };
 
 /** stompClient() : 서버랑 연결할 클라이언트 객체 생성 */
@@ -47,6 +48,7 @@ const ChatDetail = ({
   user,
   product,
   clickPrevButton,
+  handleOpen,
 }: ChatUserProps) => {
   // 지금부터 보낼 메세지 담기
   const [msg, setMsg] = useState<Msg[]>([]);
@@ -207,6 +209,7 @@ const ChatDetail = ({
         handleLeave={handleLeave}
         shopName={seller.shopName}
         clickPrevButton={clickPrevButton}
+        handleOpen={handleOpen}
       />
       <ChatDetailBody
         prevMsg={prevMsg}
