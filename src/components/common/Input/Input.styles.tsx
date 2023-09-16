@@ -30,7 +30,7 @@ const inputWrapperStyle = css`
     &_outline {
       height: 45px;
       background-color: transparent;
-      border-radius: 25px;
+      border-radius: 8px;
       border: 2px solid ${theme.color.borderColor};
       &:focus-within {
         border: 2px solid black;

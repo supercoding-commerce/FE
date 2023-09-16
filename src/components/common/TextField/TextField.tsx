@@ -7,6 +7,7 @@ interface TextFieldProps {
   labelId: string;
   label: ReactNode;
   children?: ReactNode;
+  size?: 'small' | 'medium';
   error?: boolean;
   required?: boolean;
   rightSlot?: ReactNode;
@@ -16,6 +17,7 @@ interface TextFieldProps {
 const TextField = ({
   labelId,
   label,
+  size = 'small',
   error = false,
   required = false,
   children,
@@ -27,7 +29,7 @@ const TextField = ({
     <S.TextField>
       <S.TextFieldLabel>
         <S.LabelWrapper>
-          <S.Label htmlFor={labelId} style={errorStyle}>
+          <S.Label htmlFor={labelId} style={errorStyle} className={size}>
             {label}
           </S.Label>
           {help && <S.Help>{help}</S.Help>}

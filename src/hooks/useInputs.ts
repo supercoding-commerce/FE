@@ -3,7 +3,7 @@ import { useState } from 'react';
 const useInputs = <T>(initialValue: T) => {
   const [form, setForm] = useState(initialValue);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const name = e.target.name;
     const value = e.target.value;
 
@@ -13,11 +13,18 @@ const useInputs = <T>(initialValue: T) => {
     });
   };
 
+  const onChangeForm = (key: keyof T, value: any) => {
+    setForm({
+      ...form,
+      [key]: value,
+    });
+  };
+
   const onReset = () => {
     setForm(initialValue);
   };
 
-  return { form, onChange, onReset };
+  return { form, onChange, onChangeForm, onReset };
 };
 
 export default useInputs;

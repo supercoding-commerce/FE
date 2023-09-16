@@ -13,9 +13,14 @@ export { ReactComponent as IconHeart } from './Heart.svg';
 export { ReactComponent as IconPaper } from './Paper.svg';
 export { ReactComponent as IconTicket } from './Ticket.svg';
 export { ReactComponent as IconBox } from './Box.svg';
+export { ReactComponent as IconCamera } from './Cameta.svg';
 export { ReactComponent as IconKakao } from './SymbolKakao.svg';
+export { ReactComponent as IconX } from './X.svg';
 export { ReactComponent as IconAdd } from './Add.svg';
 export { ReactComponent as IconAirplane } from './Airplane.svg';
+
+export { ReactComponent as IconArrowRightFill } from './ArrowRightFill.svg';
+
 export { ReactComponent as IconTop } from './Top.svg';
 export { ReactComponent as IconPants } from './Pants.svg';
 export { ReactComponent as IconDress } from './Dress.svg';
