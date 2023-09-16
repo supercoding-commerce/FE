@@ -221,12 +221,19 @@ export const ChatDetailHeader = styled.div`
     height: 88px;
   }
 
+  .close_btn_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 18%;
+    height: 88px;
+  }
+
   .detail_title_wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding-right: 70px;
     box-sizing: border-box;
     width: 82%;
     height: 88px;

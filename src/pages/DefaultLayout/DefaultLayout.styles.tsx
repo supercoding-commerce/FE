@@ -13,5 +13,6 @@ export const DefaultLayoutWrapper = styled.main<{ onlyDesktop: boolean }>`
     onlyDesktop &&
     css`
       max-width: 1040px;
+      height: 100%;
     `}
 `;

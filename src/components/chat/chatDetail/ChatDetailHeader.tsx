@@ -3,10 +3,12 @@ import * as S from '../Chat.styles';
 
 type headerProps = {
   handleLeave: () => void;
+  clickPrevButton: () => void;
+  handleOpen: () => void;
   shopName: string;
 };
 
-const ChatDetailHeader = ({ handleLeave, shopName }: headerProps) => {
+const ChatDetailHeader = ({ handleLeave, clickPrevButton, handleOpen, shopName }: headerProps) => {
   return (
     <S.ChatDetailHeader>
       <div className="arrow_btn_wrapper">
@@ -14,15 +16,27 @@ const ChatDetailHeader = ({ handleLeave, shopName }: headerProps) => {
           name="IconArrowLeft"
           color="green"
           cursor={'pointer'}
-          width="30px"
-          height="30px"
+          size={30}
           onClick={() => {
             handleLeave();
+            clickPrevButton();
           }}
         />
       </div>
       <div className="detail_title_wrapper">
         <span>{shopName}</span>
+      </div>
+      <div className="close_btn_wrapper">
+        <Icon
+          name="IconX"
+          color="borderColor"
+          cursor={'pointer'}
+          size={25}
+          onClick={() => {
+            handleLeave();
+            handleOpen();
+          }}
+        />
       </div>
     </S.ChatDetailHeader>
   );
