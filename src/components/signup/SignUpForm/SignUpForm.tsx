@@ -47,12 +47,19 @@ interface InputItem {
   type: HTMLInputTypeAttribute;
   button?: (e: MouseEvent<HTMLButtonElement>) => void;
   value: string;
+  disabled?: boolean;
+  buttonText?: string;
 }
 
 const SignUpForm = ({ pathname }: SignUpFormProps) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [image, setImage] = useState<File[]>([]);
+  const [isChecked, setIsChecked] = useState({
+    checkedEmail: false,
+    checkedNickName: false,
+    checkedShopName: false,
+  });
 
   const { form, onChange, onChangeForm } = useInputs<SignUpItem>({
     email: '',
@@ -70,24 +77,31 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
   });
 
   const handleCheckEmail = (e: MouseEvent<HTMLButtonElement>) => {
-    // TODO-YD : 백엔드 api 다시 사용가능할 때 수정 예정
     e.preventDefault();
-    checkEmail(form.email).then((result) => {
-      if (result.status === 200) {
-        console.log(result);
-      }
-      if (result.status === 409) {
-        console.log(result);
-      }
-    });
+    checkEmail(form.email)
+      .then((result) => {
+        if (result.status === 200) {
+          setIsChecked({
+            ...isChecked,
+            checkedEmail: true,
+          });
+        }
+      })
+      .catch((result) => {
+        if (result.response.status === 409) {
+          alert(`${result.response.data.errorMessage}`);
+        }
+      });
   };
 
   const handleCheckNickName = (e: MouseEvent<HTMLButtonElement>) => {
-    // TODO-YD : 백엔드 api 다시 사용가능할 때 수정 예정
     e.preventDefault();
     checkNickName(form.nickname).then((result) => {
       if (result.status === 200) {
-        console.log(result);
+        setIsChecked({
+          ...isChecked,
+          checkedNickName: true,
+        });
       }
       if (result.status === 409) {
         console.log(result);
@@ -96,7 +110,6 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
   };
 
   const handleCheckShopName = (e: MouseEvent<HTMLButtonElement>) => {
-    // TODO-YD : 백엔드 api 다시 사용가능할 때 수정 예정
     e.preventDefault();
     checkShopName(form.shopName).then((result) => {
       if (result.status === 200) {
@@ -116,6 +129,8 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
       type: 'email',
       button: handleCheckEmail,
       value: form.email,
+      disabled: validateEmail(form.email),
+      buttonText: isChecked.checkedEmail ? 'v' : '중복검사',
     },
     {
       labelId: 'password',
@@ -155,6 +170,8 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
       type: 'text',
       button: handleCheckNickName,
       value: form.nickname,
+      disabled: validateEmpty(form.nickname),
+      buttonText: isChecked.checkedNickName ? 'v' : '중복검사',
     },
     {
       labelId: 'age',
@@ -231,13 +248,18 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
     validateEmpty(form.address) &&
     validateEmpty(form.detailAddress);
 
-  const buyerInputsValidate = validateEmpty(form.nickname) && validateEmpty(form.age);
+  const buyerValidate =
+    commonInputsValidate &&
+    validateEmpty(form.nickname) &&
+    validateEmpty(form.age) &&
+    isChecked.checkedEmail &&
+    isChecked.checkedNickName;
 
-  const sellerInputsValidate = validateEmpty(form.shopName);
-
-  const buyerValidate = commonInputsValidate && buyerInputsValidate;
-
-  const sellerValidate = commonInputsValidate && sellerInputsValidate;
+  const sellerValidate =
+    commonInputsValidate &&
+    validateEmpty(form.shopName) &&
+    isChecked.checkedEmail &&
+    isChecked.checkedShopName;
 
   const handleDaumPostCode = (data: Address) => {
     const { address, zonecode } = data;
@@ -272,8 +294,9 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
                   width={'90px'}
                   variant="main"
                   onClick={item.button}
+                  disabled={!item.disabled}
                 >
-                  중복검사
+                  {item.buttonText}
                 </Button>
               )}
             </TextField>
@@ -300,8 +323,9 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
                       width={'90px'}
                       variant="main"
                       onClick={item.button}
+                      disabled={!item.disabled}
                     >
-                      중복검사
+                      {item.buttonText}
                     </Button>
                   )}
                 </TextField>
@@ -383,8 +407,9 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
                 width={'90px'}
                 variant="main"
                 onClick={handleCheckShopName}
+                disabled={!validateEmpty(form.shopName)}
               >
-                중복검사
+                {isChecked.checkedShopName ? 'v' : '중복검사'}
               </Button>
             </TextField>
             <TextField label="쇼핑몰 주소" labelId="address">
