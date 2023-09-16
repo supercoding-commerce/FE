@@ -96,29 +96,38 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
 
   const handleCheckNickName = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    checkNickName(form.nickname).then((result) => {
-      if (result.status === 200) {
-        setIsChecked({
-          ...isChecked,
-          checkedNickName: true,
-        });
-      }
-      if (result.status === 409) {
-        console.log(result);
-      }
-    });
+    checkNickName(form.nickname)
+      .then((result) => {
+        if (result.status === 200) {
+          setIsChecked({
+            ...isChecked,
+            checkedNickName: true,
+          });
+        }
+      })
+      .catch((result) => {
+        if (result.response.status === 409) {
+          alert(`${result.response.data.errorMessage}`);
+        }
+      });
   };
 
   const handleCheckShopName = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    checkShopName(form.shopName).then((result) => {
-      if (result.status === 200) {
-        console.log(result);
-      }
-      if (result.status === 409) {
-        console.log(result);
-      }
-    });
+    checkShopName(form.shopName)
+      .then((result) => {
+        if (result.status === 200) {
+          setIsChecked({
+            ...isChecked,
+            checkedShopName: true,
+          });
+        }
+      })
+      .catch((result) => {
+        if (result.response.status === 409) {
+          alert(`${result.response.data.errorMessage}`);
+        }
+      });
   };
 
   const commonInputs: InputItem[] = [
