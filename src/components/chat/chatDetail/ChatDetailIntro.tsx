@@ -1,13 +1,17 @@
 import * as S from '../Chat.styles';
 
-const ChatDetailIntro = () => {
+type introProps = {
+  shopName: string;
+};
+
+const ChatDetailIntro = ({ shopName }: introProps) => {
   return (
     <S.ChatDetailIntro>
       <div className="intro_img_wrapper">
         <img src="" alt="로고" />
       </div>
       <div className="intro_title_wrapper">
-        <span>어쩌구쇼핑에 문의하기</span>
+        <span>{shopName}에 문의하기</span>
       </div>
     </S.ChatDetailIntro>
   );

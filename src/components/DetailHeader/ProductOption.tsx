@@ -1,61 +1,66 @@
+import { CartItemAPI } from '@/apis/product';
 import Counter from '@/components/common/Counter/Counter';
 import Icon from '@/components/common/Icon';
 import SelectBox from '@/components/common/SelectBox/SelectBox';
+import { DetailProduct } from '@/pages/DetailPage/DetailPage';
 import * as S from './ProductOption.styles';
 
-type ProductType = {
-  productId: number;
-  mainImage: string;
-  shopName: string;
-  name: string;
-  leftAmount: number;
-  quantity: number;
-  star: number;
-  reviewer: number;
-  price: number;
-  optionList: string[];
-  option: string;
-};
-
 type ProductProps = {
-  product: ProductType[];
-  onOptionChange?: (index: number, newOption: string) => void;
+  product: DetailProduct;
+  onOptionPlus?: (item: string) => void;
+  onOptionDelete?: (index: number) => void;
   onQuantityChange?: (index: number, newQuantity: number) => void;
+  cartProduct?: CartItemAPI[];
 };
 
-const ProductOption = ({ product, onOptionChange, onQuantityChange }: ProductProps) => {
+const ProductOption = ({
+  product,
+  onOptionPlus,
+  onQuantityChange,
+  onOptionDelete,
+  cartProduct,
+}: ProductProps) => {
   return (
     <S.OptionContainer>
-      {product.map((p, idx: number) => (
-        <S.Option key={idx}>
-          <S.Options>
-            <p>Option</p>
-            {onOptionChange ? (
-              <SelectBox
-                optionList={p.optionList}
-                value={p.option}
-                onChange={(newOption) => onOptionChange(idx, newOption)}
-              />
-            ) : null}
-          </S.Options>
-          {p.option ? (
-            <S.SelectedOptionContainer>
-              <S.SelectedOption>{p.option}</S.SelectedOption>
-              {onQuantityChange ? (
-                <Counter
-                  quantity={p.quantity}
-                  maxQuantity={p.leftAmount}
-                  onQuantityChange={(newQuantity) => onQuantityChange(idx, newQuantity)}
-                />
-              ) : null}
-              <S.OptionPriceContainer>
-                <S.OptionPrice>{(p.price * p.quantity).toLocaleString()}원</S.OptionPrice>
-                <Icon name="IconX" size={20} style={{ cursor: 'pointer' }} />
-              </S.OptionPriceContainer>
-            </S.SelectedOptionContainer>
+      <S.Option>
+        <S.Options>
+          <p>Option</p>
+          {onOptionPlus ? (
+            <SelectBox
+              optionList={product.options}
+              value={'선택'}
+              onChange={(newOption) => onOptionPlus(newOption)}
+            />
           ) : null}
-        </S.Option>
-      ))}
+        </S.Options>
+        {cartProduct && cartProduct.length > 0
+          ? cartProduct.map((item, index) => (
+              <S.SelectedOptionContainer key={index}>
+                <S.SelectedOption>{item.options[0]}</S.SelectedOption>
+                {onQuantityChange ? (
+                  <Counter
+                    quantity={item.quantity}
+                    maxQuantity={product.leftAmount}
+                    onQuantityChange={(newQuantity) => onQuantityChange(index, newQuantity)}
+                  />
+                ) : null}
+                <S.OptionPriceContainer>
+                  <S.OptionPrice>
+                    {(product.price * item.quantity).toLocaleString()}원
+                  </S.OptionPrice>
+                  {onOptionDelete ? (
+                    <Icon
+                      name="IconX"
+                      size={20}
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => onOptionDelete(index)}
+                    />
+                  ) : null}
+                </S.OptionPriceContainer>
+              </S.SelectedOptionContainer>
+            ))
+          : null}
+      </S.Option>
     </S.OptionContainer>
   );
 };
