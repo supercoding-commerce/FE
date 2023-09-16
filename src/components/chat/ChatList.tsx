@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+import { client } from '@/apis';
 import ChatBody from '@/components/chat/chatList/ChatBody';
 import ChatHeader from '@/components/chat/chatList/ChatHeader';
 
@@ -23,27 +23,47 @@ export type list = {
 
 type chatProps = {
   clickListBox: (customRoomId: string) => void;
+  seller: {
+    sellerId: number;
+    shopName: string;
+  };
+  product: {
+    productId: number;
+    productName: string;
+  };
+  isSeller: boolean;
 };
 
-const ChatList = ({ clickListBox }: chatProps) => {
+const ChatList = ({ clickListBox, seller, isSeller, product }: chatProps) => {
   /** TODO: 디테일 페이지에서 props로 받아올 것 */
-  const seller = { sellerId: 2, shopName: '테스트판매자2' };
   const [list, setList] = useState<list[]>([]);
 
   const [shopImg, setShopImg] = useState<string>('');
 
-  const ACCESS_TOKEN =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0M0B0ZXN0LmNvbSIsImF1dGgiOiJVU0VSIiwiZXhwIjoxNjk0NzkxODY5LCJpYXQiOjE2OTQ3ODgyNjl9.Brl5Ah1y2Vvb7hxDhOsdU_HlWKcGytwhqXRd6sbUBYY';
+  console.log(seller.sellerId);
+  console.log('isSeller', seller.sellerId);
 
-  const loadChatList: () => Promise<void> = async () => {
+  const loadUserChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;
-    const url = import.meta.env.VITE_API_BASE_URL;
-    console.log(sellerId);
-    await axios
-      .get(`${url}/v1/api/chat/user/${sellerId}`, {
-        // 셀러 아이디 받아와야함
-        headers: { ACCESS_TOKEN: `Bearer ${ACCESS_TOKEN}` },
+    await client
+      .get(`/v1/api/chat/user/${sellerId}`)
+      .then((res) => {
+        console.log(res.data);
+        const data = res.data.chatList;
+        const img = res.data.shopImage;
+        setList([...data]);
+        setShopImg(img);
       })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const loadSellerChatList: () => Promise<void> = async () => {
+    const sellerId = seller.sellerId;
+    const productId = product.productId;
+    await client
+      .get(`/v1/api/chat/seller/${sellerId}/${productId}`)
       .then((res) => {
         console.log(res.data);
         const data = res.data.chatList;
@@ -57,8 +77,9 @@ const ChatList = ({ clickListBox }: chatProps) => {
   };
 
   useEffect(() => {
-    loadChatList();
-  }, []);
+    if (!isSeller) loadUserChatList();
+    else loadSellerChatList();
+  }, [isSeller]);
 
   console.log('chatList', list);
   console.log('shopImg', shopImg);
