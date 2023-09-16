@@ -6,12 +6,12 @@ type FilterOption = '신상품' | '나이' | '성별';
 
 interface FilterModalProps {
   isOpen: boolean;
-  onClose: () => void;
   options: string[];
-  selectedOption: (option: string) => void;
+  onClose: () => void;
+  onSelectOption: (option: FilterOption) => void;
 }
 
-const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose, options, selectedOption }) => {
+const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose, options, onSelectOption }) => {
   if (!isOpen) {
     return null;
   }
@@ -21,7 +21,7 @@ const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose, options, sel
       {isOpen && <S.ModalBackground onClick={onClose} isOpen={isOpen}></S.ModalBackground>}
       <S.ModalContainer>
         {options.map((option, index) => (
-          <S.ModalFilterBtn key={index} onClick={() => selectedOption(option as FilterOption)}>
+          <S.ModalFilterBtn key={index} onClick={() => onSelectOption(option as FilterOption)}>
             {option}
           </S.ModalFilterBtn>
         ))}

@@ -17,14 +17,27 @@ interface CategoryListProps {
   category: string | null;
 }
 
-const CategoryList: React.FC<CategoryListProps> = ({ category }) => {
+const CategoryList: React.FC<CategoryListProps> = ({
+  category,
+  // age, gender
+}) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [page, setPage] = useState<number>(1);
   const [ref, inView] = useInView();
 
+  // age, gender
+  const age = 10;
+  const gender = 'common';
   const productFetch = async () => {
+    // https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${page}&ageCategory=20&
+    let url = `https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${page}`;
+
+    url += age ? `&ageCategory=${age}` : '';
+    url += gender ? `&genderCategory=${gender}` : '';
+
     await axios
-      .get(`https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${page}`)
+      // .get(`https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${page}`)
+      .get(url)
       .then((res) => {
         console.log(res.data);
         setProducts((prevProducts) => [...prevProducts, ...res.data]);
@@ -35,6 +48,14 @@ const CategoryList: React.FC<CategoryListProps> = ({ category }) => {
       });
   };
 
+  // 옵션 필터 처리시 호출
+  useEffect(() => {
+    // age, gender
+    setPage(1);
+    // setTimeout(() => productFetch(), 100)
+  }, [age, gender]);
+
+  // 무한스크롤 처리 하는 로직
   useEffect(() => {
     if (inView) {
       console.log(inView, '무한 스크롤 요청 🎃');
@@ -46,6 +67,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ category }) => {
     <S.ListContainer>
       {products.map((product) => (
         <ListItem
+          productId={product.productId}
           imageUrl={product.imageUrl}
           name={product.name}
           price={product.price}

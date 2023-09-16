@@ -6,10 +6,10 @@ export const ModalBackground = styled.div<{ isOpen: boolean }>`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 어두운 배경의 색상과 투명도 설정 */
-  display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')}; /* 모달이 열렸을 때만 표시 */
-  justify-content: center; /* 가운데 정렬 */
-  align-items: center; /* 가운데 정렬 */
+  background-color: rgba(0, 0, 0, 0.5);
+  display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
+  justify-content: center;
+  align-items: center;
   z-index: 1;
 `;
 
