@@ -1,11 +1,19 @@
-import { client } from '@/apis';
+import { client } from '@/apis/index.ts';
+
+const BASE_URL = '/v1/api/product';
+export const createProduct = async (payload: FormData) => {
+  return client.post(BASE_URL, payload, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
 
 export type CartItemAPI = {
   productId: number;
   quantity: number;
   options: string[];
 };
-// type 사용할 객체 필요 payload로 cartItem타입의 객체(쓰일 곳에서 선언)
 
 export async function getProduct(productId: number) {
   const response = await client.get(`/v1/api/product/detail/${productId}`);

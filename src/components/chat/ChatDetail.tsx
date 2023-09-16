@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Client } from '@stomp/stompjs';
 
+import { client } from '@/apis';
 import ChatDetailBody from '@/components/chat/chatDetail/ChatDetailBody';
 import ChatDetailHeader from '@/components/chat/chatDetail/ChatDetailHeader';
 import ChatSend from '@/components/chat/chatDetail/ChatSend';
@@ -11,22 +11,45 @@ export type Msg = {
   content: string;
 };
 
+type UserInfo = {
+  userId: number;
+  userName: string;
+};
+
+type ProductInfo = {
+  productId: number;
+  productName: string;
+};
+
+type SellerInfo = {
+  sellerId: number;
+  shopName: string;
+};
+
+type ChatUserProps = {
+  customRoomId: string | null;
+  role: string;
+  seller: SellerInfo;
+  user: UserInfo;
+  product: ProductInfo;
+  clickPrevButton: () => void;
+  handleOpen: () => void;
+};
+
 /** stompClient() : 서버랑 연결할 클라이언트 객체 생성 */
 const stompClient = new Client({
-  brokerURL: 'ws://52.79.195.235:8080/chat',
+  brokerURL: `${import.meta.env.VITE_API_CHAT_URL}/chat`,
 });
 
-const ChatDetail = () => {
-  /** TODO: 디테일 페이지에서 props로 받아올 것 */
-  const seller = { sellerId: 2, shopName: '테스트판매자2' };
-  /** TODO: 로그인할때 유저정보에서 받아올 것. 리코일 쓰나? */
-  const user = { userId: 3, userName: '테스트유저3' };
-  /** TODO: 디테일 페이지에서 props로 받아올 것 */
-  const product = { productId: 5, productName: '테스트상품4' };
-  /** TODO: 임시, 원래는 상세페이지에서 props로 받아야함.
-   * 상세페이지를 클릭했을때 본인이 user인지 seller인지 boolean값으로 들어옴*/
-  const isSeller = false;
-  const role = isSeller ? 'seller' : 'user';
+const ChatDetail = ({
+  customRoomId,
+  role,
+  seller,
+  user,
+  product,
+  clickPrevButton,
+  handleOpen,
+}: ChatUserProps) => {
   // 지금부터 보낼 메세지 담기
   const [msg, setMsg] = useState<Msg[]>([]);
   // 이전의 메세지 기록 담기
@@ -39,29 +62,11 @@ const ChatDetail = () => {
     [seller.shopName]: false,
   });
 
-  const ACCESS_TOKEN =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0M0B0ZXN0LmNvbSIsImF1dGgiOiJVU0VSIiwiZXhwIjoxNjk0Nzc3MjI5LCJpYXQiOjE2OTQ3NzM2Mjl9.5_85cprdrA23ZdqcDMPZzIVMkPCmeWEiTd6tW9xlJjA';
-
-  const customRoomId = createCustomRoomId(seller.sellerId, product.productId, user.userId);
-  /** createCustomRoomId() : 소켓 방 열때 필요한 roomId 조합생성 */
-  function createCustomRoomId(sellerId: number, productId: number, userId: number) {
-    const userIdStr = String(userId).padStart(6, '0');
-    const sellerIdStr = String(sellerId).padStart(6, '0');
-    const productIdStr = String(productId).padStart(6, '0');
-
-    const customRoomId = sellerIdStr + productIdStr + userIdStr;
-
-    return customRoomId;
-  }
-
   const loadPrevChat: () => Promise<void> = async () => {
-
-    const url = import.meta.env.VITE_API_BASE_URL;
-    await axios
-      .get(`${url}/v1/api/chat/detail/${customRoomId}`, {
-        headers: { ACCESS_TOKEN: `Bearer ${ACCESS_TOKEN}` },
-      })
+    await client
+      .get(`/v1/api/chat/detail/${customRoomId}`)
       .then((res) => {
+        console.log(res);
         const prev = res.data.chats;
         const msgArray: Msg[] = Object.values(prev);
         setPrevMsg([...msgArray]);
@@ -195,7 +200,12 @@ const ChatDetail = () => {
 
   return (
     <>
-      <ChatDetailHeader handleLeave={handleLeave} shopName={seller.shopName} />
+      <ChatDetailHeader
+        handleLeave={handleLeave}
+        shopName={seller.shopName}
+        clickPrevButton={clickPrevButton}
+        handleOpen={handleOpen}
+      />
       <ChatDetailBody
         prevMsg={prevMsg}
         msg={msg}

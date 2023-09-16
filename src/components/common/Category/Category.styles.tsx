@@ -11,6 +11,7 @@ export const Category = styled.div`
   align-items: center;
   cursor: pointer;
   background-color: white;
+  box-sizing: border-box;
 
   &.active {
     background-color: ${theme.color.black};

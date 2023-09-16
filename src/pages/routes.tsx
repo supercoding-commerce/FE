@@ -8,12 +8,12 @@ import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import DetailPage from '@/pages/DetailPage/DetailPage';
 import Home from '@/pages/Home/Home.tsx';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
-import { Payment } from '@/pages/Payment/Payment.tsx';
+import { Payment } from '@/pages/Payment/Payment';
+import ProductPage from '@/pages/ProductPage/ProductPage';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
 import { UpdateProduct } from '@/pages/UpdateProduct/UpdateProduct.tsx';
-
 // GYU-TODO: DELETE
 function TestCompoennt() {
   const location = useLocation();
@@ -42,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path: '/detail/:productId',
         element: <DetailPage />,
+      },
+      {
+        path: '/search/category',
+        element: <ProductPage />,
       },
 
       // 회원가입 / 로그인

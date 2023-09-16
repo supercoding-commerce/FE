@@ -1,99 +1,131 @@
+import { useNavigate } from 'react-router-dom';
+
 import Category, { CategoryProps } from '@/components/common/Category/Category';
 import CategoryHeader from '@/components/common/Header/CategoryHeader';
-
 const Menu = () => {
-  const test = () => {
-    alert('되나용?');
-  };
+  const navigate = useNavigate();
 
   const topOptions: CategoryProps[] = [
     {
       icon: 'IconTop',
-      title: 'Top',
-      onClick: test,
+      title: 'TOP',
       options: [
         {
           icon: 'IconSweat',
-          title: 'Sweat',
-          onClick: () => alert('IconPaper'),
+          title: 'SWEAT',
+          onClick: () => {
+            navigate('/search/category?category=Top&subcategory=SWEAT');
+          },
         },
         {
           icon: 'IconHood',
-          title: 'Hood',
-          onClick: () => alert('IconCreditCard'),
+          title: 'HOOD',
+          onClick: () => {
+            navigate('/search/category?category=Top&subcategory=HOOD');
+          },
         },
         {
           icon: 'IconKnit',
-          title: 'Knit',
-          onClick: () => alert('IconCreditCard'),
+          title: 'KNIT',
+          onClick: () => {
+            navigate('/search/category?category=Top&subcategory=KNIT');
+          },
         },
         {
           icon: 'IconSleeveless',
-          title: 'Sleeveless',
-          onClick: () => alert('IconCreditCard'),
+          title: 'SLEEVELESS',
+          onClick: () => {
+            navigate('/search/category?category=Top&subcategory=SLEEVELESS');
+          },
         },
       ],
     },
     {
       icon: 'IconPants',
-      title: 'Pants',
-      onClick: () => alert('IconBag'),
+      title: 'PANTS',
       options: [
         {
           icon: 'IconJeans',
-          title: 'Jeans',
-          onClick: () => alert('IconClear'),
+          title: 'JEANS',
+          onClick: () => {
+            navigate('/search/category?category=Pants&subcategory=JEANS');
+          },
         },
         {
           icon: 'IconShorts',
-          title: 'Shorts',
-          onClick: () => alert('IconClear'),
+          title: 'SHORTS',
+          onClick: () => {
+            navigate('/search/category?category=Pants&subcategory=SHORTS');
+          },
         },
         {
           icon: 'IconTraining',
-          title: 'Training',
-          onClick: () => alert('IconClear'),
+          title: 'TRAINING',
+          onClick: () => {
+            navigate('/search/category?category=Pants&subcategory=TRAINING');
+          },
         },
         {
           icon: 'IconLeggings',
-          title: 'Leggings',
+          title: 'LEGGINGS',
+          onClick: () => {
+            navigate('/search/category?category=Pants&subcategory=LEGGINGS');
+          },
         },
       ],
     },
     {
       icon: 'IconDress',
-      title: 'Dress',
+      title: 'DRESS',
       options: [
         {
           icon: 'IconShortDress',
-          title: 'ShortDress',
+          title: 'SHORTDRESS',
+          onClick: () => {
+            navigate('/search/category?category=Dress&subcategory=SHORTDRESS');
+          },
         },
         {
           icon: 'IconLongDress',
-          title: 'LongDress',
+          title: 'LONGDRESS',
+          onClick: () => {
+            navigate('/search/category?category=Dress&subcategory=LONGDRESS');
+          },
         },
       ],
     },
 
     {
       icon: 'IconAccessories',
-      title: 'Accessories',
+      title: 'ACCESSORIES',
       options: [
         {
           icon: 'IconShoes',
-          title: 'Shoes',
+          title: 'SHOES',
+          onClick: () => {
+            navigate('/search/category?category=Accessories&subcategory=SHOES');
+          },
         },
         {
           icon: 'IconMuffler',
-          title: 'Muffler',
+          title: 'MUFFLER',
+          onClick: () => {
+            navigate('/search/category?category=Accessories&subcategory=MUFFLER');
+          },
         },
         {
           icon: 'IconGloves',
-          title: 'Gloves',
+          title: 'GLOVES',
+          onClick: () => {
+            navigate('/search/category?category=Accessories&subcategory=GLOVES');
+          },
         },
         {
           icon: 'IconCap',
-          title: 'Cap',
+          title: 'CAP',
+          onClick: () => {
+            navigate('/search/category?category=Accessories&subcategory=CAP');
+          },
         },
       ],
     },
@@ -103,15 +135,7 @@ const Menu = () => {
     <div style={{ width: '100%' }}>
       <CategoryHeader />
       {topOptions?.map((item, idx) => {
-        return (
-          <Category
-            key={idx}
-            icon={item.icon}
-            title={item.title}
-            onClick={item.onClick}
-            options={item.options}
-          />
-        );
+        return <Category key={idx} icon={item.icon} title={item.title} options={item.options} />;
       })}
     </div>
   );
