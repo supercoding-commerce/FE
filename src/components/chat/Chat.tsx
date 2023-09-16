@@ -11,7 +11,7 @@ const Chat = () => {
   const user = { userId: 12, userName: 'kristengreen' };
   /** TODO: 디테일 페이지에서 props로 받아올 것 */
   const product = { productId: 5, productName: 'what' };
-  const isSeller = false;
+  const isSeller = true;
   const role = isSeller ? 'seller' : 'user';
   const roomId = createCustomRoomId(seller.sellerId, product.productId, user.userId);
 
@@ -58,10 +58,37 @@ const Chat = () => {
   return (
     <>
       <ChatButton handleOpen={handleOpen} />
-      {isModalOpen && (
+      {isModalOpen && isSeller && (
+        <S.Chat>
+          {isCustomRoomId ? (
+            <ChatList
+              clickListBox={clickListBox}
+              seller={seller}
+              isSeller={isSeller}
+              product={product}
+            />
+          ) : (
+            <ChatDetail
+              customRoomId={customRoomId}
+              role={role}
+              seller={seller}
+              user={user}
+              product={product}
+              clickPrevButton={clickPrevButton}
+              handleOpen={handleOpen}
+            />
+          )}
+        </S.Chat>
+      )}
+      {isModalOpen && !isSeller && (
         <S.Chat>
           {!isCustomRoomId ? (
-            <ChatList clickListBox={clickListBox} seller={seller} />
+            <ChatList
+              clickListBox={clickListBox}
+              seller={seller}
+              isSeller={isSeller}
+              product={product}
+            />
           ) : (
             <ChatDetail
               customRoomId={customRoomId}
