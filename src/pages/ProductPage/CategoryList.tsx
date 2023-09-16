@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
+import * as S from '@/components/MainPage/ListItemComponent/AllProductList.styles';
 import ListItem from '@/components/MainPage/ListItemComponent/ListItem';
-import * as S from '../../components/MainPage/ListItemComponent/AllProductList.styles';
 
 interface Product {
   productId: number;
@@ -24,7 +24,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ category }) => {
 
   const productFetch = async () => {
     await axios
-      .get(`https://pet-commerce.shop/v1/api/product/${category}?pageNumber=${page}`)
+      .get(`https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${page}`)
       .then((res) => {
         console.log(res.data);
         setProducts((prevProducts) => [...prevProducts, ...res.data]);
