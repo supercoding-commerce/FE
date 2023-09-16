@@ -15,9 +15,9 @@ const ProductPage: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<FilterOption>();
   const [searchParams] = useSearchParams();
   const subcategory = searchParams.get('subcategory');
-  const [filterButtonText, setFilterButtonText] = useState<string>('신상품');
-  const [ageButtonText, setAgeButtonText] = useState<string>('나이');
-  const [genderButtonText, setGenderButtonText] = useState<string>('성별');
+  const [filter, setFilter] = useState<string>('신상품');
+  const [ageCategory, setAgeCategory] = useState<string>('나이');
+  const [genderCategory, setGenderCategory] = useState<string>('성별');
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -32,13 +32,13 @@ const ProductPage: React.FC = () => {
 
     switch (selectedOption) {
       case '신상품':
-        setFilterButtonText(option as FilterOption);
+        setFilter(option as FilterOption);
         break;
       case '나이':
-        setAgeButtonText(option as FilterOption);
+        setAgeCategory(option as FilterOption);
         break;
       case '성별':
-        setGenderButtonText(option as FilterOption);
+        setGenderCategory(option as FilterOption);
         break;
       default:
         break;
@@ -76,7 +76,7 @@ const ProductPage: React.FC = () => {
             icon="IconArrowDown"
             onClick={() => handleFilterButtonClick('신상품')}
           >
-            {filterButtonText}
+            {filter}
           </Button>
           <Button
             variant="contained"
@@ -86,7 +86,7 @@ const ProductPage: React.FC = () => {
             icon="IconArrowDown"
             onClick={() => handleFilterButtonClick('나이')}
           >
-            {ageButtonText}
+            {ageCategory}
           </Button>
           <Button
             variant="contained"
@@ -96,10 +96,10 @@ const ProductPage: React.FC = () => {
             icon="IconArrowDown"
             onClick={() => handleFilterButtonClick('성별')}
           >
-            {genderButtonText}
+            {genderCategory}
           </Button>
         </S.FilterContainer>
-        <CategoryList category={subcategory} />
+        <CategoryList category={subcategory} age={ageCategory} gender={genderCategory} />
 
         <FilterModal
           isOpen={isModalOpen}
@@ -108,8 +108,8 @@ const ProductPage: React.FC = () => {
               ? selectedOption === '신상품'
                 ? ['신상품', '리뷰순', '저가순', '고가순']
                 : selectedOption === '나이'
-                ? ['10대', '20대', '30대']
-                : ['남성', '여성']
+                ? ['10', '20', '30']
+                : ['MALE', 'FEMALE']
               : []
           }
           onClose={closeModal}

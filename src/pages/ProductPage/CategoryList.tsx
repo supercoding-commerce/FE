@@ -11,62 +11,84 @@ interface Product {
   name: string;
   price: number;
   shopName: string;
+  ageCategory: string;
+  genderCategory: string;
 }
 
 interface CategoryListProps {
   category: string | null;
+  age: string | null;
+  gender: string | null;
 }
 
-const CategoryList: React.FC<CategoryListProps> = ({
-  category,
-  // age, gender
-}) => {
+const CategoryList: React.FC<CategoryListProps> = ({ category, age, gender }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [page, setPage] = useState<number>(1);
   const [ref, inView] = useInView();
 
-  // age, gender
-  const age = 10;
-  const gender = 'common';
   const productFetch = async () => {
-    // https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${page}&ageCategory=20&
-    let url = `https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${page}`;
+    try {
+      let url = `https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${page}`;
 
-    url += age ? `&ageCategory=${age}` : '';
-    url += gender ? `&genderCategory=${gender}` : '';
+      if (age !== null && age !== undefined) {
+        url += `&ageCategory=${age}`;
+      }
 
-    await axios
-      // .get(`https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${page}`)
-      .get(url)
-      .then((res) => {
-        console.log(res.data);
-        setProducts((prevProducts) => [...prevProducts, ...res.data]);
-        setPage((prevPage) => prevPage + 1);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      if (gender !== null && gender !== undefined) {
+        url += `&genderCategory=${gender}`;
+      }
+
+      const response = await axios.get(url);
+      console.log('RESPONSE', response.data);
+      setProducts((prevProducts) => [...prevProducts, ...response.data]);
+      // if (age || gender) {
+      //   // setPage(1);
+      // setPage((prevPage) => prevPage + 1);
+      // }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  // 옵션 필터 처리시 호출
   useEffect(() => {
-    // age, gender
+    // if (inView) return;
+    if (age === '나이' && gender === '성별') return;
+
+    console.log('age gender 변경 호출', page);
+
     setPage(1);
-    // setTimeout(() => productFetch(), 100)
+    setProducts([]);
+    // productFetch();
+    // setPage((prev) => prev + 1);
+    setTimeout(() => {
+      productFetch();
+      // setPage((prev) => prev + 1);
+      setPage(page + 1);
+    }, 100);
+
+    console.log(page);
   }, [age, gender]);
 
-  // 무한스크롤 처리 하는 로직
+  // console.log('페이지구별', page, inView, 'age', age, gender);
+
   useEffect(() => {
+    // if (products.length === 0) {
+    //   return;
+    // }
+
     if (inView) {
-      console.log(inView, '무한 스크롤 요청 🎃');
+      console.log(inView, '무한 스크롤 요청 🎃', page);
       productFetch();
+      // setPage((prevPage) => prevPage + 1);
+      setPage(page + 1);
     }
   }, [inView]);
 
   return (
     <S.ListContainer>
-      {products.map((product) => (
+      {products.map((product, index) => (
         <ListItem
+          key={index}
           productId={product.productId}
           imageUrl={product.imageUrl}
           name={product.name}
