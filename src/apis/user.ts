@@ -42,7 +42,7 @@ export const checkNickName = async (payload: string) => {
 };
 
 export const checkShopName = async (payload: string) => {
-  const response = await client.get(`${USER_URL}/checkshopName`, {
+  const response = await client.get(`${USER_URL}/checkShopName`, {
     params: {
       shopName: payload,
     },

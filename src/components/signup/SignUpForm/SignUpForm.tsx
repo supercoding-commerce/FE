@@ -35,7 +35,7 @@ export interface SignUpItem {
   telephone: string;
   gender: 'FEMALE' | 'MALE';
   age: string;
-  nickName: string;
+  nickname: string;
   shopName: string;
   file: File | null;
 }
@@ -45,7 +45,7 @@ interface InputItem {
   label: string;
   placeholder: string;
   type: HTMLInputTypeAttribute;
-  button?: () => void;
+  button?: (e: MouseEvent<HTMLButtonElement>) => void;
   value: string;
 }
 
@@ -63,43 +63,49 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
     gender: 'FEMALE',
     address: '',
     age: '',
-    nickName: '',
+    nickname: '',
     detailAddress: '',
     shopName: '',
     file: null,
   });
 
-  const handleCheckEmail = () => {
+  const handleCheckEmail = (e: MouseEvent<HTMLButtonElement>) => {
     // TODO-YD : 백엔드 api 다시 사용가능할 때 수정 예정
-    // checkEmail(form.email).then((result) => {
-    //   if (result.status === 200) {
-    //     console.log(result);
-    //   }
-    //   if (result.status === 409) {
-    //   }
-    // });
+    e.preventDefault();
+    checkEmail(form.email).then((result) => {
+      if (result.status === 200) {
+        console.log(result);
+      }
+      if (result.status === 409) {
+        console.log(result);
+      }
+    });
   };
 
-  const handleCheckNickName = () => {
+  const handleCheckNickName = (e: MouseEvent<HTMLButtonElement>) => {
     // TODO-YD : 백엔드 api 다시 사용가능할 때 수정 예정
-    // checkNickName(form.nickName).then((result) => {
-    //   if (result.status === 200) {
-    //     console.log(result);
-    //   }
-    //   if (result.status === 409) {
-    //   }
-    // });
+    e.preventDefault();
+    checkNickName(form.nickname).then((result) => {
+      if (result.status === 200) {
+        console.log(result);
+      }
+      if (result.status === 409) {
+        console.log(result);
+      }
+    });
   };
 
-  const handleCheckShopName = () => {
+  const handleCheckShopName = (e: MouseEvent<HTMLButtonElement>) => {
     // TODO-YD : 백엔드 api 다시 사용가능할 때 수정 예정
-    // checkShopName(form.shopName).then((result) => {
-    //   if (result.status === 200) {
-    //     console.log(result);
-    //   }
-    //   if (result.status === 409) {
-    //   }
-    // });
+    e.preventDefault();
+    checkShopName(form.shopName).then((result) => {
+      if (result.status === 200) {
+        console.log(result);
+      }
+      if (result.status === 409) {
+        console.log(result);
+      }
+    });
   };
 
   const commonInputs: InputItem[] = [
@@ -143,12 +149,12 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
 
   const buyerInputs: InputItem[] = [
     {
-      labelId: 'nickName',
+      labelId: 'nickname',
       label: '닉네임',
       placeholder: '닉네임을 입력해주세요',
       type: 'text',
       button: handleCheckNickName,
-      value: form.nickName,
+      value: form.nickname,
     },
     {
       labelId: 'age',
@@ -170,7 +176,7 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
         gender: form.gender,
         address: form.address,
         age: form.age,
-        nickName: form.nickName,
+        nickname: form.nickname,
         // TODO-YD : 현재 api에 detail주소가 없어서 주석처리했습니다. api 수정되면 주석해제 해야함.
         // detailAddress: form.detailAddress,
       }).then((result) => {
@@ -225,7 +231,7 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
     validateEmpty(form.address) &&
     validateEmpty(form.detailAddress);
 
-  const buyerInputsValidate = validateEmpty(form.nickName) && validateEmpty(form.age);
+  const buyerInputsValidate = validateEmpty(form.nickname) && validateEmpty(form.age);
 
   const sellerInputsValidate = validateEmpty(form.shopName);
 
