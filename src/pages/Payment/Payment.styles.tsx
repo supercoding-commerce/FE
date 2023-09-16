@@ -20,6 +20,7 @@ export const SectionsWrapper = styled.div`
 export const AddressSection = styled.section`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 16px;
   border: 1px solid ${theme.color.black};
   border-radius: 8px;

@@ -2,13 +2,16 @@ import { Link } from 'react-router-dom';
 
 import Button from '@/components/common/Button/Button.tsx';
 import Icon from '@/components/common/Icon.tsx';
+import { useGetUserInfo } from '@/queries/user/query.ts';
 import { theme } from '@/styles/theme.ts';
 import * as S from './Payment.styles';
 
 export function Payment() {
-  const userName = '김승규';
-  const address = '서울특별시 용산구 후암동 서울특별시 용산구 후암동 서울특별시 용산구 후암동';
-  const 보유금액 = 100000;
+  const { data: user } = useGetUserInfo();
+
+  // const userName = '김승규';
+  // const address = '서울특별시 용산구 후암동 서울특별시 용산구 후암동 서울특별시 용산구 후암동';
+  // const 보유금액 = 100000;
 
   const 총금액 = 70750;
   const 배송비 = 0;
@@ -26,14 +29,15 @@ export function Payment() {
     alert('포인트 전액 사용');
   };
 
+  if (!user) return null;
   return (
     <S.PaymentWrapper>
       <S.SectionsWrapper>
         <Link to={'#'}>
           <S.AddressSection>
             <S.AddressWrapper>
-              <S.AddressTitle>배송지 | {userName}</S.AddressTitle>
-              <S.Address>{address}</S.Address>
+              <S.AddressTitle>배송지 | {user.nickname}</S.AddressTitle>
+              <S.Address>{user.address}</S.Address>
             </S.AddressWrapper>
             <Icon name={'IconArrowRightFill'} size={24} />
           </S.AddressSection>
@@ -42,7 +46,7 @@ export function Payment() {
         <S.PayMoneySection>
           <S.MoneyWrapper>
             <S.Title>총 보유 금액</S.Title>
-            <S.TextHighlight>{moneyFormat(보유금액)}원</S.TextHighlight>
+            <S.TextHighlight>{moneyFormat(user.payMoney)}원</S.TextHighlight>
           </S.MoneyWrapper>
           <Link to={'#'}>
             <Button variant={'main'} size={'large'} isFullWidth>
