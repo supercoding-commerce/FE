@@ -12,6 +12,7 @@ import { OptionAdder } from '@/components/OptionAdder/OptionAdder.tsx';
 import { AGE_CATEGORY, CATEGORY_PRODUCT } from '@/const';
 import useInputs from '@/hooks/useInputs.ts';
 import { ProductFormType } from '@/models/product.ts';
+import { useCreateProduct } from '@/queries/product/mutation.ts';
 import * as S from './ProductForm.styles.tsx';
 
 // GYU-TODO: 입력마다 리렌더링되는 부분 성능 개선!
@@ -22,21 +23,22 @@ type ProductFormProps = {
 export function ProductForm({ productForm }: ProductFormProps) {
   const [images, setImages] = useState<File[]>(productForm.imageFiles || []);
   const [options, setOptions] = useState<string[]>(productForm.options || []);
-
   const { form, onChange, onChangeForm } = useInputs<ProductFormType>(productForm);
 
-  const handleClickAddProduct = () => {
-    // GYU-TODO: 상품 등록 기능 추가하기
-    const addForm = {
-      ...form,
-      price: Number(form.price),
-      leftAmount: Number(form.leftAmount),
-      images,
-      options,
-    };
+  const { createProductMutate } = useCreateProduct();
 
-    alert('상품 추가하기');
-    console.log('addForm 형태', addForm);
+  const handleClickAddProduct = async () => {
+    const productFormData = new FormData();
+    productFormData.append('productRequest', JSON.stringify({ ...form, options }));
+    Array.from(images).forEach((image) => {
+      productFormData.append('imageFiles', image);
+    });
+
+    createProductMutate(productFormData, {
+      onSuccess: () => {
+        alert('상품 추가 성공');
+      },
+    });
   };
 
   return (

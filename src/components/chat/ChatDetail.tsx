@@ -1,7 +1,8 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Client } from '@stomp/stompjs';
 
+import { client } from '@/apis';
 import ChatDetailBody from '@/components/chat/chatDetail/ChatDetailBody';
 import ChatDetailHeader from '@/components/chat/chatDetail/ChatDetailHeader';
 import ChatSend from '@/components/chat/chatDetail/ChatSend';
@@ -38,7 +39,7 @@ type ChatUserProps = {
 
 /** stompClient() : 서버랑 연결할 클라이언트 객체 생성 */
 const stompClient = new Client({
-  brokerURL: 'ws://52.79.195.235:8080/chat',
+  brokerURL: `${import.meta.env.VITE_API_CHAT_URL}/chat`,
 });
 
 const ChatDetail = ({
@@ -62,16 +63,12 @@ const ChatDetail = ({
     [seller.shopName]: false,
   });
 
-  const ACCESS_TOKEN =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0M0B0ZXN0LmNvbSIsImF1dGgiOiJVU0VSIiwiZXhwIjoxNjk0NzkxODY5LCJpYXQiOjE2OTQ3ODgyNjl9.Brl5Ah1y2Vvb7hxDhOsdU_HlWKcGytwhqXRd6sbUBYY';
-
   const loadPrevChat: () => Promise<void> = async () => {
-    const url = import.meta.env.VITE_API_BASE_URL;
-    await axios
-      .get(`${url}/v1/api/chat/detail/${customRoomId}`, {
-        headers: { ACCESS_TOKEN: `Bearer ${ACCESS_TOKEN}` },
-      })
+    // const url = import.meta.env.VITE_API_BASE_URL;
+    await client
+      .get(`/v1/api/chat/detail/${customRoomId}`)
       .then((res) => {
+        console.log(res);
         const prev = res.data.chats;
         const msgArray: Msg[] = Object.values(prev);
         setPrevMsg([...msgArray]);
