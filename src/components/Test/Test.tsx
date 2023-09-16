@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 
+import BtnTest from '@/components/common/commonUiTest/BtnTest';
 import Icon from '@/components/common/Icon.tsx';
 import { Rating } from '@/components/common/Rating/Rating.tsx';
 import { DeleteIcon } from '@/components/icons/DeleteIcon.tsx';
@@ -46,6 +47,7 @@ function Test() {
         <Rating count={ratingStar} onChange={handleChangeRating} /> <span>{ratingStar}</span>
         <Rating readOnly count={2} size={12} />
       </div>
+      <BtnTest />
     </div>
   );
 }
