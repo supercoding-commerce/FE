@@ -131,7 +131,7 @@ export const OrderItemInfoWrapper = styled.div`
     ${theme.font.body0}
   }
   .option {
-    ${theme.font.body2}
+    ${theme.font.body3}
   }
   .info {
     ${theme.font.body2}
