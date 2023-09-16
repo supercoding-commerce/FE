@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import * as S from '@/components/MainPage/ListItemComponent/AllProductList.styles';
@@ -25,10 +25,13 @@ const CategoryList: React.FC<CategoryListProps> = ({ category, age, gender }) =>
   const [products, setProducts] = useState<Product[]>([]);
   const [page, setPage] = useState<number>(1);
   const [ref, inView] = useInView();
+  const pageRef = useRef(1);
+  // console.log('page', page);
 
   const productFetch = async () => {
+    // console.log('productFetch call');
     try {
-      let url = `https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${page}`;
+      let url = `https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${pageRef.current}`;
 
       if (age !== null && age !== undefined) {
         url += `&ageCategory=${age}`;
@@ -40,7 +43,11 @@ const CategoryList: React.FC<CategoryListProps> = ({ category, age, gender }) =>
 
       const response = await axios.get(url);
       console.log('RESPONSE', response.data);
-      setProducts((prevProducts) => [...prevProducts, ...response.data]);
+      setProducts((prevProducts) => [
+        ...(pageRef.current === 1 ? [] : prevProducts),
+        ...response.data,
+      ]);
+      pageRef.current = pageRef.current + 1;
       // if (age || gender) {
       //   // setPage(1);
       // setPage((prevPage) => prevPage + 1);
@@ -51,22 +58,22 @@ const CategoryList: React.FC<CategoryListProps> = ({ category, age, gender }) =>
   };
 
   useEffect(() => {
-    // if (inView) return;
     if (age === '나이' && gender === '성별') return;
 
-    console.log('age gender 변경 호출', page);
+    pageRef.current = 1;
+    productFetch();
+    // setPage(1);
+    // setProducts([]);
 
-    setPage(1);
-    setProducts([]);
     // productFetch();
     // setPage((prev) => prev + 1);
-    setTimeout(() => {
-      productFetch();
-      // setPage((prev) => prev + 1);
-      setPage(page + 1);
-    }, 100);
+    // setTimeout(() => {
 
-    console.log(page);
+    // setPage((prev) => prev + 1);
+    // setPage(page + 1);
+    // }, 100);
+
+    // console.log(page);
   }, [age, gender]);
 
   // console.log('페이지구별', page, inView, 'age', age, gender);
@@ -76,13 +83,17 @@ const CategoryList: React.FC<CategoryListProps> = ({ category, age, gender }) =>
     //   return;
     // }
 
+    // console.log('inView 변경 호출', page);
     if (inView) {
       console.log(inView, '무한 스크롤 요청 🎃', page);
       productFetch();
+      // pageRef.current = pageRef.current + 1;
       // setPage((prevPage) => prevPage + 1);
-      setPage(page + 1);
+      // setPage(page + 1);
     }
   }, [inView]);
+
+  console.log('pageRef.current', pageRef.current);
 
   return (
     <S.ListContainer>
