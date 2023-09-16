@@ -1,11 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { CartItemAPI, postPayment } from '@/apis/product';
 import Button from '@/components/common/Button/Button';
 import Icon, { IconNameType } from '@/components/common/Icon';
 import * as S from './DetailFooter.styles';
 
-const DetailFooter = () => {
+type FooterProps = {
+  cartProduct: CartItemAPI[];
+};
+
+const DetailFooter = ({ cartProduct }: FooterProps) => {
+  console.log(cartProduct);
   const [heart, setHeart] = useState<IconNameType>('IconEmptyHeart');
   const isBuyer = true;
 
@@ -14,7 +20,10 @@ const DetailFooter = () => {
   };
 
   const navigate = useNavigate();
-  const goToPay = () => [navigate('/pay')];
+  const postPaymentProduct = () => {
+    postPayment([...cartProduct]);
+    navigate('/pay');
+  };
 
   return (
     <>
@@ -37,7 +46,7 @@ const DetailFooter = () => {
             width="150px"
             isCircle={false}
             isFullWidth={false}
-            onClick={goToPay}
+            onClick={postPaymentProduct}
           >
             구매하기
           </Button>
