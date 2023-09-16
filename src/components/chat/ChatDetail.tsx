@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Client } from '@stomp/stompjs';
 
@@ -64,7 +63,6 @@ const ChatDetail = ({
   });
 
   const loadPrevChat: () => Promise<void> = async () => {
-    // const url = import.meta.env.VITE_API_BASE_URL;
     await client
       .get(`/v1/api/chat/detail/${customRoomId}`)
       .then((res) => {

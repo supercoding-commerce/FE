@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+import { client } from '@/apis';
 import ChatBody from '@/components/chat/chatList/ChatBody';
 import ChatHeader from '@/components/chat/chatList/ChatHeader';
 
@@ -35,18 +35,10 @@ const ChatList = ({ clickListBox, seller }: chatProps) => {
 
   const [shopImg, setShopImg] = useState<string>('');
 
-  const ACCESS_TOKEN =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwb3BvMkBwb3BvLmNvbSIsImF1dGgiOiJVU0VSIiwiZXhwIjoxNjk0ODU5MzU0LCJpYXQiOjE2OTQ4NTU3NTR9.EgdnqXXgYDech0P8d9Hx5AdCFeqbqhX1fhB-t68Xz44';
-
   const loadChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;
-    const url = import.meta.env.VITE_API_BASE_URL;
-    console.log(sellerId);
-    await axios
-      .get(`${url}/v1/api/chat/user/${sellerId}`, {
-        // 셀러 아이디 받아와야함
-        headers: { ACCESS_TOKEN: `Bearer ${ACCESS_TOKEN}` },
-      })
+    await client
+      .get(`/v1/api/chat/user/${sellerId}`)
       .then((res) => {
         console.log(res.data);
         const data = res.data.chatList;
