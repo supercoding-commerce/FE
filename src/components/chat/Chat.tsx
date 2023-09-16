@@ -6,11 +6,11 @@ import ChatList from '@/components/chat/ChatList';
 import * as S from './Chat.styles';
 
 const Chat = () => {
-  const seller = { sellerId: 2, shopName: '테스트판매자2' };
+  const seller = { sellerId: 3, shopName: '상점3' };
   /** TODO: 로그인할때 유저정보에서 받아올 것. 리코일 쓰나? */
-  const user = { userId: 3, userName: '테스트유저3' };
+  const user = { userId: 12, userName: 'kristengreen' };
   /** TODO: 디테일 페이지에서 props로 받아올 것 */
-  const product = { productId: 5, productName: '테스트상품4' };
+  const product = { productId: 5, productName: 'what' };
   const isSeller = false;
   const role = isSeller ? 'seller' : 'user';
   const roomId = createCustomRoomId(seller.sellerId, product.productId, user.userId);
@@ -42,7 +42,6 @@ const Chat = () => {
    */
   const clickListBox = (customRoomId: string) => {
     setIsCustomRoomId((prev) => !prev);
-    console.log('chat의 customRoomId', customRoomId);
     setCustomRoomId(customRoomId);
   };
 
@@ -62,7 +61,7 @@ const Chat = () => {
       {isModalOpen && (
         <S.Chat>
           {!isCustomRoomId ? (
-            <ChatList clickListBox={clickListBox} />
+            <ChatList clickListBox={clickListBox} seller={seller} />
           ) : (
             <ChatDetail
               customRoomId={customRoomId}
