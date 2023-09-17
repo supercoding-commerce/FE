@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { checkEmail, checkNickName, checkShopName, signUpBuyer, signUpSeller } from '@/apis/user';
 import Button from '@/components/common/Button/Button';
 import { Input } from '@/components/common/Input/Input';
-import Modal from '@/components/common/Modal/Modal';
+import AddressModal from '@/components/common/Modal/AddressModal';
 import { Radio } from '@/components/common/Radio/Radio';
 import { RadioGroup } from '@/components/common/Radio/RadioGroup';
 import TextField from '@/components/common/TextField/TextField';
@@ -279,9 +279,9 @@ const SignUpForm = ({ pathname }: SignUpFormProps) => {
   return (
     <>
       {modalOpen ? (
-        <Modal setModalOpen={setModalOpen}>
+        <AddressModal setModalOpen={setModalOpen}>
           <DaumPostCode onComplete={handleDaumPostCode} />
-        </Modal>
+        </AddressModal>
       ) : null}
       <S.SignUpFormContainer onSubmit={submitHandler}>
         {commonInputs.map((item) => {
