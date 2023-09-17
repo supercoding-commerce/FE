@@ -1,13 +1,27 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import { cx } from '@emotion/css';
 
 import * as S from '@/components/common/Header/SearchHeader.styles.tsx';
 import Icon from '@/components/common/Icon.tsx';
+import { userState } from '@/recoil/userState';
 
 // GYU-TODO: Search Header 보니깐, Category UI 동일하게 있음, 해당 컴포넌트에 넣어도 될듯!
 const SearchHeader = () => {
+  const navigate = useNavigate();
+  const userInfo = useRecoilValue(userState);
   const [searchOpen, setSearchOpen] = useState(false);
   const [inputOpen, setInputOpen] = useState(false);
+
+  console.log(userInfo.role);
+  const handleUserInfo = () => {
+    if (userInfo.role === '') {
+      navigate('/signin');
+      return;
+    }
+    navigate('/mypage');
+  };
 
   return (
     <S.SearchHeaderContainer>
@@ -42,10 +56,17 @@ const SearchHeader = () => {
             }}
           />
         )}
-        {/* user아이콘 fill이 white로 되어있는 것 같습니다!
-        헤더의 배경색이 흰색이면 상관 없을 듯한데 다른색이면 이부분도 색 수정을 해야합니다! */}
-        <Icon name="IconUser" />
-        <Icon name="IconBag" />
+        <Icon name="IconUser" onClick={handleUserInfo} style={{ cursor: 'pointer' }} />
+        {userInfo.role === 'SELLER' ? (
+          <Icon
+            name="IconAdd"
+            size={24}
+            onClick={() => navigate('/new/product')}
+            style={{ cursor: 'pointer' }}
+          />
+        ) : (
+          <Icon name="IconBag" onClick={() => navigate('/mycart')} style={{ cursor: 'pointer' }} />
+        )}
       </S.IconsContainer>
     </S.SearchHeaderContainer>
   );

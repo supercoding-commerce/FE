@@ -4,7 +4,7 @@ import { theme } from '@/styles/theme';
 
 export const ListItem = styled.li`
   width: 171px;
-  border: 2px solid black;
+  border: 1px solid black;
   height: 207px;
   list-style: none;
 `;
@@ -25,7 +25,7 @@ export const DetailDescription = styled.p`
   ${theme.font.body3}
 `;
 
-export const ProductContainer = styled.div`
+export const ListWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -36,4 +36,10 @@ export const ListContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
   flex-direction: row;
+`;
+
+export const ProductImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;

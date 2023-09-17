@@ -82,7 +82,7 @@ export const Button = styled.button`
     border-radius: 100%;
     width: var(--width);
     height: var(--height);
-    padding: 0px 0px;
+    padding: 0px 0px !important;
   }
 
   &.full-width {

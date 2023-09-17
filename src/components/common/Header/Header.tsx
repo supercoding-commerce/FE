@@ -24,7 +24,13 @@ export function Header() {
   return <DefaultHeader text={HEADER_TITLE[pathname] || ''} />;
 }
 
-const NO_HEADER_URL: RoutePath[] = ['/signup', '/signup/seller', '/signup/buyer', '/signin'];
+const NO_HEADER_URL: RoutePath[] = [
+  '/signup',
+  '/signup/seller',
+  '/signup/buyer',
+  '/signin',
+  '/search/category',
+];
 const SEARCH_HEADER_URL: RoutePath[] = ['/', '/category'];
 const PRODUCT_DETAIL_REGEX = new RegExp(/\/product\/\d+/);
 const HEADER_TITLE: { [key: RoutePath]: string } = {
