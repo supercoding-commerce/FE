@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 import { CartItemAPI, getProduct } from '@/apis/product';
+import { getReview } from '@/apis/review';
 import DetailCategory from '@/components/Detail/detailCategory/DetailCategory';
 import InformationBox from '@/components/Detail/detailInformation/InformationBox';
 import ReviewBox from '@/components/Detail/detailReview/ReviewBox';
@@ -29,15 +30,37 @@ export type DetailProduct = {
   }[];
 };
 
+export type DetailReview = {
+  productId: number;
+  productName: string;
+  options: string;
+  reviewId: number;
+  author: string;
+  title: string;
+  content: string;
+  starPoint: number;
+  imageUrl: string;
+  createdAt: string;
+};
+
 const DetailPage = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState<DetailProduct>();
+  const [review, setReview] = useState<DetailReview[]>([]);
   const [cartProduct, setCartProduct] = useState<CartItemAPI[]>([]);
   const [isReview, setIsReview] = useState<boolean>(false);
   const [prevCategory, setPrevCategory] = useState<string>('');
 
-  console.log('product', product);
-  console.log('isReview', isReview);
+  useEffect(() => {
+    if (isReview) {
+      getReview(Number(productId)).then((result) => {
+        if (result.status === 200) {
+          const data = result.data;
+          setReview((prevReview) => [...prevReview, ...data]);
+        }
+      });
+    }
+  }, [isReview, productId]);
 
   useEffect(() => {
     getProduct(Number(productId)).then((result) => {
@@ -79,6 +102,7 @@ const DetailPage = () => {
     setCartProduct(cartProduct.filter((_, index) => index !== idx));
   };
 
+  /** handleCategory() : 상세정보/리뷰 카테고리 내용 전환 */
   const handleCategory = (category: string) => {
     if (category !== prevCategory) {
       setIsReview((prev) => !prev);
@@ -104,7 +128,9 @@ const DetailPage = () => {
           <ReviewButton />
           <ReviewWrite />
           <ReviewFilterButton />
-          <ReviewBox />
+          {review?.map((item, idx) => {
+            return <ReviewBox key={idx} review={item} />;
+          })}
         </>
       )}
       <DetailFooter cartProduct={cartProduct} />
