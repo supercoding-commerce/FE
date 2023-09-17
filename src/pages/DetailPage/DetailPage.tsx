@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 
-import { CartItemAPI, getProduct } from '@/apis/product';
+import { getProduct, OrderNCartItemAPI } from '@/apis/product';
 import DetailFooter from '@/components/DetailFooter/DetailFooter';
-import DetailHeader from '@/components/DetailHeader/DetailHeader';
-import ProductOption from '@/components/DetailHeader/ProductOption';
+import DetailInfo from '@/components/DetailInfo/DetailInfo';
+import ProductOption from '@/components/DetailInfo/ProductOption';
 import { theme } from '@/styles/theme';
 
 export type DetailProduct = {
@@ -26,7 +26,7 @@ export type DetailProduct = {
 const DetailPage = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState<DetailProduct>();
-  const [cartProduct, setCartProduct] = useState<CartItemAPI[]>([]);
+  const [orderNCartProduct, setOrderNCartProduct] = useState<OrderNCartItemAPI[]>([]);
 
   useEffect(() => {
     getProduct(Number(productId)).then((result) => {
@@ -38,10 +38,11 @@ const DetailPage = () => {
     });
   }, []);
   if (!product) return;
+  console.log(product);
 
   const onOptionPlusHandler = (item: string) => {
-    setCartProduct([
-      ...cartProduct,
+    setOrderNCartProduct([
+      ...orderNCartProduct,
       {
         productId: Number(productId),
         quantity: 1,
@@ -52,7 +53,7 @@ const DetailPage = () => {
 
   //배열에 useState 사용하는 법
   const onQuantityChangeHandler = (idx: number, newQuantity: number) => {
-    const array = cartProduct;
+    const array = orderNCartProduct;
     const newArray = array.map((v, index) => {
       if (index === idx) {
         v.quantity = newQuantity;
@@ -61,24 +62,24 @@ const DetailPage = () => {
       return v;
     });
 
-    setCartProduct(newArray);
+    setOrderNCartProduct(newArray);
   };
 
   const onOptionDeleteHandler = (idx: number) => {
-    setCartProduct(cartProduct.filter((_, index) => index !== idx));
+    setOrderNCartProduct(orderNCartProduct.filter((_, index) => index !== idx));
   };
 
   return (
     <DetailPageContainer>
-      <DetailHeader product={product} />
+      <DetailInfo product={product} />
       <ProductOption
         product={product}
-        cartProduct={cartProduct}
+        orderNCartProduct={orderNCartProduct}
         onOptionPlus={onOptionPlusHandler}
         onOptionDelete={onOptionDeleteHandler}
         onQuantityChange={onQuantityChangeHandler}
       />
-      <DetailFooter cartProduct={cartProduct} />
+      <DetailFooter orderNCartProduct={orderNCartProduct} />
     </DetailPageContainer>
   );
 };

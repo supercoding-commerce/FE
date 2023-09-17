@@ -15,10 +15,10 @@ import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
 import { UpdateProduct } from '@/pages/UpdateProduct/UpdateProduct.tsx';
 // GYU-TODO: DELETE
-function TestCompoennt() {
-  const location = useLocation();
-  return <div>{location.pathname}</div>;
-}
+// function TestCompoennt() {
+//   const location = useLocation();
+//   return <div>{location.pathname}</div>;
+// } 사용하지 않는거 같아서 주석처리 했습니다
 
 export const router = createBrowserRouter([
   {
@@ -32,16 +32,12 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/product/:id',
-        element: <TestCompoennt />,
+        path: '/product/:productId',
+        element: <DetailPage />,
       },
       {
         path: '/category',
         element: <Menu />,
-      },
-      {
-        path: '/detail/:productId',
-        element: <DetailPage />,
       },
       {
         path: '/search/category',
@@ -102,6 +98,7 @@ export type RoutePath =
   | '/signin'
   | '/'
   | '/product/:id'
+  | '/product/:productId'
   | '/category'
   | '/mycart'
   | '/pay'

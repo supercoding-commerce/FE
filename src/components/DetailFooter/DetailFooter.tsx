@@ -1,28 +1,33 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { CartItemAPI, postPayment } from '@/apis/product';
+import { OrderNCartItemAPI, postCart, postPayment } from '@/apis/product';
 import Button from '@/components/common/Button/Button';
 import Icon, { IconNameType } from '@/components/common/Icon';
 import * as S from './DetailFooter.styles';
 
 type FooterProps = {
-  cartProduct: CartItemAPI[];
+  orderNCartProduct: OrderNCartItemAPI[];
 };
 
-const DetailFooter = ({ cartProduct }: FooterProps) => {
-  console.log(cartProduct);
+const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
   const [heart, setHeart] = useState<IconNameType>('IconEmptyHeart');
+  const navigate = useNavigate();
+
   const isBuyer = true;
 
   const changeHeartHandler = () => {
     setHeart(heart === 'IconEmptyHeart' ? 'IconFullHeart' : 'IconEmptyHeart');
   };
 
-  const navigate = useNavigate();
   const postPaymentProduct = () => {
-    postPayment([...cartProduct]);
+    postPayment([...orderNCartProduct]);
     navigate('/pay');
+  };
+
+  const postCartProduct = () => {
+    postCart(orderNCartProduct[0]);
+    // navigate('/mycart');
   };
 
   return (
@@ -37,6 +42,7 @@ const DetailFooter = ({ cartProduct }: FooterProps) => {
             color="black"
             isCircle={false}
             isFullWidth={false}
+            onClick={postCartProduct}
           >
             장바구니
           </Button>
