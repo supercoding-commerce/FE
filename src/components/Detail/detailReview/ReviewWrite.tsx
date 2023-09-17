@@ -14,11 +14,12 @@ type writeProps = {
   orderId: string[] | null;
   stringOrderList: string[];
   productId: number;
+  handleWriteButton: () => void;
 };
 
-const ReviewWrite = ({ stringOrderList, productId }: writeProps) => {
+const ReviewWrite = ({ stringOrderList, productId, handleWriteButton }: writeProps) => {
   const [option, setOption] = useState<string>('');
-  // const [orderId, setOrderId] = useState<string>('');
+
   // 파일 이름을 저장할 상태를 만듭니다.
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
@@ -96,7 +97,7 @@ const ReviewWrite = ({ stringOrderList, productId }: writeProps) => {
       <div className="Review_write_container">
         <div className="review_top">
           <Rating size={20} onChange={handleChangeRating} />
-          <Icon name="IconX" cursor="pointer" />
+          <Icon name="IconX" cursor="pointer" onClick={handleWriteButton} />
         </div>
         <div className="review_top1">
           <SelectBox optionList={stringOrderList} onChange={handleChangeOrderId} value={option} />

@@ -30,6 +30,7 @@ type reviewProps = {
 
 const Review = ({ productId, isReview, orderList }: reviewProps) => {
   const [review, setReview] = useState<DetailReview[]>([]);
+  const [isWrite, setIsWrite] = useState<boolean>(false);
 
   const orderId = orderList.map((item) => JSON.stringify(item.orderId));
   //   const orderOption = orderList.map((item) => JSON.parse(item.orderOption));
@@ -49,6 +50,10 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
     }
   }, [isReview, productId]);
 
+  const handleWriteButton = () => {
+    setIsWrite((prev) => !prev);
+  };
+
   /** 별점 순 재배열 */
   const byRating = () => {
     const star = review.sort((a, b) => b.starPoint - a.starPoint);
@@ -61,8 +66,15 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
 
   return (
     <>
-      <ReviewButton />
-      <ReviewWrite orderId={orderId} stringOrderList={stringOrderList} productId={productId} />
+      <ReviewButton handleWriteButton={handleWriteButton} />
+      {isWrite && (
+        <ReviewWrite
+          orderId={orderId}
+          stringOrderList={stringOrderList}
+          productId={productId}
+          handleWriteButton={handleWriteButton}
+        />
+      )}
       <ReviewFilterButton byRating={byRating} />
       {review?.map((item, idx) => {
         return <ReviewBox key={idx} review={item} />;
