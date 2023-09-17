@@ -1,3 +1,4 @@
 export const localStorageKey = {
-  auth: 'AUTH',
+  accessToken: 'ACCESS_TOKEN',
+  refreshToken: 'REFRESH_TOKEN',
 };

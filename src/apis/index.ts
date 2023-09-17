@@ -11,11 +11,17 @@ export const client = axios.create({
 
 client.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    const accessToken = getItem<string>(localStorageKey.auth);
+    const accessToken = getItem<string>(localStorageKey.accessToken);
+    const refreshToken = getItem<string>(localStorageKey.refreshToken);
 
     if (accessToken) {
       config.headers = config.headers || {};
       config.headers.ACCESS_TOKEN = `Bearer ${accessToken}`;
+    }
+
+    if (refreshToken) {
+      config.headers = config.headers || {};
+      config.headers.REFRESH_TOKEN = `Bearer ${refreshToken}`;
     }
 
     return config;
@@ -24,10 +30,18 @@ client.interceptors.request.use(
 
 client.interceptors.response.use((response: AxiosResponse): AxiosResponse => {
   const accessToken: string | null = response.data.accessToken;
+  const refreshToken: string | null = response.data.refreshToken;
+  const editToken = (token: string) => {
+    const editedToken = token.replace('Bearer', '').trim();
+    return editedToken;
+  };
 
   if (accessToken) {
-    const editAccessToken = accessToken.replace('Bearer', '').trim();
-    setItem(localStorageKey.auth, editAccessToken);
+    setItem(localStorageKey.accessToken, editToken(accessToken));
+  }
+
+  if (refreshToken) {
+    setItem(localStorageKey.refreshToken, editToken(refreshToken));
   }
 
   return response;

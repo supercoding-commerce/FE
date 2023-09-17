@@ -36,7 +36,7 @@ const SignInPage = () => {
     e.preventDefault();
     signIn(form).then((result) => {
       if (result.status === 200) {
-        const accessToken = getItem<string>(localStorageKey.auth);
+        const accessToken = getItem<string>(localStorageKey.accessToken);
         if (accessToken) {
           const userData = parseJwt(accessToken);
           setUser({
