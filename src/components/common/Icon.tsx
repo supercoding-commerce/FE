@@ -42,6 +42,9 @@ const Icon = ({
       width: ${width ?? `${size}px`};
       height: ${height ?? `${size}px`};
     }
+    & {
+      cursor: pointer;
+    }
   `;
 
   return <SVGIcon {...rest} css={IconStyles} style={style} />;
