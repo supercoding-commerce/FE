@@ -27,15 +27,23 @@ type chatProps = {
     sellerId: number;
     shopName: string;
   };
+  product: {
+    productId: number;
+    productName: string;
+  };
+  isSeller: boolean;
 };
 
-const ChatList = ({ clickListBox, seller }: chatProps) => {
+const ChatList = ({ clickListBox, seller, isSeller, product }: chatProps) => {
   /** TODO: 디테일 페이지에서 props로 받아올 것 */
   const [list, setList] = useState<list[]>([]);
 
   const [shopImg, setShopImg] = useState<string>('');
 
-  const loadChatList: () => Promise<void> = async () => {
+  console.log(seller.sellerId);
+  console.log('isSeller', seller.sellerId);
+
+  const loadUserChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;
     await client
       .get(`/v1/api/chat/user/${sellerId}`)
@@ -51,9 +59,27 @@ const ChatList = ({ clickListBox, seller }: chatProps) => {
       });
   };
 
+  const loadSellerChatList: () => Promise<void> = async () => {
+    const sellerId = seller.sellerId;
+    const productId = product.productId;
+    await client
+      .get(`/v1/api/chat/seller/${sellerId}/${productId}`)
+      .then((res) => {
+        console.log(res.data);
+        const data = res.data.chatList;
+        const img = res.data.shopImage;
+        setList([...data]);
+        setShopImg(img);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
-    loadChatList();
-  }, []);
+    if (!isSeller) loadUserChatList();
+    else loadSellerChatList();
+  }, [isSeller]);
 
   console.log('chatList', list);
   console.log('shopImg', shopImg);

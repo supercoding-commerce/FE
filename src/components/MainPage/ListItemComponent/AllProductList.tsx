@@ -42,6 +42,7 @@ const AllProductList: React.FC = () => {
     <S.ListContainer>
       {products.map((product, index) => (
         <ListItem
+          productId={product.productId}
           key={index}
           imageUrl={product.imageUrl}
           name={product.name}

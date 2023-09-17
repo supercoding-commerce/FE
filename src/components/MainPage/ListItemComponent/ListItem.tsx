@@ -1,3 +1,6 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import * as S from '../ListItemComponent/AllProductList.styles';
 
 interface ListItemProps {
@@ -5,11 +8,18 @@ interface ListItemProps {
   name: string;
   price: number;
   shopName: string;
+  productId: number;
 }
 
-const ListItem: React.FC<ListItemProps> = ({ imageUrl, name, price, shopName }) => {
+const ListItem: React.FC<ListItemProps> = ({ imageUrl, name, price, shopName, productId }) => {
+  const navigate = useNavigate();
+
+  const handleItemClick = () => {
+    navigate(`/product/${productId}`);
+  };
+
   return (
-    <S.ListWrapper>
+    <S.ListWrapper onClick={handleItemClick} style={{ cursor: 'pointer' }}>
       <S.ListItem>
         <S.ProductImg src={imageUrl} alt="" />
       </S.ListItem>

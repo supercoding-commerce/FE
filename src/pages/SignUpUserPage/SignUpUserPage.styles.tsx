@@ -4,11 +4,13 @@ import { theme } from '@/styles/theme';
 
 export const SingUpUserContainer = styled.main`
   width: 100%;
-  height: 100vh;
+  height: auto;
   padding: 85px 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: white;
+  position: relative;
 `;
 
 export const SignUpTitle = styled.h2`
