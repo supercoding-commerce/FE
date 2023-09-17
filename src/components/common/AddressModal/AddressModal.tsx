@@ -1,7 +1,7 @@
 import { Dispatch, ReactNode } from 'react';
 
+import { ModalContainer, ModalXBtnBox } from '@/components/common/AddressModal/AddressModal.styles';
 import Icon from '@/components/common/Icon';
-import { ModalContainer, ModalXBtnBox } from '@/components/common/Modal/AddressModal.styles';
 
 interface ModalProps {
   children: ReactNode;

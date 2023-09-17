@@ -3,9 +3,9 @@ import DaumPostCode, { Address } from 'react-daum-postcode';
 import { useNavigate } from 'react-router-dom';
 
 import { checkEmail, checkNickName, checkShopName, signUpBuyer, signUpSeller } from '@/apis/user';
+import AddressModal from '@/components/common/AddressModal/AddressModal';
 import Button from '@/components/common/Button/Button';
 import { Input } from '@/components/common/Input/Input';
-import AddressModal from '@/components/common/Modal/AddressModal';
 import { Radio } from '@/components/common/Radio/Radio';
 import { RadioGroup } from '@/components/common/Radio/RadioGroup';
 import TextField from '@/components/common/TextField/TextField';
