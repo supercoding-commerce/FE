@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useModal } from '@ebay/nice-modal-react';
 
 import Button from '@/components/common/Button/Button.tsx';
 import Icon from '@/components/common/Icon.tsx';
+import { CouponModal } from '@/components/modals/CouponModal.tsx';
 import { useToggle } from '@/hooks/useToggle.ts';
 import { useGetOrders } from '@/queries/order/query.ts';
 import { useGetUserInfo } from '@/queries/user/query.ts';
@@ -13,20 +16,32 @@ export function Payment() {
   const { data: orders } = useGetOrders();
 
   const [pointActive, togglePoint] = useToggle();
+  const [selectedCoupon, setSelectedCoupon] = useState<Coupon | undefined>(undefined);
 
-  const 쿠폰 = 0;
+  const couponModal = useModal(CouponModal);
 
-  const handleClickCoupon = () => {
+  const handleClickCoupon = async () => {
+    // 이미 쿠폰 선택시 다시 클릭하면 쿠폰선택 취소
+    if (쿠폰적용금액 > 0) {
+      setSelectedCoupon(undefined);
+      return;
+    }
+
     // TODO: 모달 띄워서 쿠폰선택할 수 있게끔??
-    alert('쿠폰 선택 완료');
+    await couponModal.show({
+      selectedCoupon: selectedCoupon,
+      onUseCoupon: (selectedCoupon: Coupon | undefined) => setSelectedCoupon(selectedCoupon),
+    });
   };
 
   if (!user || !orders) return null;
 
   const 총상품가격 = getTotalPrice(orders);
   const 배송비 = getDeliveryFee(총상품가격);
+  const 쿠폰적용금액 = applyCoupon(selectedCoupon, 총상품가격);
   const 적립금 = pointActive ? 100 : 0;
-  const 총결제금액 = 총상품가격 + 배송비 - 적립금;
+  const 총결제금액 = 총상품가격 + 배송비 - 쿠폰적용금액 - 적립금;
+
   return (
     <S.PaymentWrapper>
       <S.SectionsWrapper>
@@ -43,7 +58,7 @@ export function Payment() {
         <S.PayMoneySection>
           <S.MoneyWrapper>
             <S.Title>총 보유 금액</S.Title>
-            <S.TextHighlight>{moneyFormat(user.payMoney)}원</S.TextHighlight>
+            <S.TextHighlight>{moneyFormat(user.payMoney || 0)}원</S.TextHighlight>
           </S.MoneyWrapper>
           <Link to={'#'}>
             <Button variant={'main'} size={'large'} isFullWidth>
@@ -63,10 +78,14 @@ export function Payment() {
           <S.TotalPayItemWrapper>
             <span>쿠폰 적용</span>
             <S.TotalPayItemOptionWrapper>
-              <S.Button color={theme.color.blue} onClick={handleClickCoupon}>
-                쿠폰 선택
+              <S.Button
+                color={theme.color.blue}
+                onClick={handleClickCoupon}
+                className={쿠폰적용금액 ? 'active' : ''}
+              >
+                {쿠폰적용금액 ? '취소' : '선택'}
               </S.Button>
-              <span>{moneyFormat(쿠폰)}원</span>
+              <span>{moneyFormat(쿠폰적용금액)}원</span>
             </S.TotalPayItemOptionWrapper>
           </S.TotalPayItemWrapper>
           <S.TotalPayItemWrapper>
@@ -94,7 +113,7 @@ export function Payment() {
                 <img src={orderItem.imageUrl} alt="thumbnail" />
                 <S.OrderItemInfoWrapper>
                   <span className={'name'}>{orderItem.productName}</span>
-                  <span className={'option'}>옵션 - {orderItem.options[0]}</span>
+                  <span className={'option'}>{orderItem.options[0]}</span>
                   <span className={'info'}>
                     {moneyFormat(orderItem.price)}원 - {orderItem.quantity}개
                   </span>
@@ -136,4 +155,18 @@ function getTotalPrice(orders: Order[]) {
 const FREE_PRICE = 80000;
 function getDeliveryFee(totalPrice: number) {
   return totalPrice >= FREE_PRICE ? 0 : 3000;
+}
+
+function applyCoupon(coupon: Coupon | undefined, 총상품가격: number) {
+  if (!coupon) return 0;
+
+  let discountRate = 1;
+  if (coupon.couponContent === '15%') {
+    discountRate = 0.15;
+  }
+  if (coupon.couponContent === '10%') {
+    discountRate = 0.1;
+  }
+
+  return 총상품가격 * discountRate;
 }
