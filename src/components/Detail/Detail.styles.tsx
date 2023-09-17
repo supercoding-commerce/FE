@@ -109,6 +109,13 @@ export const DetailReviewWrite = styled.div`
       align-items: center;
       margin-top: 28px;
     }
+    .review_top1 {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 18px;
+    }
 
     .review_middle {
       width: 100%;
@@ -233,6 +240,12 @@ export const DetailReviewBox = styled.div`
       align-items: center;
       border: 1px solid ${theme.color.borderColor};
       margin-top: 12px;
+
+      .img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
     .review_box_bottom {

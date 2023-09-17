@@ -97,7 +97,7 @@ const DetailPage = () => {
         <InformationBox />
       ) : (
         <>
-          <Review productId={Number(productId)} isReview={isReview} />
+          <Review productId={Number(productId)} isReview={isReview} orderList={product.orderList} />
         </>
       )}
       <DetailFooter cartProduct={cartProduct} />

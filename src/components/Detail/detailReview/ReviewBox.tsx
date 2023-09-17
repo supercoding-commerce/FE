@@ -22,7 +22,7 @@ const ReviewBox = ({ review }: ReviewProps) => {
           </div>
         </div>
         <div className="review_box_middle">
-          <img src={review.imageUrl} alt="리뷰 이미지" />
+          <img className="img" src={review.imageUrl} alt="리뷰 이미지" />
         </div>
         <div className="review_box_bottom">
           <div className="option_wrapper">

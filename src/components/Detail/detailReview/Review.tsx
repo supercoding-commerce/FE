@@ -22,12 +22,21 @@ export type DetailReview = {
 type reviewProps = {
   productId: number;
   isReview: boolean;
+  orderList: {
+    orderId: number;
+    orderOption: string;
+  }[];
 };
 
-const Review = ({ productId, isReview }: reviewProps) => {
+const Review = ({ productId, isReview, orderList }: reviewProps) => {
   const [review, setReview] = useState<DetailReview[]>([]);
 
-  console.log(review);
+  const orderId = orderList.map((item) => JSON.stringify(item.orderId));
+  //   const orderOption = orderList.map((item) => JSON.parse(item.orderOption));
+  const combineOrderIdAndOption = (item: { orderId: number; orderOption: string }) =>
+    `${item.orderId}-${JSON.parse(item.orderOption)[0]}`;
+
+  const stringOrderList = orderList.map(combineOrderIdAndOption);
 
   useEffect(() => {
     if (isReview) {
@@ -43,7 +52,6 @@ const Review = ({ productId, isReview }: reviewProps) => {
   /** 별점 순 재배열 */
   const byRating = () => {
     const star = review.sort((a, b) => b.starPoint - a.starPoint);
-    console.log('작동?');
     setReview([...star]);
   };
 
@@ -54,7 +62,7 @@ const Review = ({ productId, isReview }: reviewProps) => {
   return (
     <>
       <ReviewButton />
-      <ReviewWrite />
+      <ReviewWrite orderId={orderId} stringOrderList={stringOrderList} productId={productId} />
       <ReviewFilterButton byRating={byRating} />
       {review?.map((item, idx) => {
         return <ReviewBox key={idx} review={item} />;
