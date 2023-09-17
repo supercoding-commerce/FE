@@ -96,7 +96,7 @@ const ReviewWrite = ({ stringOrderList, productId }: writeProps) => {
       <div className="Review_write_container">
         <div className="review_top">
           <Rating size={20} onChange={handleChangeRating} />
-          <Icon name="IconX" />
+          <Icon name="IconX" cursor="pointer" />
         </div>
         <div className="review_top1">
           <SelectBox optionList={stringOrderList} onChange={handleChangeOrderId} value={option} />

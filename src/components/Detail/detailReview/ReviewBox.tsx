@@ -1,3 +1,5 @@
+import { deleteReview } from '@/apis/review';
+import Icon from '@/components/common/Icon';
 import { Rating } from '@/components/common/Rating/Rating';
 import { DetailReview } from '@/components/Detail/detailReview/Review';
 import * as S from '../Detail.styles';
@@ -10,12 +12,22 @@ type ReviewProps = {
 const ReviewBox = ({ review }: ReviewProps) => {
   const options = JSON.parse(review.options);
 
+  const deleteReviews = () => {
+    deleteReview(review.reviewId).then((result) => {
+      if (result.status === 200) {
+        //TODO: alert -> 모달로 변경
+        alert('해당 리뷰가 삭제되었습니다.');
+      }
+    });
+  };
+
   return (
     <S.DetailReviewBox>
       <div className="review_box_container">
         <div className="review_box_top">
           <div className="name_wrapper">
             <span>{review.author}</span>
+            <Icon name="IconX" cursor="pointer" onClick={deleteReviews} />
           </div>
           <div className="rating_wrapper">
             <Rating size={20} count={review.starPoint} readOnly />

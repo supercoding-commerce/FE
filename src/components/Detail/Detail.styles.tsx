@@ -220,11 +220,21 @@ export const DetailReviewBox = styled.div`
       flex-direction: column;
       margin-top: 32px;
 
+      .name_wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+          ${theme.font.body0};
+        }
+      }
+
       .rating_wrapper {
         display: flex;
         justify-content: left;
         align-items: center;
-        margin-top: 7px;
+        margin-top: 10px;
 
         span {
           ${theme.font.body1};
