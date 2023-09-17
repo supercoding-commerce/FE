@@ -3,6 +3,12 @@ import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 import { CartItemAPI, getProduct } from '@/apis/product';
+import DetailCategory from '@/components/Detail/detailCategory/DetailCategory';
+import InformationBox from '@/components/Detail/detailInformation/InformationBox';
+import ReviewBox from '@/components/Detail/detailReview/ReviewBox';
+import ReviewButton from '@/components/Detail/detailReview/ReviewButton';
+import ReviewFilterButton from '@/components/Detail/detailReview/ReviewFilterButton';
+import ReviewWrite from '@/components/Detail/detailReview/ReviewWrite';
 import DetailFooter from '@/components/DetailFooter/DetailFooter';
 import DetailHeader from '@/components/DetailHeader/DetailHeader';
 import ProductOption from '@/components/DetailHeader/ProductOption';
@@ -27,6 +33,11 @@ const DetailPage = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState<DetailProduct>();
   const [cartProduct, setCartProduct] = useState<CartItemAPI[]>([]);
+  const [isReview, setIsReview] = useState<boolean>(false);
+  const [prevCategory, setPrevCategory] = useState<string>('');
+
+  console.log('product', product);
+  console.log('isReview', isReview);
 
   useEffect(() => {
     getProduct(Number(productId)).then((result) => {
@@ -68,6 +79,13 @@ const DetailPage = () => {
     setCartProduct(cartProduct.filter((_, index) => index !== idx));
   };
 
+  const handleCategory = (category: string) => {
+    if (category !== prevCategory) {
+      setIsReview((prev) => !prev);
+      setPrevCategory(category);
+    }
+  };
+
   return (
     <DetailPageContainer>
       <DetailHeader product={product} />
@@ -78,6 +96,17 @@ const DetailPage = () => {
         onOptionDelete={onOptionDeleteHandler}
         onQuantityChange={onQuantityChangeHandler}
       />
+      <DetailCategory handleCategory={handleCategory} />
+      {!isReview ? (
+        <InformationBox />
+      ) : (
+        <>
+          <ReviewButton />
+          <ReviewWrite />
+          <ReviewFilterButton />
+          <ReviewBox />
+        </>
+      )}
       <DetailFooter cartProduct={cartProduct} />
     </DetailPageContainer>
   );
