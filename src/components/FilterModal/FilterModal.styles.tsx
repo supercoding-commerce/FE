@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { theme } from '@/styles/theme';
 export const ModalBackground = styled.div<{ isOpen: boolean }>`
   position: fixed;
   top: 0;
@@ -21,6 +22,7 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;
+  left: 348px;
   bottom: 0;
   justify-content: center;
   z-index: 1;
@@ -29,6 +31,7 @@ export const ModalContainer = styled.div`
 export const ModalWrapper = styled.div``;
 
 export const ModalFilterBtn = styled.button`
+  ${theme.font.body2Bold}
   width: 100%;
   background-color: white;
   text-align: start;
@@ -38,8 +41,9 @@ export const ModalFilterBtn = styled.button`
 
 export const ModalCloseBtn = styled.button`
   width: 100%;
+  ${theme.font.body2Bold}
   background-color: black;
   border: 0;
-  color: white;
+  color: ${theme.color.brand};
   padding: 15px 30px;
 `;
