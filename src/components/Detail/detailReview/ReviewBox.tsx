@@ -1,5 +1,5 @@
 import { Rating } from '@/components/common/Rating/Rating';
-import { DetailReview } from '@/pages/DetailPage/DetailPage';
+import { DetailReview } from '@/components/Detail/detailReview/Review';
 import * as S from '../Detail.styles';
 
 type ReviewProps = {
@@ -8,8 +8,6 @@ type ReviewProps = {
 };
 
 const ReviewBox = ({ review }: ReviewProps) => {
-  console.log('ReviewBox', review);
-
   const options = JSON.parse(review.options);
 
   return (
