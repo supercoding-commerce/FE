@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
+import { fetchCategoryProducts } from '@/apis/categoryProduct';
 import * as S from '@/components/MainPage/ListItemComponent/AllProductList.styles';
 import ListItem from '@/components/MainPage/ListItemComponent/ListItem';
 
@@ -11,85 +11,43 @@ interface Product {
   name: string;
   price: number;
   shopName: string;
-  ageCategory: string;
-  genderCategory: string;
+  filter: string;
 }
 
 interface CategoryListProps {
   category: string | null;
   age: string | null;
   gender: string | null;
+  filter: string | null;
 }
 
-const CategoryList: React.FC<CategoryListProps> = ({ category, age, gender }) => {
+const CategoryList: React.FC<CategoryListProps> = ({ category, filter, age, gender }) => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [page, setPage] = useState<number>(1);
   const [ref, inView] = useInView();
   const pageRef = useRef(1);
-  // console.log('page', page);
 
   const productFetch = async () => {
-    // console.log('productFetch call');
     try {
-      let url = `https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${pageRef.current}`;
-
-      if (age !== null && age !== undefined) {
-        url += `&ageCategory=${age}`;
-      }
-
-      if (gender !== null && gender !== undefined) {
-        url += `&genderCategory=${gender}`;
-      }
-
-      const response = await axios.get(url);
-      console.log('RESPONSE', response.data);
-      setProducts((prevProducts) => [
-        ...(pageRef.current === 1 ? [] : prevProducts),
-        ...response.data,
-      ]);
+      const response = await fetchCategoryProducts(category, pageRef.current, age, gender, filter);
+      console.log('RESPONSE', response);
+      setProducts((prevProducts) => [...(pageRef.current === 1 ? [] : prevProducts), ...response]);
       pageRef.current = pageRef.current + 1;
-      // if (age || gender) {
-      //   // setPage(1);
-      // setPage((prevPage) => prevPage + 1);
-      // }
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    if (age === '나이' && gender === '성별') return;
+    // 불필요 통신 막기 위함
+    if (filter === '필터옵션' && age === '나이' && gender === '성별') return;
 
     pageRef.current = 1;
     productFetch();
-    // setPage(1);
-    // setProducts([]);
-
-    // productFetch();
-    // setPage((prev) => prev + 1);
-    // setTimeout(() => {
-
-    // setPage((prev) => prev + 1);
-    // setPage(page + 1);
-    // }, 100);
-
-    // console.log(page);
-  }, [age, gender]);
-
-  // console.log('페이지구별', page, inView, 'age', age, gender);
+  }, [filter, age, gender]);
 
   useEffect(() => {
-    // if (products.length === 0) {
-    //   return;
-    // }
-
-    // console.log('inView 변경 호출', page);
     if (inView) {
-      console.log(inView, '무한 스크롤 요청 🎃', page);
       productFetch();
-      // pageRef.current = pageRef.current + 1;
-      // setPage((prevPage) => prevPage + 1);
-      // setPage(page + 1);
     }
   }, [inView]);
 

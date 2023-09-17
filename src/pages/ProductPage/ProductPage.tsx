@@ -8,14 +8,14 @@ import FilterModal from '@/components/FilterModal/FilterModal';
 import CategoryList from '@/pages/ProductPage/CategoryList';
 import * as S from '../ProductPage/ProductPage.styles';
 
-type FilterOption = '신상품' | '나이' | '성별';
+type FilterOption = '필터옵션' | '나이' | '성별';
 
 const ProductPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<FilterOption>();
   const [searchParams] = useSearchParams();
   const subcategory = searchParams.get('subcategory');
-  const [filter, setFilter] = useState<string>('신상품');
+  const [filter, setFilter] = useState<string>('필터옵션');
   const [ageCategory, setAgeCategory] = useState<string>('나이');
   const [genderCategory, setGenderCategory] = useState<string>('성별');
 
@@ -31,7 +31,7 @@ const ProductPage: React.FC = () => {
     closeModal();
 
     switch (selectedOption) {
-      case '신상품':
+      case '필터옵션':
         setFilter(option as FilterOption);
         break;
       case '나이':
@@ -47,7 +47,7 @@ const ProductPage: React.FC = () => {
 
   const handleFilterButtonClick = (filterType: FilterOption) => {
     switch (filterType) {
-      case '신상품':
+      case '필터옵션':
       case '나이':
       case '성별':
         setSelectedOption(filterType);
@@ -64,6 +64,7 @@ const ProductPage: React.FC = () => {
         text={searchParams.get('subcategory') || 'ProductPage'}
         backgroundColor="white"
         color="black"
+        arrowColor="black"
       />
       <CategoryHeader />
       <S.ProductPageWrapper>
@@ -74,7 +75,7 @@ const ProductPage: React.FC = () => {
             backgroundColor="white"
             color="black"
             icon="IconArrowDown"
-            onClick={() => handleFilterButtonClick('신상품')}
+            onClick={() => handleFilterButtonClick('필터옵션')}
           >
             {filter}
           </Button>
@@ -99,14 +100,19 @@ const ProductPage: React.FC = () => {
             {genderCategory}
           </Button>
         </S.FilterContainer>
-        <CategoryList category={subcategory} age={ageCategory} gender={genderCategory} />
+        <CategoryList
+          filter={filter}
+          category={subcategory}
+          age={ageCategory}
+          gender={genderCategory}
+        />
 
         <FilterModal
           isOpen={isModalOpen}
           options={
             selectedOption
-              ? selectedOption === '신상품'
-                ? ['신상품', '리뷰순', '저가순', '고가순']
+              ? selectedOption === '필터옵션'
+                ? ['신상품', '저가순']
                 : selectedOption === '나이'
                 ? ['10', '20', '30']
                 : ['MALE', 'FEMALE']
