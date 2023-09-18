@@ -22,10 +22,12 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;
-  left: 348px;
+  left: 50%;
+  right: 0;
   bottom: 0;
   justify-content: center;
   z-index: 1;
+  transform: translateX(-50%);
 `;
 
 export const ModalWrapper = styled.div``;

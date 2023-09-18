@@ -9,6 +9,7 @@ export const ProductPageWrapper = styled.div`
   height: calc(100vh - 60px - 46px - 170px);
   overflow: scroll;
   overflow-x: hidden;
+  position: relative;
 
   &::-webkit-scrollbar {
     width: 8px;
