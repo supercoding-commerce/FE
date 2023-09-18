@@ -60,9 +60,15 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
     setReview([...star]);
   };
 
-  /** TODO: 최신순 재배열 */
-  //   const byLatest = () => {
-  //   };
+  /** 최신순 재배열 */
+  const byLatest = () => {
+    const sortedReviews = review.sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return dateB - dateA;
+    });
+    setReview([...sortedReviews]);
+  };
 
   return (
     <>
@@ -75,7 +81,7 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
           handleWriteButton={handleWriteButton}
         />
       )}
-      <ReviewFilterButton byRating={byRating} />
+      <ReviewFilterButton byRating={byRating} byLatest={byLatest} />
       {review?.map((item, idx) => {
         return <ReviewBox key={idx} review={item} />;
       })}

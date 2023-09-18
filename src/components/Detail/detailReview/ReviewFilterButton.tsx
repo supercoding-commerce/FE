@@ -7,9 +7,10 @@ import * as S from '../Detail.styles';
 type FilterProps = {
   // handleArrangement: (index: number) => void;
   byRating: () => void;
+  byLatest: () => void;
 };
 
-const ReviewFilterButton = ({ byRating }: FilterProps) => {
+const ReviewFilterButton = ({ byRating, byLatest }: FilterProps) => {
   const [filter, setFilter] = useState([
     {
       title: '최신순',
@@ -22,6 +23,9 @@ const ReviewFilterButton = ({ byRating }: FilterProps) => {
   ]);
 
   const handleButtonClick = (index: number) => {
+    if (filter[index].status) {
+      return;
+    }
     const updatedFilter = filter.map((item, idx) => {
       if (idx === index) {
         return {
@@ -36,9 +40,13 @@ const ReviewFilterButton = ({ byRating }: FilterProps) => {
       }
     });
     setFilter(updatedFilter);
-    // handleArrangement(index);
 
-    if (index === 1) byRating();
+    if (index === 0) {
+      byLatest();
+    }
+    if (index === 1) {
+      byRating();
+    }
   };
 
   return (
