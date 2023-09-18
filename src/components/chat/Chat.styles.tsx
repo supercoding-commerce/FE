@@ -4,20 +4,35 @@ import { theme } from '@/styles/theme';
 
 // import { theme } from '@/styles/theme.ts';
 
-export const Chat = styled.div`
-  width: 390px;
-  height: 730px;
+export const ChatButton = styled.div`
+  position: fixed;
+  z-index: 10;
   display: flex;
-  justify-content: center;
-  align-items: top;
-  flex-direction: column;
-  border-radius: 40px;
-  margin-left: 50px;
-  margin-top: 50px;
-  overflow: hidden;
-  box-shadow: 0px 0px 10px 10px #dddddd;
+  flex-wrap: nowrap;
+  width: auto;
+  overflow: visible;
+  background: none;
+  border-radius: 999px;
+  bottom: 60px;
+  right: 5%;
+`;
 
-  background-color: #ffffff;
+export const Chat = styled.div`
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  /* flex-wrap: nowrap; */
+  width: 390px;
+  height: 680px;
+  border-radius: 40px;
+  overflow: hidden;
+  background: transparent;
+  bottom: 80px;
+  right: 6%;
+  box-shadow: 0px 0px 20px 10px rgba(164, 164, 164, 0.2);
+
+  background-color: ${theme.color.white};
 `;
 
 export const ChatHeader = styled.div`
