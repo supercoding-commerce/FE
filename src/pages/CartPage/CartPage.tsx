@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { deleteAll, deleteCartItem, getCart, postPayment, putCart } from '@/apis/product';
+import { deleteAll, deleteCartItem, getCart, postPayment, putCart } from '@/apis/cart';
 import Button from '@/components/common/Button/Button';
 import { CartItem } from './CartItem';
 import * as S from './CartPage.styles';
