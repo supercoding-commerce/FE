@@ -35,8 +35,8 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
   const [review, setReview] = useState<DetailReview[]>([]);
   const [isWrite, setIsWrite] = useState<boolean>(false);
   const [filterOrderLists, setFilterOrderLists] = useState<OrderList>([]);
-  // const [possibleOrderId, setPossibleOrderId] = useState<OrderList>([]);
 
+  /** filterOrderList() : 이미 작성했던 오더리스트 제외 필터링 */
   const filterOrderList = () => {
     const filter = orderList.filter((orderList) => !orderList.isReviewed);
     setFilterOrderLists([...filter]);
@@ -46,6 +46,7 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
     filterOrderList();
   }, [orderList]);
 
+  // 리뷰작성창에 'orderId-옵션내용' 형태로 보내기
   const orderId = filterOrderLists.map((item) => JSON.stringify(item.orderId));
 
   const combineOrderIdAndOption = (item: { orderId: number; orderOption: string }) =>
@@ -53,9 +54,7 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
 
   const stringOrderList = filterOrderLists.map(combineOrderIdAndOption);
 
-  console.log('orderList', orderList);
-  console.log('filterOrderLists', filterOrderLists);
-
+  // axios 요청
   useEffect(() => {
     if (isReview) {
       getReview(productId).then((result) => {
@@ -71,7 +70,7 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
     setIsWrite((prev) => !prev);
   };
 
-  /** 별점 순 재배열 */
+  /** 별점순 재배열 */
   const byRating = () => {
     const star = review.sort((a, b) => b.starPoint - a.starPoint);
     setReview([...star]);
@@ -87,6 +86,21 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
     setReview([...sortedReviews]);
   };
 
+  /** handleNewReview() : 내가 작성한 새로운 리뷰 실시간 반영(임시) */
+  const handleNewReview = (newReview?: DetailReview) => {
+    if (newReview) {
+      setReview((prevReview) => [newReview, ...prevReview]);
+    }
+  };
+
+  /** handleDeleteReview() : 내가 삭제한 리뷰 실시간 반영(임시) */
+  const handleDeleteReview = (deleteReview?: number) => {
+    if (deleteReview) {
+      const filter = review.filter((review) => review.reviewId !== deleteReview);
+      setReview([...filter]);
+    }
+  };
+
   return (
     <>
       <ReviewButton handleWriteButton={handleWriteButton} />
@@ -96,11 +110,12 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
           stringOrderList={stringOrderList}
           productId={productId}
           handleWriteButton={handleWriteButton}
+          handleNewReview={handleNewReview}
         />
       )}
       <ReviewFilterButton byRating={byRating} byLatest={byLatest} />
       {review?.map((item, idx) => {
-        return <ReviewBox key={idx} review={item} />;
+        return <ReviewBox key={idx} review={item} handleDeleteReview={handleDeleteReview} />;
       })}
     </>
   );

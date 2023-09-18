@@ -7,6 +7,7 @@ import Icon from '@/components/common/Icon';
 import { Rating } from '@/components/common/Rating/Rating';
 import SelectBox from '@/components/common/SelectBox/SelectBox';
 import { Textarea } from '@/components/common/Textarea';
+import { DetailReview } from '@/components/Detail/detailReview/Review';
 import { theme } from '@/styles/theme';
 import * as S from '../Detail.styles';
 
@@ -15,14 +16,28 @@ type writeProps = {
   stringOrderList: string[];
   productId: number;
   handleWriteButton: () => void;
+  handleNewReview: (newReview: DetailReview) => void;
 };
 
-const ReviewWrite = ({ stringOrderList, productId, handleWriteButton }: writeProps) => {
+export type FormData = {
+  productId: number;
+  orderId: string;
+  title: string;
+  content: string;
+  starPoint: number;
+};
+
+const ReviewWrite = ({
+  stringOrderList,
+  productId,
+  handleWriteButton,
+  handleNewReview,
+}: writeProps) => {
   const [option, setOption] = useState<string>('');
 
   // 파일 이름을 저장할 상태를 만듭니다.
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     productId: productId,
     orderId: '',
     title: '',
@@ -86,7 +101,7 @@ const ReviewWrite = ({ stringOrderList, productId, handleWriteButton }: writePro
       });
 
       const responseData = response.data;
-      console.log('성공', responseData);
+      handleNewReview(responseData);
     } catch (error) {
       console.error('Error creating review:', error);
     }
