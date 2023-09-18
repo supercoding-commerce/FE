@@ -20,6 +20,7 @@ export type DetailProduct = {
   star: number;
   price: number;
   options: string[];
+  imageUrls: string[];
   orderList: {
     orderId: number;
     orderOption: string;
@@ -94,7 +95,7 @@ const DetailPage = () => {
       />
       <DetailCategory handleCategory={handleCategory} />
       {!isReview ? (
-        <InformationBox />
+        <InformationBox productImage={product.imageUrls} />
       ) : (
         <>
           <Review productId={Number(productId)} isReview={isReview} orderList={product.orderList} />

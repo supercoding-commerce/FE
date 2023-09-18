@@ -45,15 +45,27 @@ export const DetailInformation = styled.div`
     align-items: center;
     flex-direction: column;
     width: 85%;
-    height: 670px;
+    height: 600px;
     border: 1px solid ${theme.color.borderColor};
     margin-top: 25px;
+    overflow: hidden;
 
     .information_box {
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
+      object-fit: cover;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &.expanded {
+      height: auto;
+      overflow: visible;
     }
   }
 
