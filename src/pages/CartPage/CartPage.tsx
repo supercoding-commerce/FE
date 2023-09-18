@@ -45,11 +45,8 @@ export function CartPage() {
     });
   }, []);
 
-  console.log(cartItems);
-
   const cartQuantityChangeHandler = (index: number, newQuantity: number) => {
     const updatedItem = cartItems[index];
-    console.log('updatedItem', updatedItem);
     putCart([
       {
         productId: updatedItem.productId,
@@ -103,7 +100,6 @@ export function CartPage() {
   const postCartItemPayment = () => {
     const cartIds = cartItems.map((item) => item.cartId);
     postPayment({ cartIdList: cartIds });
-    console.log({ cartIdList: cartIds });
   };
 
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
