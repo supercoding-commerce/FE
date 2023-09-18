@@ -8,3 +8,28 @@ export const createProduct = async (payload: FormData) => {
     },
   });
 };
+
+export type CartItemAPI = {
+  productId: number;
+  quantity: number;
+  options: string[];
+};
+
+export async function getProduct(productId: number) {
+  const response = await client.get(`/v1/api/product/detail/${productId}`);
+  return response;
+}
+
+export async function postCart(payload: CartItemAPI): Promise<CartItemAPI> {
+  const response = await client.post('/v1/api/cart', payload);
+  return response.data;
+}
+
+export async function postPayment(payload: CartItemAPI[]): Promise<CartItemAPI> {
+  const response = await client.post('/v1/api/order', payload);
+  return response.data;
+}
+
+export async function deleteProduct(productId: number) {
+  return client.delete(`/v1/api/product/${productId}`);
+}

@@ -44,13 +44,13 @@ const Counter = ({ quantity, maxQuantity, onQuantityChange }: CounterProps) => {
   return (
     <S.Counter>
       <S.MinusBtn onClick={decreaseNumber}>
-        <div>-</div>
+        <p>-</p>
       </S.MinusBtn>
       <S.InputContainer>
         <input type="number" value={quantity} onChange={quantityChange} min={0} max={maxQuantity} />
       </S.InputContainer>
       <S.PlusBtn onClick={increaseNumber}>
-        <div>+</div>
+        <p>+</p>
       </S.PlusBtn>
     </S.Counter>
   );

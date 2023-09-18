@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Icon, { IconProps } from '@/components/common/Icon.tsx';
 import * as S from './Rating.styles.tsx';
@@ -20,15 +20,21 @@ const RATING_ARRAY = [1, 2, 3, 4, 5];
  */
 export function Rating({ readOnly, count, size = 24, onChange }: RatingProps) {
   const [hoverCount, setHoverCount] = useState<number>(0);
-  const [clickedCount, setClickedCount] = useState<number>(count || 0);
+  const [filledCount, setFilledCount] = useState<number>(count || 0);
 
   const handleClickRate = (count: number) => {
     if (readOnly) return;
 
     const ratedCount = Number(count);
     onChange && onChange(ratedCount);
-    setClickedCount(ratedCount);
+    setFilledCount(ratedCount);
   };
+
+  useEffect(() => {
+    if (count) {
+      setFilledCount(count);
+    }
+  }, [count]);
 
   return (
     <S.StarContainer>
@@ -37,7 +43,7 @@ export function Rating({ readOnly, count, size = 24, onChange }: RatingProps) {
           name="IconRate"
           size={size}
           key={currentCount}
-          fill={clickedCount >= currentCount || hoverCount >= currentCount ? 'brand' : 'current'}
+          fill={filledCount >= currentCount || hoverCount >= currentCount ? 'brand' : 'current'}
           onMouseEnter={() => !readOnly && setHoverCount(currentCount)}
           onMouseLeave={() => !readOnly && setHoverCount(0)}
           onClick={() => handleClickRate(currentCount)}
