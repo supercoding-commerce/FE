@@ -1,21 +1,11 @@
 import Counter from '@/components/common/Counter/Counter';
 import Icon from '@/components/common/Icon';
 import SelectBox from '@/components/common/SelectBox/SelectBox';
+import { Cart } from '@/pages/CartPage/CartPage';
 import * as S from './CartItem.styles';
 
-type CartItemType = {
-  brand: string;
-  mainImage: string;
-  name: string;
-  option: string;
-  price: number;
-  maxQuantity: number;
-  quantity: number;
-  optionList: string[];
-};
-
 type CartItemProps = {
-  cartItems: CartItemType[];
+  cartItems: Cart[];
   onDelete: (index: number) => void;
   onQuantityChange?: (index: number, newQuantity: number) => void;
   onOptionChange?: (index: number, newOption: string) => void;
@@ -27,15 +17,19 @@ export function CartItem({ cartItems, onDelete, onQuantityChange, onOptionChange
       {cartItems.map((item, idx: number) => (
         <S.CartItem key={idx}>
           <S.CartItemHeader>
-            <S.ItemBrand>{item.brand}</S.ItemBrand>
-            <Icon name="IconX" style={{ cursor: 'pointer' }} onClick={() => onDelete(idx)} />
+            <S.ItemBrand>{item.shopName}</S.ItemBrand>
+            <Icon
+              name="IconX"
+              style={{ cursor: 'pointer' }}
+              onClick={() => onDelete(item.cartId)}
+            />
           </S.CartItemHeader>
           <S.CartItemBodyContainer>
             <S.CartItemBody>
-              <S.Image src={item.mainImage} />
+              <S.Image src={item.imageUrl} />
               <S.ItemInfoWrapper>
                 <S.ItemNameWrapper>
-                  <S.ItemName>{item.name}</S.ItemName>
+                  <S.ItemName>{item.productName}</S.ItemName>
                   <S.ItemOption>{item.option}</S.ItemOption>
                 </S.ItemNameWrapper>
                 <S.PriceAndCount>
@@ -46,7 +40,7 @@ export function CartItem({ cartItems, onDelete, onQuantityChange, onOptionChange
                     {onQuantityChange ? (
                       <Counter
                         quantity={item.quantity}
-                        maxQuantity={item.maxQuantity}
+                        maxQuantity={item.stock}
                         onQuantityChange={(newQuantity) => onQuantityChange(idx, newQuantity)}
                       />
                     ) : null}
@@ -59,9 +53,9 @@ export function CartItem({ cartItems, onDelete, onQuantityChange, onOptionChange
             <S.ItemOptionSelect>
               {onOptionChange ? (
                 <SelectBox
-                  optionList={item.optionList}
+                  optionList={item.productOptionList}
                   onChange={(newOption) => onOptionChange(idx, newOption)}
-                  value={item.option}
+                  value={item.option[0]}
                 />
               ) : (
                 item.option

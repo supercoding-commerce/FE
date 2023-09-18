@@ -63,7 +63,7 @@ export const router = createBrowserRouter([
 
       // 마이페이지 및 결제 등
       {
-        path: '/cart',
+        path: '/mycart',
         element: <CartPage />,
       },
       {

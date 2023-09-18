@@ -1,4 +1,7 @@
+import { AxiosResponse } from 'axios';
+
 import { client } from '@/apis/index.ts';
+import { Cart, OrderCart } from '@/pages/CartPage/CartPage';
 
 const BASE_URL = '/v1/api/product';
 export const createProduct = async (payload: FormData) => {
@@ -8,3 +11,33 @@ export const createProduct = async (payload: FormData) => {
     },
   });
 };
+
+const CART_URL = '/v1/api/cart';
+
+export async function getCart(): Promise<AxiosResponse<Cart[]>> {
+  const response = await client.get(CART_URL);
+  return response;
+}
+
+export async function putCart(payload: OrderCart[]): Promise<OrderCart> {
+  const response = await client.put(CART_URL, payload);
+  return response.data;
+}
+
+export async function deleteCartItem(cartId: number) {
+  const response = await client.delete(`${CART_URL}/${cartId}`);
+  return response;
+}
+
+export async function deleteAll() {
+  const response = await client.delete(CART_URL);
+  return response;
+}
+
+export type PaymentItem = {
+  cartIdList: number[];
+};
+export async function postPayment(payload: PaymentItem) {
+  const response = await client.post('/v1/api/order/cart', payload);
+  return response;
+}
