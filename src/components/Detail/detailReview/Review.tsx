@@ -19,25 +19,42 @@ export type DetailReview = {
   createdAt: string;
 };
 
+type OrderList = {
+  orderId: number;
+  isReviewed: boolean;
+  orderOption: string;
+}[];
+
 type reviewProps = {
   productId: number;
   isReview: boolean;
-  orderList: {
-    orderId: number;
-    orderOption: string;
-  }[];
+  orderList: OrderList;
 };
 
 const Review = ({ productId, isReview, orderList }: reviewProps) => {
   const [review, setReview] = useState<DetailReview[]>([]);
   const [isWrite, setIsWrite] = useState<boolean>(false);
+  const [filterOrderLists, setFilterOrderLists] = useState<OrderList>([]);
+  // const [possibleOrderId, setPossibleOrderId] = useState<OrderList>([]);
 
-  const orderId = orderList.map((item) => JSON.stringify(item.orderId));
-  //   const orderOption = orderList.map((item) => JSON.parse(item.orderOption));
+  const filterOrderList = () => {
+    const filter = orderList.filter((orderList) => !orderList.isReviewed);
+    setFilterOrderLists([...filter]);
+  };
+
+  useEffect(() => {
+    filterOrderList();
+  }, [orderList]);
+
+  const orderId = filterOrderLists.map((item) => JSON.stringify(item.orderId));
+
   const combineOrderIdAndOption = (item: { orderId: number; orderOption: string }) =>
     `${item.orderId}-${JSON.parse(item.orderOption)[0]}`;
 
-  const stringOrderList = orderList.map(combineOrderIdAndOption);
+  const stringOrderList = filterOrderLists.map(combineOrderIdAndOption);
+
+  console.log('orderList', orderList);
+  console.log('filterOrderLists', filterOrderLists);
 
   useEffect(() => {
     if (isReview) {

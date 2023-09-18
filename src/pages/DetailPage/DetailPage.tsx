@@ -23,6 +23,7 @@ export type DetailProduct = {
   imageUrls: string[];
   orderList: {
     orderId: number;
+    isReviewed: boolean;
     orderOption: string;
   }[];
 };
