@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as S from './FilterModal.styles';
 
-type FilterOption = '신상품' | '나이' | '성별';
+type FilterOption = '필터옵션' | '나이' | '성별';
 
 interface FilterModalProps {
   isOpen: boolean;

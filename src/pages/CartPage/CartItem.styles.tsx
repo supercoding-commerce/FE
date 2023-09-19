@@ -8,15 +8,15 @@ export const CartItemContainer = styled.div`
 `;
 export const CartItem = styled.div`
   width: 100%;
-  height: 300px;
+  height: auto;
 `;
 export const CartItemHeader = styled.span`
   display: flex;
   justify-content: space-between;
-  margin: 20px 0;
+  margin: 15px 0;
 `;
 export const ItemBrand = styled.div`
-  font: ${theme.font.body0};
+  font: ${theme.font.body1};
   font-weight: bold;
 `;
 export const CartItemBodyContainer = styled.span`
@@ -32,7 +32,7 @@ export const CartItemBody = styled.div`
 export const Image = styled.img`
   width: 135px;
   height: 150px;
-  margin-right: 20px;
+  margin-right: 15px;
 `;
 
 export const ItemInfoWrapper = styled.div`
@@ -63,20 +63,14 @@ export const ItemSaleContainer = styled.span`
 `;
 
 export const ItemOriginalPrice = styled.div`
-  text-decoration: line-through;
-  color: #6e6e6e;
-  font: ${theme.font.body3};
-`;
-
-export const ItemSalePrice = styled.div`
-  font: ${theme.font.body1};
+  font: ${theme.font.body2};
   width: 80px;
 `;
 
 export const CounterContainer = styled.div`
   flex-direction: column;
   display: flex;
-  margin-left: 30px;
+  margin-left: 35px;
 `;
 
 export const ItemOptionSelectContainer = styled.div`
