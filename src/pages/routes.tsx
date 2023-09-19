@@ -71,7 +71,7 @@ export const router = createBrowserRouter([
       {
         path: '/mycart',
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute onlyBuyer>
             <CartPage />
           </ProtectedRoute>
         ),
@@ -79,7 +79,7 @@ export const router = createBrowserRouter([
       {
         path: '/pay',
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute onlyBuyer>
             <Payment />
           </ProtectedRoute>
         ),
