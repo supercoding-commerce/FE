@@ -14,28 +14,28 @@ const Menu = () => {
           icon: 'IconSweat',
           title: 'SWEAT',
           onClick: () => {
-            navigate('/search/category?category=Top&subcategory=SWEAT');
+            navigate('/product/search/category?category=Top&subcategory=SWEAT');
           },
         },
         {
           icon: 'IconHood',
           title: 'HOOD',
           onClick: () => {
-            navigate('/search/category?category=Top&subcategory=HOOD');
+            navigate('/product/search/category?category=Top&subcategory=HOOD');
           },
         },
         {
           icon: 'IconKnit',
           title: 'KNIT',
           onClick: () => {
-            navigate('/search/category?category=Top&subcategory=KNIT');
+            navigate('/product/search/category?category=Top&subcategory=KNIT');
           },
         },
         {
           icon: 'IconSleeveless',
           title: 'SLEEVELESS',
           onClick: () => {
-            navigate('/search/category?category=Top&subcategory=SLEEVELESS');
+            navigate('/product/search/category?category=Top&subcategory=SLEEVELESS');
           },
         },
       ],
@@ -48,28 +48,28 @@ const Menu = () => {
           icon: 'IconJeans',
           title: 'JEANS',
           onClick: () => {
-            navigate('/search/category?category=Pants&subcategory=JEANS');
+            navigate('/product/search/category?category=Pants&subcategory=JEANS');
           },
         },
         {
           icon: 'IconShorts',
           title: 'SHORTS',
           onClick: () => {
-            navigate('/search/category?category=Pants&subcategory=SHORTS');
+            navigate('/product/search/category?category=Pants&subcategory=SHORTS');
           },
         },
         {
           icon: 'IconTraining',
           title: 'TRAINING',
           onClick: () => {
-            navigate('/search/category?category=Pants&subcategory=TRAINING');
+            navigate('/product/search/category?category=Pants&subcategory=TRAINING');
           },
         },
         {
           icon: 'IconLeggings',
           title: 'LEGGINGS',
           onClick: () => {
-            navigate('/search/category?category=Pants&subcategory=LEGGINGS');
+            navigate('/product/search/category?category=Pants&subcategory=LEGGINGS');
           },
         },
       ],
@@ -82,14 +82,14 @@ const Menu = () => {
           icon: 'IconShortDress',
           title: 'SHORTDRESS',
           onClick: () => {
-            navigate('/search/category?category=Dress&subcategory=SHORTDRESS');
+            navigate('/product/search/category?category=Dress&subcategory=SHORTDRESS');
           },
         },
         {
           icon: 'IconLongDress',
           title: 'LONGDRESS',
           onClick: () => {
-            navigate('/search/category?category=Dress&subcategory=LONGDRESS');
+            navigate('/product/search/category?category=Dress&subcategory=LONGDRESS');
           },
         },
       ],
@@ -103,28 +103,28 @@ const Menu = () => {
           icon: 'IconShoes',
           title: 'SHOES',
           onClick: () => {
-            navigate('/search/category?category=Accessories&subcategory=SHOES');
+            navigate('/product/search/category?category=Accessories&subcategory=SHOES');
           },
         },
         {
           icon: 'IconMuffler',
           title: 'MUFFLER',
           onClick: () => {
-            navigate('/search/category?category=Accessories&subcategory=MUFFLER');
+            navigate('/product/search/category?category=Accessories&subcategory=MUFFLER');
           },
         },
         {
           icon: 'IconGloves',
           title: 'GLOVES',
           onClick: () => {
-            navigate('/search/category?category=Accessories&subcategory=GLOVES');
+            navigate('/product/search/category?category=Accessories&subcategory=GLOVES');
           },
         },
         {
           icon: 'IconCap',
           title: 'CAP',
           onClick: () => {
-            navigate('/search/category?category=Accessories&subcategory=CAP');
+            navigate('/product/search/category?category=Accessories&subcategory=CAP');
           },
         },
       ],

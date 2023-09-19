@@ -29,7 +29,7 @@ const NO_HEADER_URL: RoutePath[] = [
   '/signup/seller',
   '/signup/buyer',
   '/signin',
-  '/search/category',
+  '/product/search/category',
 ];
 const SEARCH_HEADER_URL: RoutePath[] = ['/', '/category'];
 const PRODUCT_DETAIL_REGEX = new RegExp(/\/product\/\d+/);
