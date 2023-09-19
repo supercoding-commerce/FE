@@ -1,6 +1,7 @@
 import Button from '@/components/common/Button/Button';
 import Icon from '@/components/common/Icon';
 import { theme } from '@/styles/theme';
+import * as S from './Chat.styles';
 
 type ChatButtonProps = {
   handleOpen: () => void;
@@ -8,7 +9,7 @@ type ChatButtonProps = {
 
 const ChatButton = ({ handleOpen }: ChatButtonProps) => {
   return (
-    <div
+    <S.ChatButton
       onClick={() => {
         handleOpen();
       }}
@@ -17,12 +18,12 @@ const ChatButton = ({ handleOpen }: ChatButtonProps) => {
         variant="contained"
         backgroundColor={theme.color.black}
         isCircle
-        width="60px"
-        height="60px"
+        width="65px"
+        height="65px"
       >
         <Icon name="IconChat" size={35} color="green" />
       </Button>
-    </div>
+    </S.ChatButton>
   );
 };
 
