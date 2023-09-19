@@ -1,9 +1,5 @@
 const SearchProduct = () => {
-  return (
-    <>
-      <h1>안뇽</h1>
-    </>
-  );
+  return <></>;
 };
 
 export default SearchProduct;
