@@ -11,7 +11,6 @@ import { Payment } from '@/pages/Payment/Payment';
 import ProductPage from '@/pages/ProductPage/ProductPage';
 import { ProtectedRoute } from '@/pages/ProtectedRoute.tsx';
 import Search from '@/pages/Search/Search';
-import SearchProduct from '@/pages/Search/SearchProduct';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
@@ -48,10 +47,6 @@ export const router = createBrowserRouter([
       {
         path: '/search',
         element: <Search />,
-      },
-      {
-        path: '/product/search',
-        element: <SearchProduct />,
       },
       // 회원가입 / 로그인
       {
@@ -130,6 +125,5 @@ export type RoutePath =
   | '/new/product'
   | '/update/product'
   | '/search'
-  | '/product/search'
   | '/product/search/category'
   | string;
