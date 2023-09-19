@@ -1,5 +1,5 @@
 import { client } from '@/apis';
-import { SignUpItem } from '@/components/signup/SignUpForm/SignUpForm';
+import { SignUpItem } from '@/components/signup/SignUpForm/SignUpForm.tsx';
 import { userInfoProps } from '@/pages/SignInPage/SignInPage';
 
 const USER_URL = '/v1/api/user';
@@ -7,6 +7,18 @@ const USER_URL = '/v1/api/user';
 export const signIn = async (payload: userInfoProps) => {
   const response = await client.post(`${USER_URL}/login`, payload);
   return response;
+};
+
+export type UserInfo = {
+  address: string;
+  grade: string;
+  nickname: string;
+  payMoney: number;
+  role: string;
+};
+export const getInfo = async (): Promise<UserInfo> => {
+  const response = await client.get(`${USER_URL}/getInfo`);
+  return response.data;
 };
 
 export const signUpBuyer = async (payload: Partial<SignUpItem>) => {

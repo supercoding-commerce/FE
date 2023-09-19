@@ -3,12 +3,19 @@ import * as S from '../Chat.styles';
 
 type headerProps = {
   handleLeave: () => void;
+  handleTerminate: () => void;
   clickPrevButton: () => void;
   handleOpen: () => void;
   shopName: string;
 };
 
-const ChatDetailHeader = ({ handleLeave, clickPrevButton, handleOpen, shopName }: headerProps) => {
+const ChatDetailHeader = ({
+  handleLeave,
+  handleTerminate,
+  clickPrevButton,
+  handleOpen,
+  shopName,
+}: headerProps) => {
   return (
     <S.ChatDetailHeader>
       <div className="arrow_btn_wrapper">
@@ -19,6 +26,7 @@ const ChatDetailHeader = ({ handleLeave, clickPrevButton, handleOpen, shopName }
           size={30}
           onClick={() => {
             handleLeave();
+            handleTerminate();
             clickPrevButton();
           }}
         />
@@ -34,6 +42,7 @@ const ChatDetailHeader = ({ handleLeave, clickPrevButton, handleOpen, shopName }
           size={25}
           onClick={() => {
             handleLeave();
+            handleTerminate();
             handleOpen();
           }}
         />

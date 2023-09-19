@@ -22,7 +22,7 @@ export type list = {
 };
 
 type chatProps = {
-  clickListBox: (customRoomId: string) => void;
+  clickListBox: (customRoomId: string, userId: number, userName: string) => void;
   seller: {
     sellerId: number;
     shopName: string;
@@ -35,20 +35,15 @@ type chatProps = {
 };
 
 const ChatList = ({ clickListBox, seller, isSeller, product }: chatProps) => {
-  /** TODO: 디테일 페이지에서 props로 받아올 것 */
   const [list, setList] = useState<list[]>([]);
 
   const [shopImg, setShopImg] = useState<string>('');
-
-  console.log(seller.sellerId);
-  console.log('isSeller', seller.sellerId);
 
   const loadUserChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;
     await client
       .get(`/v1/api/chat/user/${sellerId}`)
       .then((res) => {
-        console.log(res.data);
         const data = res.data.chatList;
         const img = res.data.shopImage;
         setList([...data]);
@@ -65,7 +60,6 @@ const ChatList = ({ clickListBox, seller, isSeller, product }: chatProps) => {
     await client
       .get(`/v1/api/chat/seller/${sellerId}/${productId}`)
       .then((res) => {
-        console.log(res.data);
         const data = res.data.chatList;
         const img = res.data.shopImage;
         setList([...data]);
@@ -80,9 +74,6 @@ const ChatList = ({ clickListBox, seller, isSeller, product }: chatProps) => {
     if (!isSeller) loadUserChatList();
     else loadSellerChatList();
   }, [isSeller]);
-
-  console.log('chatList', list);
-  console.log('shopImg', shopImg);
 
   return (
     <div>

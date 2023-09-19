@@ -1,24 +1,28 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 
-import { CartItemAPI, getProduct } from '@/apis/product';
+import { getProduct, OrderNCartItemAPI } from '@/apis/product';
 import Chat from '@/components/chat/Chat';
 import DetailCategory from '@/components/Detail/detailCategory/DetailCategory';
 import InformationBox from '@/components/Detail/detailInformation/InformationBox';
 import Review from '@/components/Detail/detailReview/Review';
 import DetailFooter from '@/components/DetailFooter/DetailFooter';
-import DetailHeader from '@/components/DetailHeader/DetailHeader';
-import ProductOption from '@/components/DetailHeader/ProductOption';
+import DetailInfo from '@/components/DetailInfo/DetailInfo';
+import ProductOption from '@/components/DetailInfo/ProductOption';
 import { theme } from '@/styles/theme';
 
 export type DetailProduct = {
+  seller: boolean;
+  sellerId: number;
+  enteredUserId: number;
+  enteredUserName: string;
   productId: number;
   thumbnailUrl: string;
   shopName: string;
   name: string;
   leftAmount: number;
-  star: number;
+  averageStarPoint: number;
   price: number;
   options: string[];
   imageUrls: string[];
@@ -31,37 +35,50 @@ export type DetailProduct = {
 
 const DetailPage = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
+
   const [product, setProduct] = useState<DetailProduct>();
-  const [cartProduct, setCartProduct] = useState<CartItemAPI[]>([]);
+  const [orderNCartProduct, setOrderNCartProduct] = useState<OrderNCartItemAPI[]>([]);
   const [prevCategory, setPrevCategory] = useState<string>('');
 
   const [isReview, setIsReview] = useState<boolean>(false);
 
   useEffect(() => {
-    getProduct(Number(productId)).then((result) => {
-      if (result.status === 200) {
-        const options = JSON.parse(result.data.options);
-        const detailItem = { ...result.data, options };
-        setProduct(detailItem);
-      }
-    });
+    getProduct(Number(productId))
+      .then((result) => {
+        if (result.status === 200) {
+          const options = JSON.parse(result.data.options);
+          const detailItem = { ...result.data, options };
+          setProduct(detailItem);
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+          alert('상품을 찾을 수 없습니다.');
+          navigate('/');
+        }
+      });
   }, []);
   if (!product) return;
 
   const onOptionPlusHandler = (item: string) => {
-    setCartProduct([
-      ...cartProduct,
-      {
-        productId: Number(productId),
-        quantity: 1,
-        options: [item],
-      },
-    ]);
+    const doubleOption = orderNCartProduct.some((product) => product.options.includes(item));
+    if (doubleOption) {
+      alert('이미 선택된 옵션입니다.');
+    } else {
+      setOrderNCartProduct([
+        ...orderNCartProduct,
+        {
+          productId: Number(productId),
+          quantity: 1,
+          options: [item],
+        },
+      ]);
+    }
   };
 
-  //배열에 useState 사용하는 법
   const onQuantityChangeHandler = (idx: number, newQuantity: number) => {
-    const array = cartProduct;
+    const array = orderNCartProduct;
     const newArray = array.map((v, index) => {
       if (index === idx) {
         v.quantity = newQuantity;
@@ -70,11 +87,11 @@ const DetailPage = () => {
       return v;
     });
 
-    setCartProduct(newArray);
+    setOrderNCartProduct(newArray);
   };
 
   const onOptionDeleteHandler = (idx: number) => {
-    setCartProduct(cartProduct.filter((_, index) => index !== idx));
+    setOrderNCartProduct(orderNCartProduct.filter((_, index) => index !== idx));
   };
 
   /** handleCategory() : 상세정보/리뷰 카테고리 내용 전환 */
@@ -87,12 +104,20 @@ const DetailPage = () => {
 
   return (
     <>
-      <Chat />
+      <Chat
+        sellerId={product.sellerId}
+        sellerName={product.shopName}
+        userId={product.enteredUserId}
+        userName={product.enteredUserName}
+        productId={product.productId}
+        productName={product.name}
+        isUser={product.seller}
+      />
       <DetailPageContainer>
-        <DetailHeader product={product} />
+        <DetailInfo product={product} />
         <ProductOption
           product={product}
-          cartProduct={cartProduct}
+          orderNCartProduct={orderNCartProduct}
           onOptionPlus={onOptionPlusHandler}
           onOptionDelete={onOptionDeleteHandler}
           onQuantityChange={onQuantityChangeHandler}
@@ -109,7 +134,7 @@ const DetailPage = () => {
             />
           </>
         )}
-        <DetailFooter cartProduct={cartProduct} />
+        <DetailFooter orderNCartProduct={orderNCartProduct} />
       </DetailPageContainer>
     </>
   );
