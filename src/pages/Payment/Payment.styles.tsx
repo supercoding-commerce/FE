@@ -20,6 +20,7 @@ export const SectionsWrapper = styled.div`
 export const AddressSection = styled.section`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 16px;
   border: 1px solid ${theme.color.black};
   border-radius: 8px;
@@ -74,6 +75,7 @@ export const TotalPayItemWrapper = styled.div`
   justify-content: space-between;
   ${theme.font.body2}
 `;
+
 export const TotalPayItemOptionWrapper = styled.div`
   display: flex;
   gap: 12px;
@@ -85,6 +87,7 @@ export const Hr = styled.hr`
 export const TotalPayWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-family: SUITE;
   font-size: 15px;
   font-weight: 800;
@@ -92,7 +95,6 @@ export const TotalPayWrapper = styled.div`
 
 // 주문 목록
 export const OrderSection = styled.section`
-  //margin-top: 32px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -129,6 +131,9 @@ export const OrderItemInfoWrapper = styled.div`
   .name {
     ${theme.font.body0}
   }
+  .option {
+    ${theme.font.body3}
+  }
   .info {
     ${theme.font.body2}
   }
@@ -154,6 +159,11 @@ export const Button = styled.button<{ color?: string }>`
   font-weight: 400;
   border-radius: 3px;
   cursor: pointer;
+
+  &.active {
+    border-color: ${theme.color.borderColor};
+    color: ${theme.color.borderColor};
+  }
 
   ${({ color = theme.color.pink }) => css`
     border: 1px solid ${color};

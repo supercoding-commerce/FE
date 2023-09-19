@@ -1,30 +1,46 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { CartItemAPI, postPayment } from '@/apis/product';
+import { OrderNCartItemAPI, postCart, postPayment } from '@/apis/product';
 import Button from '@/components/common/Button/Button';
 import Icon, { IconNameType } from '@/components/common/Icon';
 import * as S from './DetailFooter.styles';
 
 type FooterProps = {
-  cartProduct: CartItemAPI[];
+  orderNCartProduct: OrderNCartItemAPI[];
 };
 
-const DetailFooter = ({ cartProduct }: FooterProps) => {
-  console.log(cartProduct);
+const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
   const [heart, setHeart] = useState<IconNameType>('IconEmptyHeart');
+  const navigate = useNavigate();
+
   const isBuyer = true;
 
   const changeHeartHandler = () => {
     setHeart(heart === 'IconEmptyHeart' ? 'IconFullHeart' : 'IconEmptyHeart');
   };
 
-  const navigate = useNavigate();
   const postPaymentProduct = () => {
-    postPayment([...cartProduct]);
-    navigate('/pay');
+    if (orderNCartProduct.length === 0) return;
+
+    postPayment([...orderNCartProduct]).then(() => navigate('/pay'));
   };
 
+  const postCartProduct = () => {
+    postCart(orderNCartProduct)
+      .then((result) => {
+        if (result.status === 200) {
+          navigate('/mycart');
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 409) {
+          alert('이미 장바구니에 담긴 상품입니다.');
+        }
+      });
+  };
+
+  const nonSelectedProduct = orderNCartProduct.length === 0;
   return (
     <>
       {isBuyer && (
@@ -37,6 +53,8 @@ const DetailFooter = ({ cartProduct }: FooterProps) => {
             color="black"
             isCircle={false}
             isFullWidth={false}
+            onClick={postCartProduct}
+            disabled={nonSelectedProduct}
           >
             장바구니
           </Button>
@@ -47,6 +65,7 @@ const DetailFooter = ({ cartProduct }: FooterProps) => {
             isCircle={false}
             isFullWidth={false}
             onClick={postPaymentProduct}
+            disabled={nonSelectedProduct}
           >
             구매하기
           </Button>

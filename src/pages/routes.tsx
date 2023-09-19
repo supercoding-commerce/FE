@@ -1,6 +1,5 @@
-import { createBrowserRouter, useLocation } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
-import Test from '@/components/Test/Test.tsx';
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
 import Menu from '@/pages/Category/Menu';
@@ -12,15 +11,11 @@ import { Payment } from '@/pages/Payment/Payment';
 import ProductPage from '@/pages/ProductPage/ProductPage';
 import Search from '@/pages/Search/Search';
 import SearchProduct from '@/pages/Search/SearchProduct';
+import { ProtectedRoute } from '@/pages/ProtectedRoute.tsx';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
 import { UpdateProduct } from '@/pages/UpdateProduct/UpdateProduct.tsx';
-// GYU-TODO: DELETE
-function TestCompoennt() {
-  const location = useLocation();
-  return <div>{location.pathname}</div>;
-}
 
 export const router = createBrowserRouter([
   {
@@ -34,14 +29,15 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/product/:id',
-        element: <TestCompoennt />,
+        path: '/product/:productId',
+        element: <DetailPage />,
       },
       {
         path: '/category',
         element: <Menu />,
       },
       {
+
         path: '/detail/:productId',
         element: <DetailPage />,
       },
@@ -79,27 +75,43 @@ export const router = createBrowserRouter([
       // 마이페이지 및 결제 등
       {
         path: '/mycart',
-        element: <CartPage />,
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <CartPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/pay',
-        element: <Payment />,
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <Payment />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/mypage',
-        element: <MyPage />,
+        element: (
+          <ProtectedRoute>
+            <MyPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/new/product',
-        element: <AddProduct />,
+        element: (
+          <ProtectedRoute onlySeller>
+            <AddProduct />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/update/product',
-        element: <UpdateProduct />,
-      },
-      {
-        path: 'test',
-        element: <Test />,
+        element: (
+          <ProtectedRoute onlySeller>
+            <UpdateProduct />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
@@ -111,7 +123,7 @@ export type RoutePath =
   | '/signup/buyer'
   | '/signin'
   | '/'
-  | '/product/:id'
+  | '/product/:productId'
   | '/category'
   | '/mycart'
   | '/pay'
