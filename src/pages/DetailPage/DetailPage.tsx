@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 import { CartItemAPI, getProduct } from '@/apis/product';
+import Chat from '@/components/chat/Chat';
 import DetailCategory from '@/components/Detail/detailCategory/DetailCategory';
 import InformationBox from '@/components/Detail/detailInformation/InformationBox';
 import Review from '@/components/Detail/detailReview/Review';
@@ -85,32 +86,40 @@ const DetailPage = () => {
   };
 
   return (
-    <DetailPageContainer>
-      <DetailHeader product={product} />
-      <ProductOption
-        product={product}
-        cartProduct={cartProduct}
-        onOptionPlus={onOptionPlusHandler}
-        onOptionDelete={onOptionDeleteHandler}
-        onQuantityChange={onQuantityChangeHandler}
-      />
-      <DetailCategory handleCategory={handleCategory} />
-      {!isReview ? (
-        <InformationBox productImage={product.imageUrls} />
-      ) : (
-        <>
-          <Review productId={Number(productId)} isReview={isReview} orderList={product.orderList} />
-        </>
-      )}
-      <DetailFooter cartProduct={cartProduct} />
-    </DetailPageContainer>
+    <>
+      <Chat />
+      <DetailPageContainer>
+        <DetailHeader product={product} />
+        <ProductOption
+          product={product}
+          cartProduct={cartProduct}
+          onOptionPlus={onOptionPlusHandler}
+          onOptionDelete={onOptionDeleteHandler}
+          onQuantityChange={onQuantityChangeHandler}
+        />
+        <DetailCategory handleCategory={handleCategory} />
+        {!isReview ? (
+          <InformationBox productImage={product.imageUrls} />
+        ) : (
+          <>
+            <Review
+              productId={Number(productId)}
+              isReview={isReview}
+              orderList={product.orderList}
+            />
+          </>
+        )}
+        <DetailFooter cartProduct={cartProduct} />
+      </DetailPageContainer>
+    </>
   );
 };
 
 export default DetailPage;
 
 const DetailPageContainer = styled.div`
-  width: 420px;
+  max-width: 420px;
+  z-index: 1;
   height: calc(100vh - 60px - 60px);
   background-color: ${theme.color.backgroundColor};
   overflow-y: scroll;
