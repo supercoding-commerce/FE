@@ -1,6 +1,5 @@
-import { createBrowserRouter, useLocation } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
-import Test from '@/components/Test/Test.tsx';
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
 import Menu from '@/pages/Category/Menu';
@@ -15,11 +14,6 @@ import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
 import { UpdateProduct } from '@/pages/UpdateProduct/UpdateProduct.tsx';
-// GYU-TODO: DELETE
-function TestCompoennt() {
-  const location = useLocation();
-  return <div>{location.pathname}</div>;
-}
 
 export const router = createBrowserRouter([
   {
@@ -34,15 +28,11 @@ export const router = createBrowserRouter([
       },
       {
         path: '/product/:id',
-        element: <TestCompoennt />,
+        element: <DetailPage />,
       },
       {
         path: '/category',
         element: <Menu />,
-      },
-      {
-        path: '/detail/:productId',
-        element: <DetailPage />,
       },
       {
         path: '/search/category',
@@ -107,10 +97,6 @@ export const router = createBrowserRouter([
             <UpdateProduct />
           </ProtectedRoute>
         ),
-      },
-      {
-        path: 'test',
-        element: <Test />,
       },
     ],
   },
