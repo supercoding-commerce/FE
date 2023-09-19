@@ -3,14 +3,16 @@ import { useNavigate } from 'react-router-dom';
 
 import Icon from '@/components/common/Icon';
 import * as S from '@/pages/Search/Search.styles';
+import { getItem, removeItem, setItem } from '@/utils/localstorage';
 
 const Search = () => {
   const [searchWord, setSearchWord] = useState('');
   const navigate = useNavigate();
   const [searchWords, setSearchWords] = useState<string[]>([]);
+  const localStorageKey = 'searchWords';
 
   useEffect(() => {
-    const searchWordsFromStorage = JSON.parse(localStorage.getItem('searchWords') || '[]');
+    const searchWordsFromStorage = getItem<string[]>(localStorageKey) || [];
     setSearchWords(searchWordsFromStorage);
   }, []);
 
@@ -24,7 +26,7 @@ const Search = () => {
 
       setSearchWords((prev) => [...prev, newSearchWord]);
 
-      localStorage.setItem('searchWords', JSON.stringify([...searchWords, newSearchWord]));
+      setItem(localStorageKey, [...searchWords, newSearchWord]);
 
       navigate(`/product/search?searchWord=${encodeURIComponent(newSearchWord)}`);
     }
@@ -35,13 +37,13 @@ const Search = () => {
     const updatedSearchWords = searchWords.filter((word) => word !== wordToDelete);
 
     setSearchWords(updatedSearchWords);
-    localStorage.setItem('searchWords', JSON.stringify(updatedSearchWords));
+    setItem(localStorageKey, updatedSearchWords);
   };
 
   /**최근검색어 전체삭제 함수 */
   const handleDeleteAll = () => {
     setSearchWords([]);
-    localStorage.removeItem('searchWords');
+    removeItem(localStorageKey);
   };
 
   return (
