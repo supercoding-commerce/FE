@@ -49,14 +49,19 @@ const DetailPage = () => {
   if (!product) return;
 
   const onOptionPlusHandler = (item: string) => {
-    setOrderNCartProduct([
-      ...orderNCartProduct,
-      {
-        productId: Number(productId),
-        quantity: 1,
-        options: [item],
-      },
-    ]);
+    const doubleOption = orderNCartProduct.some((product) => product.options.includes(item));
+    if (doubleOption) {
+      alert('이미 선택된 옵션입니다.');
+    } else {
+      setOrderNCartProduct([
+        ...orderNCartProduct,
+        {
+          productId: Number(productId),
+          quantity: 1,
+          options: [item],
+        },
+      ]);
+    }
   };
 
   //배열에 useState 사용하는 법
