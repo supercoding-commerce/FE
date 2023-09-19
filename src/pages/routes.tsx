@@ -46,7 +46,7 @@ export const router = createBrowserRouter([
         element: <DetailPage />,
       },
       {
-        path: '/search/category',
+        path: '/product/search/category',
         element: <ProductPage />,
       },
 
@@ -120,4 +120,5 @@ export type RoutePath =
   | '/update/product'
   | '/search'
   | '/product/search'
+  | '/product/search/category'
   | string;
