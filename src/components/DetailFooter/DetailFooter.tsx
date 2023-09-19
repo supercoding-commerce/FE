@@ -26,8 +26,18 @@ const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
   };
 
   const postCartProduct = () => {
-    postCart(orderNCartProduct);
-    navigate('/mycart');
+    postCart(orderNCartProduct)
+      .then((result) => {
+        console.log('result.status', result.status);
+        if (result.status === 200) {
+          navigate('/mycart');
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 409) {
+          alert('이미 장바구니에 담긴 상품입니다.');
+        }
+      });
   };
 
   return (

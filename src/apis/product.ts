@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 import { client } from '@/apis/index.ts';
 
 const BASE_URL = '/v1/api/product';
@@ -20,9 +22,11 @@ export async function getProduct(productId: number) {
   return response;
 }
 
-export async function postCart(payload: OrderNCartItemAPI[]): Promise<OrderNCartItemAPI> {
+export async function postCart(
+  payload: OrderNCartItemAPI[],
+): Promise<AxiosResponse<OrderNCartItemAPI>> {
   const response = await client.post('/v1/api/cart', payload);
-  return response.data;
+  return response;
 }
 
 export async function postPayment(payload: OrderNCartItemAPI[]): Promise<OrderNCartItemAPI> {

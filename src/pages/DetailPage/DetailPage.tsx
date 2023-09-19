@@ -47,7 +47,6 @@ const DetailPage = () => {
     });
   }, []);
   if (!product) return;
-  console.log(product);
 
   const onOptionPlusHandler = (item: string) => {
     setOrderNCartProduct([
