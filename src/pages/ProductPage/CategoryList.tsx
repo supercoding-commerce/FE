@@ -1,7 +1,7 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
+import { fetchCategoryProducts } from '@/apis/categoryProduct';
 import * as S from '@/components/MainPage/ListItemComponent/AllProductList.styles';
 import ListItem from '@/components/MainPage/ListItemComponent/ListItem';
 
@@ -11,62 +11,53 @@ interface Product {
   name: string;
   price: number;
   shopName: string;
+  filter: string;
 }
 
 interface CategoryListProps {
   category: string | null;
+  age: string | null;
+  gender: string | null;
+  filter: string | null;
 }
 
-const CategoryList: React.FC<CategoryListProps> = ({
-  category,
-  // age, gender
-}) => {
+const CategoryList: React.FC<CategoryListProps> = ({ category, filter, age, gender }) => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [page, setPage] = useState<number>(1);
   const [ref, inView] = useInView();
+  const pageRef = useRef(1);
 
-  // age, gender
-  const age = 10;
-  const gender = 'common';
   const productFetch = async () => {
-    // https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${page}&ageCategory=20&
-    let url = `https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${page}`;
-
-    url += age ? `&ageCategory=${age}` : '';
-    url += gender ? `&genderCategory=${gender}` : '';
-
-    await axios
-      // .get(`https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${page}`)
-      .get(url)
-      .then((res) => {
-        console.log(res.data);
-        setProducts((prevProducts) => [...prevProducts, ...res.data]);
-        setPage((prevPage) => prevPage + 1);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      const response = await fetchCategoryProducts(category, pageRef.current, age, gender, filter);
+      console.log('RESPONSE', response);
+      setProducts((prevProducts) => [...(pageRef.current === 1 ? [] : prevProducts), ...response]);
+      pageRef.current = pageRef.current + 1;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  // 옵션 필터 처리시 호출
   useEffect(() => {
-    // age, gender
-    setPage(1);
-    // setTimeout(() => productFetch(), 100)
-  }, [age, gender]);
+    // 불필요 통신 막기 위함
+    if (filter === '필터옵션' && age === '나이' && gender === '성별') return;
 
-  // 무한스크롤 처리 하는 로직
+    pageRef.current = 1;
+    productFetch();
+  }, [filter, age, gender]);
+
   useEffect(() => {
     if (inView) {
-      console.log(inView, '무한 스크롤 요청 🎃');
       productFetch();
     }
   }, [inView]);
 
+  console.log('pageRef.current', pageRef.current);
+
   return (
     <S.ListContainer>
-      {products.map((product) => (
+      {products.map((product, index) => (
         <ListItem
+          key={index}
           productId={product.productId}
           imageUrl={product.imageUrl}
           name={product.name}

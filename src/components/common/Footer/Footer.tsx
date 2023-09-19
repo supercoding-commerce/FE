@@ -25,4 +25,4 @@ export default Footer;
 
 const SIGN_FOOTER_URL: RoutePath[] = ['/signin', '/signup'];
 
-const DEFAULT_FOOTER_URL: RoutePath[] = ['/', '/category'];
+const DEFAULT_FOOTER_URL: RoutePath[] = ['/', '/category', '/search/category'];
