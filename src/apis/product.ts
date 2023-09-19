@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 import { client } from '@/apis/index.ts';
 
 const BASE_URL = '/v1/api/product';
@@ -9,7 +11,7 @@ export const createProduct = async (payload: FormData) => {
   });
 };
 
-export type CartItemAPI = {
+export type OrderNCartItemAPI = {
   productId: number;
   quantity: number;
   options: string[];
@@ -20,12 +22,14 @@ export async function getProduct(productId: number) {
   return response;
 }
 
-export async function postCart(payload: CartItemAPI): Promise<CartItemAPI> {
+export async function postCart(
+  payload: OrderNCartItemAPI[],
+): Promise<AxiosResponse<OrderNCartItemAPI>> {
   const response = await client.post('/v1/api/cart', payload);
-  return response.data;
+  return response;
 }
 
-export async function postPayment(payload: CartItemAPI[]): Promise<CartItemAPI> {
+export async function postPayment(payload: OrderNCartItemAPI[]): Promise<OrderNCartItemAPI> {
   const response = await client.post('/v1/api/order', payload);
   return response.data;
 }

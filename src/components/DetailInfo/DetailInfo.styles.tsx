@@ -2,12 +2,12 @@ import styled from '@emotion/styled';
 
 import { theme } from '@/styles/theme';
 
-export const DetailHeaderContainer = styled.div`
+export const DetailInfoContainer = styled.div`
   width: 100%;
   height: auto;
 `;
 
-export const DetailHeader = styled.div``;
+export const DetailInfo = styled.div``;
 
 export const Image = styled.img`
   width: 100%;

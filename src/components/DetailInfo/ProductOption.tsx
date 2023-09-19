@@ -1,4 +1,4 @@
-import { CartItemAPI } from '@/apis/product';
+import { OrderNCartItemAPI } from '@/apis/product';
 import Counter from '@/components/common/Counter/Counter';
 import Icon from '@/components/common/Icon';
 import SelectBox from '@/components/common/SelectBox/SelectBox';
@@ -10,7 +10,7 @@ type ProductProps = {
   onOptionPlus?: (item: string) => void;
   onOptionDelete?: (index: number) => void;
   onQuantityChange?: (index: number, newQuantity: number) => void;
-  cartProduct?: CartItemAPI[];
+  orderNCartProduct?: OrderNCartItemAPI[];
 };
 
 const ProductOption = ({
@@ -18,7 +18,7 @@ const ProductOption = ({
   onOptionPlus,
   onQuantityChange,
   onOptionDelete,
-  cartProduct,
+  orderNCartProduct,
 }: ProductProps) => {
   return (
     <S.OptionContainer>
@@ -33,8 +33,8 @@ const ProductOption = ({
             />
           ) : null}
         </S.Options>
-        {cartProduct && cartProduct.length > 0
-          ? cartProduct.map((item, index) => (
+        {orderNCartProduct && orderNCartProduct.length > 0
+          ? orderNCartProduct.map((item, index) => (
               <S.SelectedOptionContainer key={index}>
                 <S.SelectedOption>{item.options[0]}</S.SelectedOption>
                 {onQuantityChange ? (
