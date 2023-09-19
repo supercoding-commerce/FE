@@ -40,6 +40,7 @@ const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
       });
   };
 
+  const nonSelectedProduct = orderNCartProduct.length === 0;
   return (
     <>
       {isBuyer && (
@@ -53,6 +54,7 @@ const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
             isCircle={false}
             isFullWidth={false}
             onClick={postCartProduct}
+            disabled={nonSelectedProduct}
           >
             장바구니
           </Button>
@@ -63,6 +65,7 @@ const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
             isCircle={false}
             isFullWidth={false}
             onClick={postPaymentProduct}
+            disabled={nonSelectedProduct}
           >
             구매하기
           </Button>
