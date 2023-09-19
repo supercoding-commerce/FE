@@ -39,5 +39,5 @@ const HEADER_TITLE: { [key: RoutePath]: string } = {
   '/update/product': 'Update Products',
   '/mypage': 'My Page',
   '/mycart': 'Cart',
-  './detail': 'Detail',
+  '/detail': 'Detail',
 };
