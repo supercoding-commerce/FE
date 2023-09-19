@@ -27,6 +27,7 @@ export function DefaultLayout() {
       <Header />
       <Outlet />
       <Footer />
+      <div id={'dialog-root'} />
     </S.DefaultLayoutWrapper>
   );
 }
