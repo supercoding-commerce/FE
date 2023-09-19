@@ -28,7 +28,6 @@ const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
   const postCartProduct = () => {
     postCart(orderNCartProduct)
       .then((result) => {
-        console.log('result.status', result.status);
         if (result.status === 200) {
           navigate('/mycart');
         }
