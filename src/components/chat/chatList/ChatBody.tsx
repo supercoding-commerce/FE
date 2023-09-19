@@ -4,17 +4,15 @@ import * as S from '../Chat.styles';
 
 type ChatBodyProps = {
   chatList: list[];
-  clickListBox: (customRoomId: string) => void;
+  clickListBox: (customRoomId: string, userId: number, userName: string) => void;
 };
 
 const ChatBody = ({ chatList, clickListBox }: ChatBodyProps) => {
-  console.log('chatList1', chatList);
-
   return (
     <S.ChatBody>
       {chatList?.map((item, idx) => {
         return (
-          <div onClick={() => clickListBox(item.customRoomId)}>
+          <div onClick={() => clickListBox(item.customRoomId, item.userId, item.userName)}>
             <ChatBox
               key={idx}
               lastChat={item.lastChat.content}

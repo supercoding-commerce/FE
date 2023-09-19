@@ -20,7 +20,6 @@ function SelectBox({
   value,
 }: SelectBoxProps) {
   const [openOption, setOpenOption] = useState(false);
-
   return (
     <S.SelectContainer style={{ '--width': width, '--height': height } as CSSProperties}>
       <S.SelectedBox

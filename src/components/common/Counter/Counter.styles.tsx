@@ -22,7 +22,7 @@ export const MinusBtn = styled.div`
   cursor: pointer;
   ${theme.font.body0}
 
-  & div {
+  & p {
     &:hover {
       color: ${theme.color.brandHover};
       transition: 0.15s ease-in-out;
@@ -72,7 +72,7 @@ export const PlusBtn = styled.div`
   cursor: pointer;
   ${theme.font.body1}
 
-  div {
+  p {
     &:hover {
       color: ${theme.color.brandHover};
       transition: 0.15s ease-in-out;

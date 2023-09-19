@@ -8,32 +8,32 @@ const Menu = () => {
   const topOptions: CategoryProps[] = [
     {
       icon: 'IconTop',
-      title: 'TOP',
+      title: 'Top',
       options: [
         {
           icon: 'IconSweat',
-          title: 'SWEAT',
+          title: 'Sweat',
           onClick: () => {
             navigate('/product/search/category?category=Top&subcategory=SWEAT');
           },
         },
         {
           icon: 'IconHood',
-          title: 'HOOD',
+          title: 'Hood',
           onClick: () => {
             navigate('/product/search/category?category=Top&subcategory=HOOD');
           },
         },
         {
           icon: 'IconKnit',
-          title: 'KNIT',
+          title: 'Knit',
           onClick: () => {
             navigate('/product/search/category?category=Top&subcategory=KNIT');
           },
         },
         {
           icon: 'IconSleeveless',
-          title: 'SLEEVELESS',
+          title: 'Sleeveless',
           onClick: () => {
             navigate('/product/search/category?category=Top&subcategory=SLEEVELESS');
           },
@@ -42,32 +42,32 @@ const Menu = () => {
     },
     {
       icon: 'IconPants',
-      title: 'PANTS',
+      title: 'Pants',
       options: [
         {
           icon: 'IconJeans',
-          title: 'JEANS',
+          title: 'Jeans',
           onClick: () => {
             navigate('/product/search/category?category=Pants&subcategory=JEANS');
           },
         },
         {
           icon: 'IconShorts',
-          title: 'SHORTS',
+          title: 'Shorts',
           onClick: () => {
             navigate('/product/search/category?category=Pants&subcategory=SHORTS');
           },
         },
         {
           icon: 'IconTraining',
-          title: 'TRAINING',
+          title: 'Training',
           onClick: () => {
             navigate('/product/search/category?category=Pants&subcategory=TRAINING');
           },
         },
         {
           icon: 'IconLeggings',
-          title: 'LEGGINGS',
+          title: 'Leggings',
           onClick: () => {
             navigate('/product/search/category?category=Pants&subcategory=LEGGINGS');
           },
@@ -76,18 +76,18 @@ const Menu = () => {
     },
     {
       icon: 'IconDress',
-      title: 'DRESS',
+      title: 'Dress',
       options: [
         {
           icon: 'IconShortDress',
-          title: 'SHORTDRESS',
+          title: 'ShortDress',
           onClick: () => {
             navigate('/product/search/category?category=Dress&subcategory=SHORTDRESS');
           },
         },
         {
           icon: 'IconLongDress',
-          title: 'LONGDRESS',
+          title: 'LongDress',
           onClick: () => {
             navigate('/product/search/category?category=Dress&subcategory=LONGDRESS');
           },
@@ -97,32 +97,32 @@ const Menu = () => {
 
     {
       icon: 'IconAccessories',
-      title: 'ACCESSORIES',
+      title: 'Accessories',
       options: [
         {
           icon: 'IconShoes',
-          title: 'SHOES',
+          title: 'Shoes',
           onClick: () => {
             navigate('/product/search/category?category=Accessories&subcategory=SHOES');
           },
         },
         {
           icon: 'IconMuffler',
-          title: 'MUFFLER',
+          title: 'Muffler',
           onClick: () => {
             navigate('/product/search/category?category=Accessories&subcategory=MUFFLER');
           },
         },
         {
           icon: 'IconGloves',
-          title: 'GLOVES',
+          title: 'Gloves',
           onClick: () => {
             navigate('/product/search/category?category=Accessories&subcategory=GLOVES');
           },
         },
         {
           icon: 'IconCap',
-          title: 'CAP',
+          title: 'Cap',
           onClick: () => {
             navigate('/product/search/category?category=Accessories&subcategory=CAP');
           },

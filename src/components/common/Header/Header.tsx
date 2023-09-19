@@ -30,6 +30,7 @@ const NO_HEADER_URL: RoutePath[] = [
   '/signup/buyer',
   '/signin',
   '/product/search/category',
+  '/search',
 ];
 const SEARCH_HEADER_URL: RoutePath[] = ['/', '/category'];
 const PRODUCT_DETAIL_REGEX = new RegExp(/\/product\/\d+/);
@@ -39,4 +40,5 @@ const HEADER_TITLE: { [key: RoutePath]: string } = {
   '/update/product': 'Update Products',
   '/mypage': 'My Page',
   '/mycart': 'Cart',
+  '/detail': 'Detail',
 };
