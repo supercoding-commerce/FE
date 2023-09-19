@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Client } from '@stomp/stompjs';
 
 import { client } from '@/apis';
+import { ProductInfo, SellerInfo, UserInfo } from '@/components/chat/Chat';
 import ChatDetailBody from '@/components/chat/chatDetail/ChatDetailBody';
 import ChatDetailHeader from '@/components/chat/chatDetail/ChatDetailHeader';
 import ChatSend from '@/components/chat/chatDetail/ChatSend';
@@ -9,21 +10,6 @@ import ChatSend from '@/components/chat/chatDetail/ChatSend';
 export type Msg = {
   sender: string;
   content: string;
-};
-
-type UserInfo = {
-  userId: number;
-  userName: string;
-};
-
-type ProductInfo = {
-  productId: number;
-  productName: string;
-};
-
-type SellerInfo = {
-  sellerId: number;
-  shopName: string;
 };
 
 type ChatUserProps = {
@@ -61,6 +47,9 @@ const ChatDetail = ({
     [user.userName]: false,
     [seller.shopName]: false,
   });
+
+  console.log(userStatus);
+  console.log('방금한 채팅 반영 안됨?', msg);
 
   const loadPrevChat: () => Promise<void> = async () => {
     await client
@@ -108,26 +97,23 @@ const ChatDetail = ({
         type: 'LEAVE',
       }),
     });
-    //TODO: 창 닫기 적용하기
+    console.log('떠나나?');
   };
 
   /** handleTerminate() : 유저, 셀러 전부 떠났을때 */
   const handleTerminate = () => {
-    stompClient.publish({
-      destination: `/topic/${seller.sellerId}/${product.productId}/${user.userId}`,
-      body: JSON.stringify({
-        shopName: seller.shopName,
-        userName: user.userName,
-        type: 'TERMINATE',
-      }),
-    });
+    if (userStatus[user.userName] || userStatus[seller.shopName]) {
+      stompClient.publish({
+        destination: `/topic/${seller.sellerId}/${product.productId}/${user.userId}`,
+        body: JSON.stringify({
+          shopName: seller.shopName,
+          userName: user.userName,
+          type: 'TERMINATE',
+        }),
+      });
+      console.log('끊겼나?');
+    } else return;
   };
-
-  useEffect(() => {
-    if (userStatus[user.userName] && userStatus[seller.shopName]) {
-      handleTerminate();
-    }
-  }, [userStatus]);
 
   /** handleDisConnect() : 소켓 객체 비활성화(끊기) */
   const handleDisConnect = () => {
@@ -156,7 +142,7 @@ const ChatDetail = ({
         (body) => {
           // message -> 백엔드랑 논의 완료 (백엔드에서 어떻게 보내주는지)
           const message = JSON.parse(body.body);
-
+          console.log('message', message);
           if (message.type === 'JOIN') {
             console.log('연결되었습니다.');
           } else if (message.type === 'LEAVE') {
@@ -168,6 +154,10 @@ const ChatDetail = ({
             }));
           } else if (message.type === 'TERMINATE') {
             handleDisConnect();
+            setUserStatus({
+              [user.userName]: false,
+              [seller.shopName]: false,
+            });
           } else {
             const msgContent = message.content;
             const msgSender = message.sender;
@@ -193,15 +183,16 @@ const ChatDetail = ({
     // 전역에 만들어진 클라이언트 소켓 객체 활성화(연결)
     stompClient.activate();
 
-    return () => {
-      handleDisConnect();
-    };
+    // return () => {
+    //   handleDisConnect();
+    // };
   }, []);
 
   return (
     <>
       <ChatDetailHeader
         handleLeave={handleLeave}
+        handleTerminate={handleTerminate}
         shopName={seller.shopName}
         clickPrevButton={clickPrevButton}
         handleOpen={handleOpen}

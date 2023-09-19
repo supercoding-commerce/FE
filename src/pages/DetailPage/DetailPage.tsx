@@ -13,6 +13,10 @@ import ProductOption from '@/components/DetailHeader/ProductOption';
 import { theme } from '@/styles/theme';
 
 export type DetailProduct = {
+  seller: boolean;
+  sellerId: number;
+  enteredUserId: number;
+  enteredUserName: string;
   productId: number;
   thumbnailUrl: string;
   shopName: string;
@@ -87,7 +91,15 @@ const DetailPage = () => {
 
   return (
     <>
-      <Chat />
+      <Chat
+        sellerId={product.sellerId}
+        sellerName={product.shopName}
+        userId={product.enteredUserId}
+        userName={product.enteredUserName}
+        productId={product.productId}
+        productName={product.name}
+        isUser={product.seller}
+      />
       <DetailPageContainer>
         <DetailHeader product={product} />
         <ProductOption
