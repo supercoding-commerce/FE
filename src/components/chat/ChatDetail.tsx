@@ -48,9 +48,6 @@ const ChatDetail = ({
     [seller.shopName]: false,
   });
 
-  console.log(userStatus);
-  console.log('방금한 채팅 반영 안됨?', msg);
-
   const loadPrevChat: () => Promise<void> = async () => {
     await client
       .get(`/v1/api/chat/detail/${customRoomId}`)
@@ -88,16 +85,16 @@ const ChatDetail = ({
 
   /** handleLeave() : 유저가 채팅방을 떠날 때 */
   const handleLeave = () => {
-    stompClient.publish({
-      destination: `/topic/${seller.sellerId}/${product.productId}/${user.userId}`,
-      body: JSON.stringify({
-        shopName: seller.shopName,
-        userName: user.userName,
-        sender: role === 'user' ? user.userName : seller.shopName,
-        type: 'LEAVE',
-      }),
-    });
-    console.log('떠나나?');
+    if (!userStatus[user.userName] && !userStatus[seller.shopName])
+      stompClient.publish({
+        destination: `/topic/${seller.sellerId}/${product.productId}/${user.userId}`,
+        body: JSON.stringify({
+          shopName: seller.shopName,
+          userName: user.userName,
+          sender: role === 'user' ? user.userName : seller.shopName,
+          type: 'LEAVE',
+        }),
+      });
   };
 
   /** handleTerminate() : 유저, 셀러 전부 떠났을때 */
@@ -111,7 +108,6 @@ const ChatDetail = ({
           type: 'TERMINATE',
         }),
       });
-      console.log('끊겼나?');
     } else return;
   };
 
@@ -142,7 +138,6 @@ const ChatDetail = ({
         (body) => {
           // message -> 백엔드랑 논의 완료 (백엔드에서 어떻게 보내주는지)
           const message = JSON.parse(body.body);
-          console.log('message', message);
           if (message.type === 'JOIN') {
             console.log('연결되었습니다.');
           } else if (message.type === 'LEAVE') {
