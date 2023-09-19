@@ -72,9 +72,9 @@ const Search = () => {
         <S.TagWrap>
           {searchWords.map((word: string, index: number) => (
             <S.TagContainer key={index}>
-              <S.StyledLink to={`/product/search?searchWord=${encodeURIComponent(word)}`}>
+              <S.TagRecentSearch to={`/product/search?searchWord=${encodeURIComponent(word)}`}>
                 {word}
-              </S.StyledLink>
+              </S.TagRecentSearch>
               <Icon
                 onClick={() => deleteTag(word)}
                 name="IconX"

@@ -79,6 +79,6 @@ export const DeleteAll = styled.h1`
   cursor: pointer;
 `;
 
-export const StyledLink = styled(Link)`
+export const TagRecentSearch = styled(Link)`
   padding-right: 5px;
 `;
