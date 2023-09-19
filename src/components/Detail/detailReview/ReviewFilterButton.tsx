@@ -4,7 +4,13 @@ import Button from '@/components/common/Button/Button';
 import { theme } from '@/styles/theme';
 import * as S from '../Detail.styles';
 
-const ReviewFilterButton = () => {
+type FilterProps = {
+  // handleArrangement: (index: number) => void;
+  byRating: () => void;
+  byLatest: () => void;
+};
+
+const ReviewFilterButton = ({ byRating, byLatest }: FilterProps) => {
   const [filter, setFilter] = useState([
     {
       title: '최신순',
@@ -17,6 +23,9 @@ const ReviewFilterButton = () => {
   ]);
 
   const handleButtonClick = (index: number) => {
+    if (filter[index].status) {
+      return;
+    }
     const updatedFilter = filter.map((item, idx) => {
       if (idx === index) {
         return {
@@ -31,6 +40,13 @@ const ReviewFilterButton = () => {
       }
     });
     setFilter(updatedFilter);
+
+    if (index === 0) {
+      byLatest();
+    }
+    if (index === 1) {
+      byRating();
+    }
   };
 
   return (

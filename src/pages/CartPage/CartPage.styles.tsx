@@ -29,7 +29,7 @@ export const AllDelete = styled.div`
 
 export const PriceWrapper = styled.div`
   width: 100%;
-  height: 180px;
+  height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,7 +47,6 @@ export const AllPrice = styled.div`
   font: ${theme.font.body1};
 `;
 export const DeliveryPrice = styled(AllPrice)``;
-export const Coupon = styled(AllPrice)``;
 
 export const GoToPay = styled.div`
   background-color: ${theme.color.backgroundColor};
