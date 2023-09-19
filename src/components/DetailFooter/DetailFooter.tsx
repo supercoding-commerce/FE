@@ -21,8 +21,9 @@ const DetailFooter = ({ cartProduct }: FooterProps) => {
 
   const navigate = useNavigate();
   const postPaymentProduct = () => {
-    postPayment([...cartProduct]);
-    navigate('/pay');
+    if (cartProduct.length === 0) return;
+
+    postPayment([...cartProduct]).then(() => navigate('/pay'));
   };
 
   return (
