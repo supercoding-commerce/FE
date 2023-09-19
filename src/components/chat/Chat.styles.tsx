@@ -126,6 +126,9 @@ export const ChatBody = styled.div`
   padding-top: 10px;
   padding-bottom: 25px;
   box-sizing: border-box;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const ChatBox = styled.div`
@@ -267,6 +270,11 @@ export const ChatDetailBody = styled.div`
   width: 100%;
   height: 642px;
   overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 export const ChatDetailIntro = styled.div`
