@@ -35,14 +35,14 @@ export const SelectedOptionContainer = styled.span`
 `;
 
 export const SelectedOption = styled.p`
-  margin-right: 50px;
   font: ${theme.font.body2};
+  width: 130px;
 `;
 
 export const OptionPrice = styled.p`
   font: ${theme.font.body2};
   margin-right: 3px;
-  width: 100px;
+  width: 110px;
   display: flex;
   justify-content: flex-end;
 `;
