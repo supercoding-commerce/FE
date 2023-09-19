@@ -39,4 +39,7 @@ export { ReactComponent as IconGloves } from './Gloves.svg';
 export { ReactComponent as IconCap } from './Cap.svg';
 export { ReactComponent as IconShortDress } from './ShortDress.svg';
 export { ReactComponent as IconLongDress } from './LongDress.svg';
+export { ReactComponent as IconFullHeart } from './FullHeart.svg';
+export { ReactComponent as IconEmptyHeart } from './EmptyHeart.svg';
 export { ReactComponent as IconChat } from './Chat.svg';
+export { ReactComponent as IconSignOut } from './SignOut.svg';
