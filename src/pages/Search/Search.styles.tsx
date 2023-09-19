@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 import { theme } from '@/styles/theme.ts';
@@ -9,6 +10,10 @@ export const SearchHeader = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #fff;
+`;
+
+export const SearchContainer = styled.div`
+  padding: 20px 30px;
 `;
 
 export const InputDiv = styled.div`
@@ -38,5 +43,42 @@ export const Input = styled.input`
   outline: none;
   border: none;
   background-color: transparent;
-  margin-left: 8px;
+`;
+
+export const TagWrap = styled.div`
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+`;
+
+export const TagContainer = styled.div`
+  margin-top: 20px;
+  margin-right: 5px;
+  font-size: 14px;
+  line-height: 21px;
+  background-color: white;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 11px;
+  cursor: pointer;
+  ${theme.font.body3}
+`;
+export const TitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const RecentSearch = styled.h1`
+  ${theme.font.body1}
+`;
+export const DeleteAll = styled.h1`
+  ${theme.font.body1}
+  cursor: pointer;
+`;
+
+export const StyledLink = styled(Link)`
+  padding-right: 5px;
 `;
