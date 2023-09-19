@@ -10,6 +10,7 @@ import { MyPage } from '@/pages/MyPage/MyPage.tsx';
 import { Payment } from '@/pages/Payment/Payment';
 import ProductPage from '@/pages/ProductPage/ProductPage';
 import { ProtectedRoute } from '@/pages/ProtectedRoute.tsx';
+import Search from '@/pages/Search/Search';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
@@ -35,10 +36,18 @@ export const router = createBrowserRouter([
         element: <Menu />,
       },
       {
-        path: '/search/category',
+        path: '/detail/:productId',
+        element: <DetailPage />,
+      },
+      {
+        path: '/product/search/category',
         element: <ProductPage />,
       },
 
+      {
+        path: '/search',
+        element: <Search />,
+      },
       // 회원가입 / 로그인
       {
         path: '/signup',
@@ -115,4 +124,6 @@ export type RoutePath =
   | '/mypage'
   | '/new/product'
   | '/update/product'
+  | '/search'
+  | '/product/search/category'
   | string;
