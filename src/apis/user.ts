@@ -1,4 +1,5 @@
 import { client } from '@/apis';
+import { SignUpItem } from '@/components/signup/SignUpForm/SignUpForm.tsx';
 import { userInfoProps } from '@/pages/SignInPage/SignInPage';
 
 const USER_URL = '/v1/api/user';
