@@ -10,14 +10,19 @@ type CouponItemProps = {
 export function CouponItem({ coupon, selectedCoupon, onSelectCoupon }: CouponItemProps) {
   const expired = isExpired(coupon.expiredAt);
 
+  const handleSelectCoupon = () => {
+    if (coupon.isUsed) return;
+    onSelectCoupon(coupon);
+  };
+
   const active = coupon.couponId === selectedCoupon?.couponId;
   return (
     <S.CouponItemWrapper
       className={cx({
-        ['disabled']: expired,
+        ['disabled']: expired || coupon.isUsed,
         ['active']: active,
       })}
-      onClick={() => onSelectCoupon(coupon)}
+      onClick={handleSelectCoupon}
     >
       <S.CouponContent>{coupon.couponContent}</S.CouponContent>
       <S.CouponTitle>{coupon.couponTitle}</S.CouponTitle>

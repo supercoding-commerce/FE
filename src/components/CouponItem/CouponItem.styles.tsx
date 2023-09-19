@@ -16,6 +16,7 @@ export const CouponItemWrapper = styled.div`
   &.disabled {
     color: ${theme.color.borderColor};
     border-color: ${theme.color.borderColor};
+    cursor: auto;
   }
 `;
 
