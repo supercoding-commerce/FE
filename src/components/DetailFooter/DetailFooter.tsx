@@ -26,8 +26,8 @@ const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
   };
 
   const postCartProduct = () => {
-    postCart(orderNCartProduct[0]);
-    // navigate('/mycart');
+    postCart(orderNCartProduct);
+    navigate('/mycart');
   };
 
   return (

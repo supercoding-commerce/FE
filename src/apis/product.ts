@@ -20,7 +20,7 @@ export async function getProduct(productId: number) {
   return response;
 }
 
-export async function postCart(payload: OrderNCartItemAPI): Promise<OrderNCartItemAPI> {
+export async function postCart(payload: OrderNCartItemAPI[]): Promise<OrderNCartItemAPI> {
   const response = await client.post('/v1/api/cart', payload);
   return response.data;
 }
