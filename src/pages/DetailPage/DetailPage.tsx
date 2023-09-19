@@ -18,7 +18,7 @@ export type DetailProduct = {
   shopName: string;
   name: string;
   leftAmount: number;
-  star: number;
+  averageStarPoint: number;
   price: number;
   options: string[];
   imageUrls: string[];

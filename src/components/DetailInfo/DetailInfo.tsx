@@ -17,7 +17,7 @@ const DetailInfo = ({ product }: DetailProps) => {
         </S.ProductInfo1>
         <S.ProductInfo2>
           <S.Rating>
-            <Rating readOnly count={product.star} />
+            <Rating readOnly count={product.averageStarPoint} />
           </S.Rating>
           <S.Price>{product.price.toLocaleString()}원</S.Price>
         </S.ProductInfo2>
