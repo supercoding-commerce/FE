@@ -108,7 +108,7 @@ export type RoutePath =
   | '/signup/buyer'
   | '/signin'
   | '/'
-  | '/product/:id'
+  | '/product/:productId'
   | '/category'
   | '/mycart'
   | '/pay'
