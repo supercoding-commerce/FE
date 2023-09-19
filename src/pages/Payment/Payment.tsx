@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useModal } from '@ebay/nice-modal-react';
 
+import { PurchasePayload } from '@/apis/payment.ts';
 import Button from '@/components/common/Button/Button.tsx';
 import Icon from '@/components/common/Icon.tsx';
 import { CouponModal } from '@/components/modals/CouponModal.tsx';
 import { useToggle } from '@/hooks/useToggle.ts';
 import { useGetOrders } from '@/queries/order/query.ts';
+import { usePurchase } from '@/queries/payments/mutation.ts';
 import { useGetUserInfo } from '@/queries/user/query.ts';
 import { theme } from '@/styles/theme.ts';
 import * as S from './Payment.styles';
@@ -19,6 +21,8 @@ export function Payment() {
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | undefined>(undefined);
 
   const couponModal = useModal(CouponModal);
+  const { purchaseMutate } = usePurchase();
+  const navigate = useNavigate();
 
   const handleClickCoupon = async () => {
     // 이미 쿠폰 선택시 다시 클릭하면 쿠폰선택 취소
@@ -31,6 +35,24 @@ export function Payment() {
     await couponModal.show({
       selectedCoupon: selectedCoupon,
       onUseCoupon: (selectedCoupon: Coupon | undefined) => setSelectedCoupon(selectedCoupon),
+    });
+  };
+
+  const handlePurchase = async () => {
+    if (!orders || orders.length === 0) return;
+
+    const purchasePayload: PurchasePayload = {
+      couponId: selectedCoupon?.couponId || 0,
+      isUsePoint: pointActive,
+      orderIdList: orders.map((order) => order.orderId),
+      paymentMethod: 1,
+      totalPrice: 총결제금액,
+    };
+    purchaseMutate(purchasePayload, {
+      onSuccess: () => {
+        alert('주문 완료');
+        navigate('/');
+      },
     });
   };
 
@@ -113,7 +135,7 @@ export function Payment() {
                 <img src={orderItem.imageUrl} alt="thumbnail" />
                 <S.OrderItemInfoWrapper>
                   <span className={'name'}>{orderItem.productName}</span>
-                  <span className={'option'}>{orderItem.options[0]}</span>
+                  <span className={'option'}>{(orderItem.options ?? [])[0]}</span>
                   <span className={'info'}>
                     {moneyFormat(orderItem.price)}원 - {orderItem.quantity}개
                   </span>
@@ -130,7 +152,7 @@ export function Payment() {
           size={'large'}
           isFullWidth
           style={{ borderRadius: 0 }}
-          onClick={() => {}}
+          onClick={handlePurchase}
         >
           구매하기
         </Button>
