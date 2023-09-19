@@ -5,19 +5,52 @@ import ChatDetail from '@/components/chat/ChatDetail';
 import ChatList from '@/components/chat/ChatList';
 import * as S from './Chat.styles';
 
-const Chat = () => {
-  const seller = { sellerId: 3, shopName: '상점3' };
-  /** TODO: 로그인할때 유저정보에서 받아올 것. 리코일 쓰나? */
-  const user = { userId: 12, userName: 'kristengreen' };
-  /** TODO: 디테일 페이지에서 props로 받아올 것 */
-  const product = { productId: 5, productName: 'what' };
-  const isSeller = true;
-  const role = isSeller ? 'seller' : 'user';
-  const roomId = createCustomRoomId(seller.sellerId, product.productId, user.userId);
+type ChatProps = {
+  sellerId: number;
+  sellerName: string;
+  userId: number;
+  userName: string;
+  productId: number;
+  productName: string;
+  isUser: boolean;
+};
 
-  const [customRoomId, setCustomRoomId] = useState<string>(roomId);
+export type UserInfo = {
+  userId: number;
+  userName: string;
+};
+
+export type ProductInfo = {
+  productId: number;
+  productName: string;
+};
+
+export type SellerInfo = {
+  sellerId: number;
+  shopName: string;
+};
+
+const Chat = ({
+  sellerId,
+  sellerName,
+  userId,
+  userName,
+  productId,
+  productName,
+  isUser,
+}: ChatProps) => {
+  const seller: SellerInfo = { sellerId: sellerId, shopName: sellerName };
+  const product: ProductInfo = { productId: productId, productName: productName };
+  const [user, setUser] = useState<UserInfo>({ userId: userId, userName: userName });
   const [isCustomRoomId, setIsCustomRoomId] = useState<boolean>(true);
+
+  const isSeller = isUser;
+  const role = isSeller ? 'seller' : 'user';
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const roomId = createCustomRoomId(seller.sellerId, product.productId, user.userId);
+  const [customRoomId, setCustomRoomId] = useState<string>(roomId);
 
   /** createCustomRoomId() : 소켓 방 열때 필요한 roomId 조합생성 */
   function createCustomRoomId(sellerId: number, productId: number, userId: number) {
@@ -39,10 +72,13 @@ const Chat = () => {
   /** clickListBox() : 채팅list에서 해당 채팅방으로 들어가기 위해
    * 1. isCustomRoomId를 false,
    * 2. ChatBody.tsx에서 custumroomId를 받아와서 ChatList.tsx로 넘겨줌.
+   * 3. seller일때 현재 디테일에서 넘어오는 userId, userName값은 판매자의 정보여서 ChatList.tsx에서
+        문의한 구매자의 userId값, userName값을 가져옴.
    */
-  const clickListBox = (customRoomId: string) => {
+  const clickListBox = (customRoomId: string, userId: number, userName: string) => {
     setIsCustomRoomId((prev) => !prev);
     setCustomRoomId(customRoomId);
+    setUser({ ...user, userId, userName });
   };
 
   const handleOpen = () => {

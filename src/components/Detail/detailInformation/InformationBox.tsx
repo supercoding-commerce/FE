@@ -21,9 +21,9 @@ const InformationBox = ({ productImage }: InformationProps) => {
   return (
     <S.DetailInformation>
       <div className={containerClassName}>
-        {productImage?.map((item) => {
+        {productImage?.map((item, idx) => {
           return (
-            <div className="information_box">
+            <div className="information_box" key={idx}>
               <img src={item} alt="상품정보" />
             </div>
           );
