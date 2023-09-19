@@ -87,6 +87,7 @@ export const Hr = styled.hr`
 export const TotalPayWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-family: SUITE;
   font-size: 15px;
   font-weight: 800;
