@@ -10,6 +10,7 @@ import Home from '@/pages/Home/Home.tsx';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
 import { Payment } from '@/pages/Payment/Payment';
 import ProductPage from '@/pages/ProductPage/ProductPage';
+import { ProtectedRoute } from '@/pages/ProtectedRoute.tsx';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
@@ -69,23 +70,43 @@ export const router = createBrowserRouter([
       // 마이페이지 및 결제 등
       {
         path: '/mycart',
-        element: <CartPage />,
+        element: (
+          <ProtectedRoute>
+            <CartPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/pay',
-        element: <Payment />,
+        element: (
+          <ProtectedRoute>
+            <Payment />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/mypage',
-        element: <MyPage />,
+        element: (
+          <ProtectedRoute>
+            <MyPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/new/product',
-        element: <AddProduct />,
+        element: (
+          <ProtectedRoute onlySeller>
+            <AddProduct />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/update/product',
-        element: <UpdateProduct />,
+        element: (
+          <ProtectedRoute onlySeller>
+            <UpdateProduct />
+          </ProtectedRoute>
+        ),
       },
       {
         path: 'test',
