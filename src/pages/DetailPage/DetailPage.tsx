@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 import { getProduct, OrderNCartItemAPI } from '@/apis/product';
@@ -31,6 +31,8 @@ export type DetailProduct = {
 
 const DetailPage = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
+
   const [product, setProduct] = useState<DetailProduct>();
   const [orderNCartProduct, setOrderNCartProduct] = useState<OrderNCartItemAPI[]>([]);
   const [prevCategory, setPrevCategory] = useState<string>('');
@@ -38,13 +40,20 @@ const DetailPage = () => {
   const [isReview, setIsReview] = useState<boolean>(false);
 
   useEffect(() => {
-    getProduct(Number(productId)).then((result) => {
-      if (result.status === 200) {
-        const options = JSON.parse(result.data.options);
-        const detailItem = { ...result.data, options };
-        setProduct(detailItem);
-      }
-    });
+    getProduct(Number(productId))
+      .then((result) => {
+        if (result.status === 200) {
+          const options = JSON.parse(result.data.options);
+          const detailItem = { ...result.data, options };
+          setProduct(detailItem);
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+          alert('상품을 찾을 수 없습니다.');
+          navigate('/');
+        }
+      });
   }, []);
   if (!product) return;
 
@@ -64,7 +73,6 @@ const DetailPage = () => {
     }
   };
 
-  //배열에 useState 사용하는 법
   const onQuantityChangeHandler = (idx: number, newQuantity: number) => {
     const array = orderNCartProduct;
     const newArray = array.map((v, index) => {
