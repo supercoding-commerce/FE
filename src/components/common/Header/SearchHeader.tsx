@@ -14,7 +14,6 @@ const SearchHeader = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [inputOpen, setInputOpen] = useState(false);
 
-  console.log(userInfo.role);
   const handleUserInfo = () => {
     if (userInfo.role === '') {
       navigate('/signin');
@@ -23,6 +22,7 @@ const SearchHeader = () => {
     navigate('/mypage');
   };
 
+  const isLogin = userInfo.role !== '';
   return (
     <S.SearchHeaderContainer>
       {/* 로고나오면 로고로 대체 */}
@@ -65,7 +65,11 @@ const SearchHeader = () => {
             style={{ cursor: 'pointer' }}
           />
         ) : (
-          <Icon name="IconBag" onClick={() => navigate('/mycart')} style={{ cursor: 'pointer' }} />
+          <Icon
+            name="IconBag"
+            onClick={() => navigate(isLogin ? '/mycart' : '/signin')}
+            style={{ cursor: 'pointer' }}
+          />
         )}
       </S.IconsContainer>
     </S.SearchHeaderContainer>
