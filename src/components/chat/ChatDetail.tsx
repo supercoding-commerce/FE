@@ -195,6 +195,7 @@ const ChatDetail = ({
       <ChatDetailBody
         prevMsg={prevMsg}
         msg={msg}
+        role={role}
         nickName={role === 'user' ? user.userName : seller.shopName}
         leaveUser={leaveUser}
         shopName={seller.shopName}

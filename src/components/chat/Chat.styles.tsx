@@ -332,6 +332,25 @@ export const ChatLeftBox = styled.div`
     }
   }
 
+  .leftbox_icon_wrapper {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${theme.color.brandHover};
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    /* margin-top: 10px; */
+
+    img {
+      width: 35px;
+      height: 35px;
+      border-radius: 10px;
+      background-color: ${theme.color.backgroundColor};
+    }
+  }
+
   .leftbox_wrapper {
     display: flex;
     justify-content: left;
