@@ -2,8 +2,6 @@ import styled from '@emotion/styled';
 
 import { theme } from '@/styles/theme';
 
-// import { theme } from '@/styles/theme.ts';
-
 export const ChatButton = styled.div`
   position: fixed;
   z-index: 10;
@@ -107,8 +105,8 @@ export const ChatHeader = styled.div`
     padding-bottom: 0px;
 
     .startBtn_icon:hover {
-      width: 40px;
-      height: 40px;
+      width: 28px;
+      height: 28px;
       background-color: ${theme.color.backgroundColor};
       border-radius: 30px;
     }
