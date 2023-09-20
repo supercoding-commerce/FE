@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { OpenVidu, Publisher, Session, StreamEvent, Subscriber } from 'openvidu-browser';
+import {
+  OpenVidu,
+  Publisher,
+  Session,
+  StreamEvent,
+  StreamManager,
+  Subscriber,
+} from 'openvidu-browser';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
@@ -16,14 +23,12 @@ const LiveSession = () => {
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState(undefined);
   const [localUserAccessAllowed, setLocalUserAccessAllowed] = useState<boolean>(false);
+  const [mainStreamManager, setMainStreamManager] = useState<StreamManager | null>(null);
 
-  // let hasBeenUpdated = false;
-
-  // const remotes: Partial<LiveUser>[] = [];
   const userInfo = useRecoilValue(userState);
   const isHost = userInfo.email === 'ekfhd5537@naver.com';
   const sessionName = 'ClipLiveSession';
-  const userName = userInfo.email.split('@')[0];
+  const userName = userInfo.email;
 
   const joinSession = async () => {
     const OV = new OpenVidu();
@@ -58,11 +63,12 @@ const LiveSession = () => {
       await OV.getUserMedia({ audioSource: undefined, videoSource: undefined });
       const devices = await OV.getDevices();
       const videoDevices = devices.filter((device) => device.kind === 'videoinput');
+      const audioDevices = devices.filter((device) => device.kind === 'audioinput');
       const publisher = await OV.initPublisherAsync(undefined, {
-        audioSource: undefined, // The source of audio. If undefined default microphone
-        videoSource: videoDevices[0].deviceId, // The source of video. If undefined default webcam
-        publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
-        publishVideo: true, // Whether you want to start publishing with your video enabled or not
+        audioSource: isHost ? audioDevices[0].deviceId : undefined, // The source of audio. If undefined default microphone
+        videoSource: isHost ? videoDevices[0].deviceId : undefined, // The source of video. If undefined default webcam
+        publishAudio: isHost ? true : false, // Whether you want to start publishing with your audio unmuted or not
+        publishVideo: isHost ? true : false, // Whether you want to start publishing with your video enabled or not
         resolution: '640x480', // The resolution of your video
         frameRate: 30, // The frame rate of your video
         insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
@@ -75,6 +81,7 @@ const LiveSession = () => {
 
       setLocalUser(publisher);
       setSession(mySession);
+      isHost && setMainStreamManager(publisher);
     } catch (error) {
       console.log('Error: ', error);
     }
@@ -147,13 +154,18 @@ const LiveSession = () => {
   //   console.log(token);
   // };
 
+  const checkHost = () => {};
   useEffect(() => {
     joinSession();
   }, []);
 
-  console.log('test_publisher', localUser);
-  console.log('test_session', session);
-  console.log('test_subscribers', subscribers);
+  useEffect(() => {
+    if (mainStreamManager) return;
+
+    setMainStreamManager(subscribers[0]);
+  }, [subscribers]);
+
+  console.log('test_mainStream', mainStreamManager);
 
   // 아래 토큰 받는 과정 ( 백엔드와의 통신 - 1단계 : 여기 까지 성공 )
   const getToken = async () => {
@@ -183,10 +195,20 @@ const LiveSession = () => {
     return response.data;
   };
 
+  const leaveSession = () => {
+    if (session) {
+      session.disconnect();
+    }
+
+    setSession(null);
+    setSubscribers([]);
+    setMainStreamManager(null);
+  };
+
   return (
     <LiveContainer>
       <LiveStreamContainer>
-        <LiveVideo isHost={isHost} />
+        <LiveVideo streamManager={mainStreamManager} />
       </LiveStreamContainer>
     </LiveContainer>
   );

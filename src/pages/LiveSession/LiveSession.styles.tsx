@@ -7,5 +7,5 @@ export const LiveContainer = styled.main`
 `;
 
 export const LiveStreamContainer = styled.section`
-  background-color: yellow;
+  background-color: black;
 `;
