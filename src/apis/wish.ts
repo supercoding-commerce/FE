@@ -1,17 +1,17 @@
 import { client } from '@/apis/index.ts';
 
-const HEART_URL = 'v1/api/wishlist';
+const WISH_URL = 'v1/api/wishlist';
 
-export async function getHeart() {
-  const response = await client.get(HEART_URL);
+export async function getWish() {
+  const response = await client.get(WISH_URL);
   return response.data;
 }
 
-export async function postHeart(productId: number) {
-  const response = await client.post(`${HEART_URL}/add?productId=${productId}`);
+export async function postWish(productId: number) {
+  const response = await client.post(`${WISH_URL}/add?productId=${productId}`);
   return response;
 }
 
-export function deleteHeart() {
-  return client.delete(`${HEART_URL}/delete`);
+export function deleteWish() {
+  return client.delete(`${WISH_URL}/delete`);
 }

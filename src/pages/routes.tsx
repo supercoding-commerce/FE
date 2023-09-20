@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { WishPage } from '@/components/Mypage-Wish/WishPage';
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
 import Menu from '@/pages/Category/Menu';
@@ -107,6 +108,10 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: '/wish',
+        element: <WishPage />,
+      },
     ],
   },
 ]);
@@ -122,6 +127,7 @@ export type RoutePath =
   | '/mycart'
   | '/pay'
   | '/mypage'
+  | '/wish'
   | '/new/product'
   | '/update/product'
   | '/search'
