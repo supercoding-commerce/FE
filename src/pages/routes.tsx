@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { SoldPage } from '@/components/Mypage-Sold/SoldPage';
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
 import Menu from '@/pages/Category/Menu';
@@ -106,6 +107,10 @@ export const router = createBrowserRouter([
             <UpdateProduct />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: '/sold',
+        element: <SoldPage />,
       },
     ],
   },
