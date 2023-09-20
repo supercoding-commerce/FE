@@ -45,7 +45,13 @@ export function SoldPage() {
                     }}
                   />
                   <S.ProductInfo>
-                    <S.ProductName>{item.productName}</S.ProductName>
+                    <S.ProductName
+                      onClick={() => {
+                        navigate(`/product/${item.productId}`);
+                      }}
+                    >
+                      {item.productName}
+                    </S.ProductName>
                     <S.Options>
                       <S.Price>{item.price.toLocaleString()}원</S.Price>
                       <S.Option>{option}</S.Option>
