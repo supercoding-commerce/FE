@@ -11,6 +11,7 @@ import { Payment } from '@/pages/Payment/Payment';
 import ProductPage from '@/pages/ProductPage/ProductPage';
 import { ProtectedRoute } from '@/pages/ProtectedRoute.tsx';
 import Search from '@/pages/Search/Search';
+import SearchProduct from '@/pages/Search/SearchProduct';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
@@ -40,10 +41,13 @@ export const router = createBrowserRouter([
         element: <DetailPage />,
       },
       {
-        path: '/search/category',
+        path: '/product/search/category',
         element: <ProductPage />,
       },
-
+      {
+        path: '/product/search',
+        element: <SearchProduct />,
+      },
       {
         path: '/search',
         element: <Search />,
@@ -126,4 +130,5 @@ export type RoutePath =
   | '/update/product'
   | '/search'
   | '/product/search/category'
+  | '/product/search'
   | string;
