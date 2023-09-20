@@ -2,9 +2,19 @@ import styled from '@emotion/styled';
 
 import { theme } from '@/styles/theme';
 
-export const PurchaseContainer = styled.div`
+export const PurchaseHistoryContainer = styled.div`
   max-width: 420px;
-  border-bottom: 4px solid#d8d8d8;
+  height: calc(100vh - 60px);
+  background-color: ${theme.color.backgroundColor};
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const PurchaseContainer = styled.div`
+  width: 100%;
+  height: auto;
 `;
 
 export const PurchaseDay = styled.div`
@@ -14,6 +24,7 @@ export const PurchaseDay = styled.div`
   align-items: center;
   padding: 0 30px;
   font: ${theme.font.body1Bold};
+  background-color: #d8d8d8;
   border-bottom: 1px solid#d8d8d8;
 `;
 
@@ -24,10 +35,13 @@ export const PurchaseInfo = styled.div`
   height: 135px;
 `;
 
-export const JustContainer = styled.div`
+export const ProductInfoContainer = styled.div`
   padding: 0 30px;
+  height: 95px;
   display: flex;
   align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid#d8d8d8;
 `;
 
 export const Delivery = styled.div`
@@ -41,10 +55,11 @@ export const Delivery = styled.div`
   justify-content: flex-start;
 `;
 
-export const PurchaseImage = styled.img`
+export const ProductImage = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 10px;
+  cursor: pointer;
 `;
 
 export const ProductInfo = styled.div`
@@ -53,8 +68,10 @@ export const ProductInfo = styled.div`
   justify-content: center;
   margin-left: 10px;
 `;
+
 export const ProductName = styled.div`
   font: ${theme.font.body1};
+  cursor: pointer;
 `;
 
 export const Options = styled.div`
@@ -77,9 +94,8 @@ export const Option = styled.div`
   color: #818181;
   margin-right: 5px;
 `;
+
 export const Quantity = styled.div`
   font: ${theme.font.body2};
   color: #818181;
 `;
-
-// export const = styled.div``

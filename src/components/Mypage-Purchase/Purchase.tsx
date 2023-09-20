@@ -1,30 +1,59 @@
+import { useEffect, useState } from 'react';
+
+import { getPurchaseHistory } from '@/apis/mypage';
 import * as S from './Purchase.styles';
 
+export type PurchaseHistory = {
+  [date: string]: {
+    orderState: string;
+    imageUrl: string;
+    brandName: string;
+    productName: string;
+    price: number;
+    options: string[];
+    quantity: number;
+  }[];
+};
+
 export function Purchase() {
+  const [purchase, setPurchase] = useState<PurchaseHistory>({});
+
+  useEffect(() => {
+    getPurchaseHistory().then((result) => {
+      const resultData = result.data[0];
+      setPurchase(resultData);
+    });
+  }, []);
+
   return (
-    <>
+    <S.PurchaseHistoryContainer>
       <S.PurchaseContainer>
-        <S.PurchaseDay>23.09.20</S.PurchaseDay>
-        <S.PurchaseInfo>
-          <S.Delivery>구매확정</S.Delivery>
-          <S.JustContainer>
-            <S.PurchaseImage
-              src={
-                'https://guerrilla-s3-1.s3.ap-northeast-2.amazonaws.com/08197772-2e18-4649-badc-212c971334fe.jpg'
-              }
-            />
-            <S.ProductInfo>
-              <S.BrandName>어텀</S.BrandName>
-              <S.ProductName>와이드 팬츠</S.ProductName>
-              <S.Options>
-                <S.Price>36,000원</S.Price>
-                <S.Option>black/M</S.Option>
-                <S.Quantity>1개</S.Quantity>
-              </S.Options>
-            </S.ProductInfo>
-          </S.JustContainer>
-        </S.PurchaseInfo>
+        {Object.keys(purchase).map((date: string, idx: number) => (
+          <>
+            <S.PurchaseDay key={idx}>{date}</S.PurchaseDay>
+            {purchase[date].map((item, idx: number) => {
+              const option = JSON.parse(item.options as unknown as string);
+              return (
+                <S.PurchaseInfo key={idx}>
+                  <S.Delivery>{item.orderState}</S.Delivery>
+                  <S.ProductInfoContainer>
+                    <S.ProductImage src={item.imageUrl} />
+                    <S.ProductInfo>
+                      <S.BrandName>{item.brandName}</S.BrandName>
+                      <S.ProductName>{item.productName}</S.ProductName>
+                      <S.Options>
+                        <S.Price>{item.price.toLocaleString()}원</S.Price>
+                        <S.Option>{option}</S.Option>
+                        <S.Quantity>{item.quantity}개</S.Quantity>
+                      </S.Options>
+                    </S.ProductInfo>
+                  </S.ProductInfoContainer>
+                </S.PurchaseInfo>
+              );
+            })}
+          </>
+        ))}
       </S.PurchaseContainer>
-    </>
+    </S.PurchaseHistoryContainer>
   );
 }
