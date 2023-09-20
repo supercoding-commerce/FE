@@ -17,7 +17,8 @@ const queryClient = new QueryClient({
 });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <>
     <GlobalStyle />
     <QueryClientProvider client={queryClient}>
       <NiceModal.Provider>
@@ -25,5 +26,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       </NiceModal.Provider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
-  </React.StrictMode>,
+  </>,
+  // </React.StrictMode>,
 );
