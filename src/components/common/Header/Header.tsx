@@ -41,5 +41,6 @@ const HEADER_TITLE: { [key: RoutePath]: string } = {
   '/mypage': 'My Page',
   '/mycart': 'Cart',
   '/detail': 'Detail',
+  '/purchase': '구매내역',
   '/sold': '판매된 내역',
 };

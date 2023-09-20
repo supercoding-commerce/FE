@@ -23,6 +23,7 @@ export type list = {
 
 type chatProps = {
   clickListBox: (customRoomId: string, userId: number, userName: string) => void;
+  handleOpen: () => void;
   seller: {
     sellerId: number;
     shopName: string;
@@ -34,7 +35,7 @@ type chatProps = {
   isSeller: boolean;
 };
 
-const ChatList = ({ clickListBox, seller, isSeller, product }: chatProps) => {
+const ChatList = ({ handleOpen, clickListBox, seller, isSeller, product }: chatProps) => {
   const [list, setList] = useState<list[]>([]);
 
   const [shopImg, setShopImg] = useState<string>('');
@@ -77,7 +78,7 @@ const ChatList = ({ clickListBox, seller, isSeller, product }: chatProps) => {
 
   return (
     <div>
-      <ChatHeader shopName={seller.shopName} shopImg={shopImg} />
+      <ChatHeader shopName={seller.shopName} shopImg={shopImg} handleOpen={handleOpen} />
       <ChatBody chatList={list} clickListBox={clickListBox} />
     </div>
   );

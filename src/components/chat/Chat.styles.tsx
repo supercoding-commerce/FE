@@ -2,8 +2,6 @@ import styled from '@emotion/styled';
 
 import { theme } from '@/styles/theme';
 
-// import { theme } from '@/styles/theme.ts';
-
 export const ChatButton = styled.div`
   position: fixed;
   z-index: 10;
@@ -107,8 +105,8 @@ export const ChatHeader = styled.div`
     padding-bottom: 0px;
 
     .startBtn_icon:hover {
-      width: 40px;
-      height: 40px;
+      width: 28px;
+      height: 28px;
       background-color: ${theme.color.backgroundColor};
       border-radius: 30px;
     }
@@ -126,6 +124,9 @@ export const ChatBody = styled.div`
   padding-top: 10px;
   padding-bottom: 25px;
   box-sizing: border-box;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const ChatBox = styled.div`
@@ -267,6 +268,11 @@ export const ChatDetailBody = styled.div`
   width: 100%;
   height: 642px;
   overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 export const ChatDetailIntro = styled.div`
@@ -316,6 +322,25 @@ export const ChatLeftBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    /* margin-top: 10px; */
+
+    img {
+      width: 35px;
+      height: 35px;
+      border-radius: 10px;
+      background-color: ${theme.color.backgroundColor};
+    }
+  }
+
+  .leftbox_icon_wrapper {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${theme.color.brandHover};
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
     /* margin-top: 10px; */
 
     img {

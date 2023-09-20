@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { Purchase } from '@/components/Mypage-Purchase/Purchase';
 import { SoldPage } from '@/components/Mypage-Sold/SoldPage';
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
@@ -109,6 +110,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: '/purchase',
+        element: <Purchase />,
+      },
+      {
         path: '/sold',
         element: <SoldPage />,
       },
@@ -127,6 +132,8 @@ export type RoutePath =
   | '/mycart'
   | '/pay'
   | '/mypage'
+  | '/purchase'
+  | '/sold'
   | '/new/product'
   | '/update/product'
   | '/search'

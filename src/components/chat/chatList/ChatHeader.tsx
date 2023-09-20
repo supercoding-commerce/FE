@@ -4,9 +4,10 @@ import * as S from '../Chat.styles';
 type ChatHeaderProps = {
   shopName: string;
   shopImg: string;
+  handleOpen: () => void;
 };
 
-const ChatHeader = ({ shopName, shopImg }: ChatHeaderProps) => {
+const ChatHeader = ({ shopName, shopImg, handleOpen }: ChatHeaderProps) => {
   return (
     <S.ChatHeader>
       <div className="header_img_wrapper">
@@ -21,12 +22,12 @@ const ChatHeader = ({ shopName, shopImg }: ChatHeaderProps) => {
           <span>24시간 운영해요</span>
         </div>
       </div>
-      <div className="header_startBtn_wrapper">
+      <div className="header_startBtn_wrapper" onClick={handleOpen}>
         <Icon
           className="startBtn_icon"
-          name={'IconAdd'}
-          width="35px"
-          height="35px"
+          name={'IconX'}
+          width="25px"
+          height="25px"
           cursor={'pointer'}
         />
       </div>

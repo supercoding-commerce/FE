@@ -15,16 +15,24 @@ const ChatSend = ({ sendMessage }: sendMessageProps) => {
     setText(e);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
+    sendMessage(text);
+    setText('');
+  };
+
   return (
     <S.ChatInput>
-      <Input
-        type="text"
-        size="sm"
-        placeholder="메시지를 입력해주세요."
-        style={{ width: '350px', height: '45px', borderRadius: '999px' }}
-        rightSlot={<Icon name="IconAirplane" onClick={() => sendMessage(text)} />}
-        onChange={(e) => inputHandle(e.target.value)}
-      />
+      <form onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          size="sm"
+          placeholder="메시지를 입력해주세요."
+          style={{ width: '350px', height: '45px', borderRadius: '999px' }}
+          rightSlot={<Icon name="IconAirplane" onClick={() => sendMessage(text)} type="submit" />}
+          onChange={(e) => inputHandle(e.target.value)}
+        />
+      </form>
     </S.ChatInput>
   );
 };
