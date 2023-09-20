@@ -18,7 +18,8 @@ const ProductPage: React.FC = () => {
   const [filter, setFilter] = useState<string>('필터옵션');
   const [ageCategory, setAgeCategory] = useState<string>('나이');
   const [genderCategory, setGenderCategory] = useState<string>('성별');
-
+  const searchWord = searchParams.get('searchWord');
+  console.log(searchWord);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -105,6 +106,7 @@ const ProductPage: React.FC = () => {
           category={subcategory}
           age={ageCategory}
           gender={genderCategory}
+          searchWord={searchWord}
         />
 
         <FilterModal
