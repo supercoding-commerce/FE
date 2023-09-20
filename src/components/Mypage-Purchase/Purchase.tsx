@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { getPurchaseHistory } from '@/apis/mypage';
 import * as S from './Purchase.styles';
 
 export type PurchaseHistory = {
   [date: string]: {
+    productId: number;
     orderState: string;
     imageUrl: string;
     brandName: string;
@@ -17,6 +19,7 @@ export type PurchaseHistory = {
 
 export function Purchase() {
   const [purchase, setPurchase] = useState<PurchaseHistory>({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     getPurchaseHistory().then((result) => {
@@ -37,7 +40,12 @@ export function Purchase() {
                 <S.PurchaseInfo key={idx}>
                   <S.Delivery>{item.orderState}</S.Delivery>
                   <S.ProductInfoContainer>
-                    <S.ProductImage src={item.imageUrl} />
+                    <S.ProductImage
+                      src={item.imageUrl}
+                      onClick={() => {
+                        navigate(`/product/${item.productId}`);
+                      }}
+                    />
                     <S.ProductInfo>
                       <S.BrandName>{item.brandName}</S.BrandName>
                       <S.ProductName>{item.productName}</S.ProductName>
