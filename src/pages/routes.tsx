@@ -6,6 +6,7 @@ import Menu from '@/pages/Category/Menu';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import DetailPage from '@/pages/DetailPage/DetailPage';
 import Home from '@/pages/Home/Home.tsx';
+import LiveSession from '@/pages/LiveSession/LiveSession';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
 import { Payment } from '@/pages/Payment/Payment';
 import ProductPage from '@/pages/ProductPage/ProductPage';
@@ -106,6 +107,16 @@ export const router = createBrowserRouter([
             <UpdateProduct />
           </ProtectedRoute>
         ),
+      },
+
+      // 라이브 관련
+      // {
+      //   path: "/live/:liveId",
+      //   element :
+      // },
+      {
+        path: '/live',
+        element: <LiveSession />,
       },
     ],
   },
