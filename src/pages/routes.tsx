@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
 import Menu from '@/pages/Category/Menu';
+import Coupon from '@/pages/Coupon/Coupon';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import DetailPage from '@/pages/DetailPage/DetailPage';
 import Home from '@/pages/Home/Home.tsx';
@@ -107,6 +108,14 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: '/coupon',
+        element: (
+          <ProtectedRoute>
+            <Coupon />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
@@ -122,6 +131,7 @@ export type RoutePath =
   | '/mycart'
   | '/pay'
   | '/mypage'
+  | '/coupon'
   | '/new/product'
   | '/update/product'
   | '/search'
