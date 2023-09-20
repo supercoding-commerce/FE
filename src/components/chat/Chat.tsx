@@ -98,6 +98,7 @@ const Chat = ({
         <S.Chat>
           {isCustomRoomId ? (
             <ChatList
+              handleOpen={handleOpen}
               clickListBox={clickListBox}
               seller={seller}
               isSeller={isSeller}
@@ -120,6 +121,7 @@ const Chat = ({
         <S.Chat>
           {!isCustomRoomId ? (
             <ChatList
+              handleOpen={handleOpen}
               clickListBox={clickListBox}
               seller={seller}
               isSeller={isSeller}
