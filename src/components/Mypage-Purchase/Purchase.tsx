@@ -9,7 +9,7 @@ export type PurchaseHistory = {
     productId: number;
     orderState: string;
     imageUrl: string;
-    brandName: string;
+    shopName: string;
     productName: string;
     price: number;
     options: string[];
@@ -47,8 +47,14 @@ export function Purchase() {
                       }}
                     />
                     <S.ProductInfo>
-                      <S.BrandName>{item.brandName}</S.BrandName>
-                      <S.ProductName>{item.productName}</S.ProductName>
+                      <S.BrandName>{item.shopName}</S.BrandName>
+                      <S.ProductName
+                        onClick={() => {
+                          navigate(`/product/${item.productId}`);
+                        }}
+                      >
+                        {item.productName}
+                      </S.ProductName>
                       <S.Options>
                         <S.Price>{item.price.toLocaleString()}원</S.Price>
                         <S.Option>{option}</S.Option>
