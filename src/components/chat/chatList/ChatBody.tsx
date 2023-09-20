@@ -12,11 +12,13 @@ const ChatBody = ({ chatList, clickListBox }: ChatBodyProps) => {
     <S.ChatBody>
       {chatList?.map((item, idx) => {
         return (
-          <div onClick={() => clickListBox(item.customRoomId, item.userId, item.userName)}>
+          <div
+            onClick={() => clickListBox(item.customRoomId, item.userId, item.userName)}
+            key={idx}
+          >
             <ChatBox
-              key={idx}
               lastChat={item.lastChat.content}
-              sender={item.lastChat.sender}
+              sender={item?.lastChat.sender}
               productName={item.productName}
               image={item.imageUrl}
             />

@@ -43,6 +43,8 @@ const DetailPage = () => {
 
   const [isReview, setIsReview] = useState<boolean>(false);
 
+  console.log(product);
+
   useEffect(() => {
     getProduct(Number(productId))
       .then((result) => {

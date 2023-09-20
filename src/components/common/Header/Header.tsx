@@ -29,7 +29,7 @@ const NO_HEADER_URL: RoutePath[] = [
   '/signup/seller',
   '/signup/buyer',
   '/signin',
-  '/search/category',
+  '/product/search/category',
   '/search',
 ];
 const SEARCH_HEADER_URL: RoutePath[] = ['/', '/category'];
@@ -41,4 +41,5 @@ const HEADER_TITLE: { [key: RoutePath]: string } = {
   '/mypage': 'My Page',
   '/mycart': 'Cart',
   '/detail': 'Detail',
+  '/purchase': '구매내역',
 };
