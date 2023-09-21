@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { getWish } from '@/apis/wish';
+// import { IconNameType } from '@/components/common/Icon';
 import { WishItems } from '@/components/Mypage-Wish/WishItems';
 import * as S from './WishPage.styles';
 
@@ -8,13 +9,15 @@ export type Wish = {
   productId: number;
   price: number;
   name: string;
-  brandName: string; //요청
-  options: string[]; // 불필요
+  shopName: string;
+  options: string[];
   thumbnailUrl: string;
 };
 
 export function WishPage() {
   const [wishItem, setWishItem] = useState<Wish[]>([]);
+
+  console.log(wishItem);
   useEffect(() => {
     getWish()
       .then((result) => {
@@ -25,9 +28,12 @@ export function WishPage() {
         console.log(error);
       });
   }, []);
+
   return (
     <S.WishPage>
-      <WishItems wishItem={wishItem} />
+      {wishItem.map((item, idx) => (
+        <WishItems key={idx} item={item} />
+      ))}
     </S.WishPage>
   );
 }

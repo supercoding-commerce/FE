@@ -2,13 +2,13 @@ import styled from '@emotion/styled';
 
 import { theme } from '@/styles/theme';
 
-export const Grid = styled.div`
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+export const WishItemsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-export const WishItemsContainer = styled.div`
+export const WishItems = styled.div`
   width: 180px;
   height: auto;
   margin-top: 12px;

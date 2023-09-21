@@ -1,26 +1,37 @@
-import Icon from '@/components/common/Icon';
+import { useState } from 'react';
+
+import { deleteWish, postWish } from '@/apis/wish';
+import Icon, { IconNameType } from '@/components/common/Icon';
 import { Wish } from '@/components/Mypage-Wish/WishPage';
 import * as S from './WishItems.styles';
 
 type WishItemProps = {
-  wishItem: Wish[];
+  item: Wish;
 };
 
-export function WishItems({ wishItem }: WishItemProps) {
+export function WishItems({ item }: WishItemProps) {
+  const [heart, setHeart] = useState<IconNameType>('IconFullHeart');
+
+  const changeHeartHandler = (productId: number) => {
+    setHeart(heart === 'IconEmptyHeart' ? 'IconFullHeart' : 'IconEmptyHeart');
+    if (heart === 'IconEmptyHeart') {
+      postWish(productId);
+    } else {
+      deleteWish(productId);
+    }
+  };
+
   return (
-    <S.Grid>
-      {wishItem.map((item, idx) => (
-        <S.WishItemsContainer key={idx}>
-          <S.WishImage src={item.thumbnailUrl} />
-          <S.BrandNameContainer>
-            {/* {item.brandName} */}
-            <S.BrandName>heejin</S.BrandName>
-            <Icon name="IconFullHeart" size={22} />
-          </S.BrandNameContainer>
-          <S.ProductName>{item.name}</S.ProductName>
-          <S.Price>{item.price.toLocaleString()}원</S.Price>
-        </S.WishItemsContainer>
-      ))}
-    </S.Grid>
+    <S.WishItemsContainer>
+      <S.WishItems>
+        <S.WishImage src={item.thumbnailUrl} />
+        <S.BrandNameContainer>
+          <S.BrandName>{item.shopName}</S.BrandName>
+          <Icon name={heart} size={22} onClick={() => changeHeartHandler(item.productId)} />
+        </S.BrandNameContainer>
+        <S.ProductName>{item.name}</S.ProductName>
+        <S.Price>{item.price.toLocaleString()}원</S.Price>
+      </S.WishItems>
+    </S.WishItemsContainer>
   );
 }
