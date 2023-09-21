@@ -9,12 +9,15 @@ export const signIn = async (payload: userInfoProps) => {
   return response;
 };
 
+// GYU-TODO: 타입 형태 변경 필요, USER, SELLER 인 형태?
 export type UserInfo = {
   address: string;
   grade: string;
   nickname: string;
   payMoney: number;
   role: string;
+  shopName: string;
+  point: number;
 };
 export const getInfo = async (): Promise<UserInfo> => {
   const response = await client.get(`${USER_URL}/getInfo`);
