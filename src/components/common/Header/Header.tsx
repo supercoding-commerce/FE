@@ -47,4 +47,5 @@ const HEADER_TITLE: { [key: RoutePath]: string } = {
   '/mypage/purchase': '구매내역',
   '/mypage/sold': '판매된 내역',
   '/mypage/point-history': '포인트 사용 내역',
+  '/mypage/selling-product': '판매중인 상품',
 };

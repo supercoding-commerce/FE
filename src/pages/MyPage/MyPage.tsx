@@ -118,6 +118,6 @@ const SELLER_MAIN_ITEMS: MainItem[] = [
   {
     icon: 'IconBox',
     label: '판매중인 상품',
-    href: '#',
+    href: '/mypage/selling-product',
   },
 ];
