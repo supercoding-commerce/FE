@@ -146,7 +146,11 @@ export const router = createBrowserRouter([
       },
       {
         path: '/mypage/wish',
-        element: <WishPage />,
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <WishPage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
