@@ -30,7 +30,7 @@ export function WishItems({ item }: WishItemProps) {
           <Icon name={heart} size={22} onClick={() => changeHeartHandler(item.productId)} />
         </S.BrandNameContainer>
         <S.ProductName>{item.name}</S.ProductName>
-        <S.Price>{item.price.toLocaleString()}원</S.Price>
+        <S.Price>{item.price.toLocaleString()}</S.Price>
       </S.WishItems>
     </S.WishItemsContainer>
   );
