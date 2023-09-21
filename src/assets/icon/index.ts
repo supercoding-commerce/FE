@@ -43,3 +43,4 @@ export { ReactComponent as IconFullHeart } from './FullHeart.svg';
 export { ReactComponent as IconEmptyHeart } from './EmptyHeart.svg';
 export { ReactComponent as IconChat } from './Chat.svg';
 export { ReactComponent as IconSignOut } from './SignOut.svg';
+export { ReactComponent as IconSmile } from './Smile.svg';

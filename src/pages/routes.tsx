@@ -1,5 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { Purchase } from '@/components/Mypage-Purchase/Purchase';
+import { SoldPage } from '@/components/Mypage-Sold/SoldPage';
 import { WishPage } from '@/components/Mypage-Wish/WishPage';
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
@@ -12,6 +14,7 @@ import { Payment } from '@/pages/Payment/Payment';
 import ProductPage from '@/pages/ProductPage/ProductPage';
 import { ProtectedRoute } from '@/pages/ProtectedRoute.tsx';
 import Search from '@/pages/Search/Search';
+import SearchProduct from '@/pages/Search/SearchProduct';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
@@ -37,14 +40,13 @@ export const router = createBrowserRouter([
         element: <Menu />,
       },
       {
-        path: '/detail/:productId',
-        element: <DetailPage />,
-      },
-      {
         path: '/product/search/category',
         element: <ProductPage />,
       },
-
+      {
+        path: '/product/search',
+        element: <SearchProduct />,
+      },
       {
         path: '/search',
         element: <Search />,
@@ -109,6 +111,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: '/purchase',
+        element: <Purchase />,
+      },
+      {
+        path: '/sold',
+        element: <SoldPage />,
+      },
+      {
         path: '/wish',
         element: <WishPage />,
       },
@@ -127,9 +137,12 @@ export type RoutePath =
   | '/mycart'
   | '/pay'
   | '/mypage'
+  | '/purchase'
+  | '/sold'
   | '/wish'
   | '/new/product'
   | '/update/product'
   | '/search'
   | '/product/search/category'
+  | '/product/search'
   | string;
