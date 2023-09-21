@@ -103,8 +103,6 @@ const DetailPage = () => {
     }
   };
 
-  console.log(orderNCartProduct);
-
   return (
     <>
       <Chat

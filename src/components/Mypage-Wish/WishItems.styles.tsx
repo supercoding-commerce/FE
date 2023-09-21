@@ -4,8 +4,7 @@ import { theme } from '@/styles/theme';
 
 export const WishItemsContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 export const WishItems = styled.div`
@@ -15,15 +14,16 @@ export const WishItems = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 `;
 
 export const WishImage = styled.img`
   width: 180px;
   height: 190px;
   margin-bottom: 3px;
+  border: 1px solid black;
   cursor: pointer;
 `;
+
 export const BrandNameContainer = styled.div`
   display: flex;
   justify-content: space-between;

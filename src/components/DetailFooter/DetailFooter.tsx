@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import { OrderNCartItemAPI, postCart, postPayment } from '@/apis/product';
-import { deleteWish, postWish } from '@/apis/wish';
+import { deleteWish, getWish, postWish } from '@/apis/wish';
 import Button from '@/components/common/Button/Button';
 import Icon, { IconNameType } from '@/components/common/Icon';
+import { Wish } from '@/components/Mypage-Wish/WishPage';
 import { DetailProduct } from '@/pages/DetailPage/DetailPage';
 import { userState } from '@/recoil/userState';
 import * as S from './DetailFooter.styles';
@@ -19,6 +20,7 @@ export type OnlyProductId = Pick<DetailProduct, 'productId'>;
 
 const DetailFooter = ({ orderNCartProduct, productId }: FooterProps) => {
   const [heart, setHeart] = useState<IconNameType>('IconEmptyHeart');
+
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userState);
 
@@ -50,6 +52,22 @@ const DetailFooter = ({ orderNCartProduct, productId }: FooterProps) => {
         }
       });
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getWish();
+        const wishCheck = productId;
+        const hasProductId = result.data.some((item: Wish) => item.productId === wishCheck);
+        if (hasProductId) {
+          setHeart('IconFullHeart');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const nonSelectedProduct = orderNCartProduct.length === 0;
   return (
