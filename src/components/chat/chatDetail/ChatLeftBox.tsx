@@ -4,9 +4,10 @@ import * as S from '../Chat.styles';
 type MsgProps = {
   content: string;
   role: string;
+  shopImageUrl: string;
 };
 
-const ChatLeftBox = ({ content, role }: MsgProps) => {
+const ChatLeftBox = ({ content, role, shopImageUrl }: MsgProps) => {
   return (
     <S.ChatLeftBox>
       {role === 'seller' ? (
@@ -15,7 +16,7 @@ const ChatLeftBox = ({ content, role }: MsgProps) => {
         </div>
       ) : (
         <div className="leftbox_img_wrapper">
-          <img src="" alt="로고" />
+          <img src={shopImageUrl} alt="로고" />
         </div>
       )}
 
