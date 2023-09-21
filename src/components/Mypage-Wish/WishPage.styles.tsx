@@ -5,7 +5,7 @@ import { theme } from '@/styles/theme';
 export const WishPage = styled.div`
   max-width: 420px;
   height: calc(100vh - 60px);
-  padding: 0 15px;
+  padding: 0 20px;
   background-color: ${theme.color.backgroundColor};
   overflow-y: auto;
   &::-webkit-scrollbar {
