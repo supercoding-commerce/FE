@@ -11,8 +11,6 @@ export const FooterContainer = styled.footer`
   align-items: center;
   justify-content: space-between;
   padding: 25px 0;
-  position: absolute;
-  bottom: 0;
 `;
 
 export const SnsIconsBox = styled.div`
