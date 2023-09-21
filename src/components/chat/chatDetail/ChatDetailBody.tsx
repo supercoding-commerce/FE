@@ -13,16 +13,20 @@ type MsgProps = {
   nickName: string;
   leaveUser: string;
   shopName: string;
+  shopImageUrl: string;
   role: string;
 };
 
-const ChatDetailBody = ({ prevMsg, msg, nickName, leaveUser, shopName, role }: MsgProps) => {
-  console.log('msgArray', msg);
-  console.log('nickName', nickName);
-  console.log('leaveUser', leaveUser.length);
-
+const ChatDetailBody = ({
+  prevMsg,
+  msg,
+  nickName,
+  leaveUser,
+  shopName,
+  shopImageUrl,
+  role,
+}: MsgProps) => {
   const RefViewControll = useRef<HTMLDivElement>(null);
-  console.log('RefViewControll', RefViewControll.current?.scrollTop);
 
   //가장 최근 채팅 보여주기
   useEffect(() => {
@@ -33,19 +37,19 @@ const ChatDetailBody = ({ prevMsg, msg, nickName, leaveUser, shopName, role }: M
 
   return (
     <S.ChatDetailBody ref={RefViewControll}>
-      <ChatDetailIntro shopName={shopName} />
+      <ChatDetailIntro shopName={shopName} shopImageUrl={shopImageUrl} />
       {prevMsg.map((item, idx) => {
         return nickName === item.sender ? (
           <ChatRightBox key={idx} content={item.content} />
         ) : (
-          <ChatLeftBox key={idx} content={item.content} role={role} />
+          <ChatLeftBox key={idx} content={item.content} role={role} shopImageUrl={shopImageUrl} />
         );
       })}
       {msg.map((item, idx) => {
         return nickName === item.sender ? (
           <ChatRightBox key={idx} content={item.content} />
         ) : (
-          <ChatLeftBox key={idx} content={item.content} role={role} />
+          <ChatLeftBox key={idx} content={item.content} role={role} shopImageUrl={shopImageUrl} />
         );
       })}
       {leaveUser.length > 0 ? <ChatLeaveBox content={leaveUser} /> : null}

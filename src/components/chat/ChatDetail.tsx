@@ -18,6 +18,7 @@ type ChatUserProps = {
   seller: SellerInfo;
   user: UserInfo;
   product: ProductInfo;
+  shopImageUrl: string;
   clickPrevButton: () => void;
   handleOpen: () => void;
 };
@@ -33,6 +34,7 @@ const ChatDetail = ({
   seller,
   user,
   product,
+  shopImageUrl,
   clickPrevButton,
   handleOpen,
 }: ChatUserProps) => {
@@ -200,6 +202,7 @@ const ChatDetail = ({
         nickName={role === 'user' ? user.userName : seller.shopName}
         leaveUser={leaveUser}
         shopName={seller.shopName}
+        shopImageUrl={shopImageUrl}
       />
       <ChatSend sendMessage={sendMessage} />
     </>

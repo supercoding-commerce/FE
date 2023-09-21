@@ -41,7 +41,9 @@ const HEADER_TITLE: { [key: RoutePath]: string } = {
   '/update/product': 'Update Products',
   '/mypage': 'My Page',
   '/mycart': 'Cart',
+  '/mypage/paymoney': 'ClipPay',
   '/detail': 'Detail',
-  '/purchase': '구매내역',
-  '/sold': '판매된 내역',
+  '/mypage/coupon': 'Coupon',
+  '/mypage/purchase': '구매내역',
+  '/mypage/sold': '판매된 내역',
 };
