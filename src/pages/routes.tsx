@@ -5,6 +5,7 @@ import { SoldPage } from '@/components/Mypage-Sold/SoldPage';
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
 import Menu from '@/pages/Category/Menu';
+import Coupon from '@/pages/Coupon/Coupon';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import DetailPage from '@/pages/DetailPage/DetailPage';
 import Home from '@/pages/Home/Home.tsx';
@@ -110,6 +111,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: '/mypage/coupon',
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <Coupon />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: '/purchase',
         element: <Purchase />,
       },
@@ -132,6 +141,7 @@ export type RoutePath =
   | '/mycart'
   | '/pay'
   | '/mypage'
+  | '/mypage/coupon'
   | '/purchase'
   | '/sold'
   | '/new/product'
