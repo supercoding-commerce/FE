@@ -13,6 +13,7 @@ import * as S from './MyPage.styles.tsx';
 export function MyPage() {
   const resetUser = useResetRecoilState(userState);
   const user = useRecoilValue(userState);
+
   const navigate = useNavigate();
   const { data: userInfo } = useGetUserInfo();
 
@@ -85,12 +86,12 @@ const BUYER_MAIN_ITEMS: MainItem[] = [
   {
     icon: 'IconPaper',
     label: '구매내역',
-    href: '#',
+    href: '/mypage/purchase',
   },
   {
     icon: 'IconCreditCard',
     label: '페이머니',
-    href: '#',
+    href: '/mypage/paymoney',
   },
   {
     icon: 'IconDatabase',
@@ -100,7 +101,7 @@ const BUYER_MAIN_ITEMS: MainItem[] = [
   {
     icon: 'IconTicket',
     label: '쿠폰',
-    href: '#',
+    href: '/mypage/coupon',
   },
   {
     icon: 'IconHeart',
@@ -112,7 +113,7 @@ const SELLER_MAIN_ITEMS: MainItem[] = [
   {
     icon: 'IconPaper',
     label: '판매내역',
-    href: '#',
+    href: '/mypage/sold',
   },
   {
     icon: 'IconBox',
