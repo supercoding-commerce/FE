@@ -61,7 +61,7 @@ export function Payment() {
   const 총상품가격 = getTotalPrice(orders);
   const 배송비 = getDeliveryFee(총상품가격);
   const 쿠폰적용금액 = applyCoupon(selectedCoupon, 총상품가격);
-  const 적립금 = pointActive ? 100 : 0;
+  const 적립금 = pointActive ? user.point : 0;
   const 총결제금액 = 총상품가격 + 배송비 - 쿠폰적용금액 - 적립금;
 
   return (
