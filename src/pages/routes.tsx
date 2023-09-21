@@ -8,6 +8,7 @@ import Menu from '@/pages/Category/Menu';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import DetailPage from '@/pages/DetailPage/DetailPage';
 import Home from '@/pages/Home/Home.tsx';
+import KakaoCallbackPage from '@/pages/KakaoCallbackPage/KakaoCallbackPage';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
 import { Payment } from '@/pages/Payment/Payment';
 import ProductPage from '@/pages/ProductPage/ProductPage';
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: '/signin',
         element: <SignInPage />,
+      },
+      {
+        path: '/v1/api/user/kakao/callback',
+        element: <KakaoCallbackPage />,
       },
 
       // 마이페이지 및 결제 등
