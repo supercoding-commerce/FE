@@ -69,6 +69,7 @@ export const router = createBrowserRouter([
         path: '/signin',
         element: <SignInPage />,
       },
+
       // 마이페이지 및 결제 등
       {
         path: '/mycart',
@@ -95,8 +96,12 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/paymoney',
-        element: <PayMoneyPage />,
+        path: '/mypage/paymoney',
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <PayMoneyPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/new/product',
@@ -123,12 +128,20 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/purchase',
-        element: <Purchase />,
+        path: '/mypage/purchase',
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <Purchase />
+          </ProtectedRoute>
+        ),
       },
       {
-        path: '/sold',
-        element: <SoldPage />,
+        path: '/mypage/sold',
+        element: (
+          <ProtectedRoute onlySeller>
+            <SoldPage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
@@ -146,6 +159,7 @@ export type RoutePath =
   | '/pay'
   | '/mypage'
   | '/mypage/coupon'
+  | '/mypage/paymoney'
   | '/purchase'
   | '/sold'
   | '/new/product'

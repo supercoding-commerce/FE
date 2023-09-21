@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useResetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import Button from '@/components/common/Button/Button.tsx';
 import Icon, { IconNameType } from '@/components/common/Icon.tsx';
@@ -11,11 +11,13 @@ import * as S from './MyPage.styles.tsx';
 
 export function MyPage() {
   const resetUser = useResetRecoilState(userState);
+  const userInfo = useRecoilValue(userState);
+
   const navigate = useNavigate();
 
   // GYU-TODO: API 요청 후? buyer / seller 에 따른 분기 처리
   const isBuyer = true;
-  const mainItemList: MainItem[] = isBuyer ? BUYER_MAIN_ITEMS : SELLER_MAIN_ITEMS;
+  const mainItemList: MainItem[] = userInfo.role === 'USER' ? BUYER_MAIN_ITEMS : SELLER_MAIN_ITEMS;
 
   const handleClickMyInfo = () => {
     // GYU-TODO: isBuyer 여부에 따라 기능 정의
@@ -77,12 +79,12 @@ const BUYER_MAIN_ITEMS: MainItem[] = [
   {
     icon: 'IconPaper',
     label: '구매내역',
-    href: '#',
+    href: '/mypage/purchase',
   },
   {
     icon: 'IconCreditCard',
     label: '페이머니',
-    href: '#',
+    href: '/mypage/paymoney',
   },
   {
     icon: 'IconDatabase',
@@ -104,7 +106,7 @@ const SELLER_MAIN_ITEMS: MainItem[] = [
   {
     icon: 'IconPaper',
     label: '판매내역',
-    href: '#',
+    href: '/mypage/sold',
   },
   {
     icon: 'IconBox',
