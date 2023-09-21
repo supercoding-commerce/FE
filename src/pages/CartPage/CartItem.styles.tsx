@@ -97,9 +97,11 @@ export const ItemTotalPrice = styled.div`
 export const ItemTotalPriceTitle = styled.div`
   font-weight: bold;
   font: ${theme.font.body1};
-  margin-right: 15px;
 `;
 export const ItemTotalPriceValue = styled.div`
   font: ${theme.font.body2};
   margin-right: 2px;
+  width: 100px;
+  display: flex;
+  justify-content: flex-end;
 `;
