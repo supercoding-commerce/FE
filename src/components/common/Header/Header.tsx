@@ -44,4 +44,5 @@ const HEADER_TITLE: { [key: RoutePath]: string } = {
   '/detail': 'Detail',
   '/purchase': '구매내역',
   '/sold': '판매된 내역',
+  '/mypage/point-history': '포인트 사용 내역',
 };

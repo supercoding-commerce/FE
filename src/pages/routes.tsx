@@ -10,6 +10,7 @@ import DetailPage from '@/pages/DetailPage/DetailPage';
 import Home from '@/pages/Home/Home.tsx';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
 import { Payment } from '@/pages/Payment/Payment';
+import { PointHistory } from '@/pages/PointHistory/PointHistory.tsx';
 import ProductPage from '@/pages/ProductPage/ProductPage';
 import { ProtectedRoute } from '@/pages/ProtectedRoute.tsx';
 import Search from '@/pages/Search/Search';
@@ -116,6 +117,10 @@ export const router = createBrowserRouter([
       {
         path: '/sold',
         element: <SoldPage />,
+      },
+      {
+        path: '/mypage/point-history',
+        element: <PointHistory />,
       },
     ],
   },

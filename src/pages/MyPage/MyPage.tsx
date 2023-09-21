@@ -95,7 +95,7 @@ const BUYER_MAIN_ITEMS: MainItem[] = [
   {
     icon: 'IconDatabase',
     label: '포인트',
-    href: '#',
+    href: '/mypage/point-history',
   },
   {
     icon: 'IconTicket',
