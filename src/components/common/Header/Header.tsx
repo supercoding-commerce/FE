@@ -31,6 +31,7 @@ const NO_HEADER_URL: RoutePath[] = [
   '/signin',
   '/product/search/category',
   '/search',
+  '/product/search',
 ];
 const SEARCH_HEADER_URL: RoutePath[] = ['/', '/category'];
 const PRODUCT_DETAIL_REGEX = new RegExp(/\/product\/\d+/);
@@ -40,5 +41,9 @@ const HEADER_TITLE: { [key: RoutePath]: string } = {
   '/update/product': 'Update Products',
   '/mypage': 'My Page',
   '/mycart': 'Cart',
+  '/mypage/paymoney': 'ClipPay',
   '/detail': 'Detail',
+  '/mypage/coupon': 'Coupon',
+  '/mypage/purchase': '구매내역',
+  '/mypage/sold': '판매된 내역',
 };

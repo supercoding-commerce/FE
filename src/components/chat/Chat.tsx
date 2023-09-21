@@ -13,6 +13,7 @@ type ChatProps = {
   productId: number;
   productName: string;
   isUser: boolean;
+  shopImageUrl: string;
 };
 
 export type UserInfo = {
@@ -38,6 +39,7 @@ const Chat = ({
   productId,
   productName,
   isUser,
+  shopImageUrl,
 }: ChatProps) => {
   const seller: SellerInfo = { sellerId: sellerId, shopName: sellerName };
   const product: ProductInfo = { productId: productId, productName: productName };
@@ -98,6 +100,7 @@ const Chat = ({
         <S.Chat>
           {isCustomRoomId ? (
             <ChatList
+              handleOpen={handleOpen}
               clickListBox={clickListBox}
               seller={seller}
               isSeller={isSeller}
@@ -110,6 +113,7 @@ const Chat = ({
               seller={seller}
               user={user}
               product={product}
+              shopImageUrl={shopImageUrl}
               clickPrevButton={clickPrevButton}
               handleOpen={handleOpen}
             />
@@ -120,6 +124,7 @@ const Chat = ({
         <S.Chat>
           {!isCustomRoomId ? (
             <ChatList
+              handleOpen={handleOpen}
               clickListBox={clickListBox}
               seller={seller}
               isSeller={isSeller}
@@ -132,6 +137,7 @@ const Chat = ({
               seller={seller}
               user={user}
               product={product}
+              shopImageUrl={shopImageUrl}
               clickPrevButton={clickPrevButton}
               handleOpen={handleOpen}
             />

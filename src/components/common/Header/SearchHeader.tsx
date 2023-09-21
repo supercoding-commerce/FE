@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { cx } from '@emotion/css';
 
 import * as S from '@/components/common/Header/SearchHeader.styles.tsx';
 import Icon from '@/components/common/Icon.tsx';
@@ -11,8 +9,6 @@ import { userState } from '@/recoil/userState';
 const SearchHeader = () => {
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userState);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [inputOpen, setInputOpen] = useState(false);
 
   const handleUserInfo = () => {
     if (userInfo.role === '') {
@@ -28,34 +24,12 @@ const SearchHeader = () => {
       {/* 로고나오면 로고로 대체 */}
       <h1>로고자리</h1>
       <S.IconsContainer>
-        {searchOpen ? (
-          <S.InputDiv>
-            <Icon
-              name="IconSearch"
-              onClick={() => {
-                setInputOpen(false);
-                setTimeout(() => {
-                  setSearchOpen(!searchOpen);
-                }, 500);
-              }}
-            />
-            <S.Input
-              className={cx({
-                ['open']: inputOpen,
-              })}
-            />
-          </S.InputDiv>
-        ) : (
-          <Icon
-            name="IconSearch"
-            onClick={() => {
-              setSearchOpen(!searchOpen);
-              setTimeout(() => {
-                setInputOpen(true);
-              }, 100);
-            }}
-          />
-        )}
+        <Icon
+          name="IconSearch"
+          onClick={() => {
+            navigate('/search');
+          }}
+        />
         <Icon name="IconUser" onClick={handleUserInfo} style={{ cursor: 'pointer' }} />
         {userInfo.role === 'SELLER' ? (
           <Icon

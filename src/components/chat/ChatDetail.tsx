@@ -18,6 +18,7 @@ type ChatUserProps = {
   seller: SellerInfo;
   user: UserInfo;
   product: ProductInfo;
+  shopImageUrl: string;
   clickPrevButton: () => void;
   handleOpen: () => void;
 };
@@ -33,6 +34,7 @@ const ChatDetail = ({
   seller,
   user,
   product,
+  shopImageUrl,
   clickPrevButton,
   handleOpen,
 }: ChatUserProps) => {
@@ -141,11 +143,12 @@ const ChatDetail = ({
           if (message.type === 'JOIN') {
             console.log('연결되었습니다.');
           } else if (message.type === 'LEAVE') {
+            handleDisConnect();
             const leave = message.sender;
             setLeaveUser(leave);
             setUserStatus((prevUserStatus) => ({
               ...prevUserStatus,
-              [message.sender]: true, // 해당 유저의 상태를 입장으로 설정
+              [message.sender]: true, // 해당 유저의 상태를 퇴장으로 설정
             }));
           } else if (message.type === 'TERMINATE') {
             handleDisConnect();
@@ -181,7 +184,7 @@ const ChatDetail = ({
     // return () => {
     //   handleDisConnect();
     // };
-  }, []);
+  }, [userStatus]);
 
   return (
     <>
@@ -195,9 +198,11 @@ const ChatDetail = ({
       <ChatDetailBody
         prevMsg={prevMsg}
         msg={msg}
+        role={role}
         nickName={role === 'user' ? user.userName : seller.shopName}
         leaveUser={leaveUser}
         shopName={seller.shopName}
+        shopImageUrl={shopImageUrl}
       />
       <ChatSend sendMessage={sendMessage} />
     </>

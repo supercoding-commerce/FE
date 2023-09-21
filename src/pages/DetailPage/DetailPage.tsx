@@ -20,6 +20,7 @@ export type DetailProduct = {
   productId: number;
   thumbnailUrl: string;
   shopName: string;
+  shopImageUrl: string;
   name: string;
   leftAmount: number;
   averageStarPoint: number;
@@ -112,6 +113,7 @@ const DetailPage = () => {
         productId={product.productId}
         productName={product.name}
         isUser={product.seller}
+        shopImageUrl={product.shopImageUrl}
       />
       <DetailPageContainer>
         <DetailInfo product={product} />

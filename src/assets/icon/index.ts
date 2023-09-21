@@ -18,6 +18,10 @@ export { ReactComponent as IconKakao } from './SymbolKakao.svg';
 export { ReactComponent as IconX } from './X.svg';
 export { ReactComponent as IconAdd } from './Add.svg';
 export { ReactComponent as IconAirplane } from './Airplane.svg';
+export { ReactComponent as IconPCoin } from './PCoin.svg';
+export { ReactComponent as IconCard1 } from './Card1.svg';
+export { ReactComponent as IconCard2 } from './Card2.svg';
+export { ReactComponent as IconCard3 } from './Card3.svg';
 
 export { ReactComponent as IconArrowRightFill } from './ArrowRightFill.svg';
 
@@ -43,3 +47,4 @@ export { ReactComponent as IconFullHeart } from './FullHeart.svg';
 export { ReactComponent as IconEmptyHeart } from './EmptyHeart.svg';
 export { ReactComponent as IconChat } from './Chat.svg';
 export { ReactComponent as IconSignOut } from './SignOut.svg';
+export { ReactComponent as IconSmile } from './Smile.svg';
