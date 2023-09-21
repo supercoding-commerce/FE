@@ -6,9 +6,15 @@ export const fetchCategoryProducts = async (
   age: string | null,
   gender: string | null,
   filter: string | null,
+  searchWord: string | null,
 ) => {
   let url = `https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${pageRef}`;
 
+  if (searchWord !== null && searchWord !== undefined) {
+    url = `https://pet-commerce.shop/v1/api/product/search?pageNumber=${pageRef}&searchWord=${encodeURIComponent(
+      searchWord,
+    )}`;
+  }
   if (age !== null && age !== undefined) {
     url += `&ageCategory=${age}`;
   }

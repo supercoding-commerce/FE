@@ -15,20 +15,34 @@ interface Product {
 }
 
 interface CategoryListProps {
+  filter: string | null;
   category: string | null;
   age: string | null;
   gender: string | null;
-  filter: string | null;
+  searchWord: string | null;
 }
 
-const CategoryList: React.FC<CategoryListProps> = ({ category, filter, age, gender }) => {
+const CategoryList: React.FC<CategoryListProps> = ({
+  filter,
+  category,
+  age,
+  gender,
+  searchWord,
+}) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [ref, inView] = useInView();
   const pageRef = useRef(1);
 
   const productFetch = async () => {
     try {
-      const response = await fetchCategoryProducts(category, pageRef.current, age, gender, filter);
+      const response = await fetchCategoryProducts(
+        category,
+        pageRef.current,
+        age,
+        gender,
+        filter,
+        searchWord,
+      );
       console.log('RESPONSE', response);
       setProducts((prevProducts) => [...(pageRef.current === 1 ? [] : prevProducts), ...response]);
       pageRef.current = pageRef.current + 1;
@@ -52,7 +66,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ category, filter, age, gend
   }, [inView]);
 
   console.log('pageRef.current', pageRef.current);
-
+  console.log('category', category);
   return (
     <S.ListContainer>
       {products.map((product, index) => (
