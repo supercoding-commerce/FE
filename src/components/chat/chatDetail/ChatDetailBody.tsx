@@ -17,15 +17,7 @@ type MsgProps = {
   role: string;
 };
 
-const ChatDetailBody = ({
-  prevMsg,
-  msg,
-  nickName,
-  // leaveUser,
-  shopName,
-  shopImageUrl,
-  role,
-}: MsgProps) => {
+const ChatDetailBody = ({ prevMsg, msg, nickName, shopName, shopImageUrl, role }: MsgProps) => {
   const RefViewControll = useRef<HTMLDivElement>(null);
 
   //가장 최근 채팅 보여주기
@@ -66,7 +58,6 @@ const ChatDetailBody = ({
           />
         );
       })}
-      {/* {leaveUser.length > 0 ? <ChatLeaveBox content={leaveUser} /> : null} */}
     </S.ChatDetailBody>
   );
 };
