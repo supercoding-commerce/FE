@@ -15,6 +15,7 @@ export type UserInfo = {
   nickname: string;
   payMoney: number;
   role: string;
+  shopName: string;
 };
 export const getInfo = async (): Promise<UserInfo> => {
   const response = await client.get(`${USER_URL}/getInfo`);
