@@ -21,7 +21,6 @@ const Coupon = () => {
         <p>쿠폰이 존재하지 않습니다.</p>
       ) : (
         <div className="coupon_container">
-          <div>얍</div>
           {coupons?.map((coupon, index) => (
             <CouponItem
               key={index}

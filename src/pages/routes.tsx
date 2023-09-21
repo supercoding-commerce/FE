@@ -113,7 +113,7 @@ export const router = createBrowserRouter([
       {
         path: '/mypage/coupon',
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute onlyBuyer>
             <Coupon />
           </ProtectedRoute>
         ),
