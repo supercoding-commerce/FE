@@ -14,7 +14,7 @@ const CategoryHeader = () => {
       <S.NavBar>
         <StyledLink to="/">Home</StyledLink>
         <StyledLink to="/category">Category</StyledLink>
-        <StyledLink to="">Product</StyledLink>
+        <StyledLink to="#">Product</StyledLink>
       </S.NavBar>
     </>
   );
