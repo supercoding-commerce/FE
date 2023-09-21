@@ -11,7 +11,6 @@ import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 import LiveVideo from '@/components/live/LiveVideo/LiveVideo';
-import { LiveUser } from '@/models/liveUser';
 import { LiveContainer, LiveStreamContainer } from '@/pages/LiveSession/LiveSession.styles';
 import { userState } from '@/recoil/userState';
 
@@ -21,8 +20,6 @@ const LiveSession = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [localUser, setLocalUser] = useState<Publisher | null>(null);
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
-  const [currentVideoDevice, setCurrentVideoDevice] = useState(undefined);
-  const [localUserAccessAllowed, setLocalUserAccessAllowed] = useState<boolean>(false);
   const [mainStreamManager, setMainStreamManager] = useState<StreamManager | null>(null);
 
   const userInfo = useRecoilValue(userState);
@@ -81,7 +78,7 @@ const LiveSession = () => {
 
       setLocalUser(publisher);
       setSession(mySession);
-      isHost && setMainStreamManager(publisher);
+      isHost ? setMainStreamManager(publisher) : setMainStreamManager(subscribers[0]);
     } catch (error) {
       console.log('Error: ', error);
     }
@@ -165,6 +162,7 @@ const LiveSession = () => {
     setMainStreamManager(subscribers[0]);
   }, [subscribers]);
 
+  console.log('test_sub', subscribers);
   console.log('test_mainStream', mainStreamManager);
 
   // 아래 토큰 받는 과정 ( 백엔드와의 통신 - 1단계 : 여기 까지 성공 )
@@ -210,6 +208,7 @@ const LiveSession = () => {
       <LiveStreamContainer>
         <LiveVideo streamManager={mainStreamManager} />
       </LiveStreamContainer>
+      <button onClick={leaveSession}>떠나기</button>
     </LiveContainer>
   );
 };
