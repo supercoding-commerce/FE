@@ -8,15 +8,22 @@ import {
   Subscriber,
 } from 'openvidu-browser';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
+import Button from '@/components/common/Button/Button';
 import LiveVideo from '@/components/live/LiveVideo/LiveVideo';
-import { LiveContainer, LiveStreamContainer } from '@/pages/LiveSession/LiveSession.styles';
+import {
+  LiveContainer,
+  LiveStreamContainer,
+  LiveStreamInfo,
+} from '@/pages/LiveSession/LiveSession.styles';
 import { userState } from '@/recoil/userState';
 
 const APPLICATION_SERVER_URL: string = import.meta.env.VITE_RTC_SERVER_URL;
 
 const LiveSession = () => {
+  const navigate = useNavigate();
   const [session, setSession] = useState<Session | null>(null);
   const [localUser, setLocalUser] = useState<Publisher | null>(null);
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
@@ -35,6 +42,9 @@ const LiveSession = () => {
 
     mySession.on('streamCreated', (event: StreamEvent) => {
       const subscriber = mySession.subscribe(event.stream, undefined);
+      subscriber.on('streamPlaying', () => {
+        subscriber.videos[0].video.parentElement?.classList.remove('custom-class');
+      });
       setSubscribers((prevSubscribers) => {
         prevSubscribers.push(subscriber);
         return prevSubscribers;
@@ -210,7 +220,17 @@ const LiveSession = () => {
       <LiveStreamContainer>
         <LiveVideo streamManager={mainStreamManager} />
       </LiveStreamContainer>
-      <button onClick={leaveSession}>떠나기</button>
+      <LiveStreamInfo>
+        <Button
+          isFullWidth
+          onClick={() => {
+            leaveSession();
+            navigate(-1);
+          }}
+        >
+          떠나기
+        </Button>
+      </LiveStreamInfo>
     </LiveContainer>
   );
 };
