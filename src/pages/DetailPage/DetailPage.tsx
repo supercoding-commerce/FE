@@ -103,6 +103,8 @@ const DetailPage = () => {
     }
   };
 
+  console.log(orderNCartProduct);
+
   return (
     <>
       <Chat
@@ -136,7 +138,7 @@ const DetailPage = () => {
             />
           </>
         )}
-        <DetailFooter orderNCartProduct={orderNCartProduct} />
+        <DetailFooter productId={product.productId} orderNCartProduct={orderNCartProduct} />
       </DetailPageContainer>
     </>
   );
