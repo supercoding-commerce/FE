@@ -18,7 +18,6 @@ export type OnlyProductId = Pick<DetailProduct, 'productId'>;
 
 const DetailFooter = ({ orderNCartProduct, productId }: FooterProps) => {
   const [heart, setHeart] = useState<IconNameType>('IconEmptyHeart');
-  const [checkWish, setCheckWish] = useState<Wish[]>([]);
 
   const navigate = useNavigate();
 
@@ -52,27 +51,15 @@ const DetailFooter = ({ orderNCartProduct, productId }: FooterProps) => {
       });
   };
 
-  // useEffect(() => {
-  //   giveWish().then((result) => {
-  //     const wishCheck = productId;
-  //     const hasProductId = checkWish.some((item) => item.productId === wishCheck);
-  //     if (hasProductId) {
-  //       setHeart('IconFullHeart');
-  //     }
-  //     setCheckWish(result);
-  //   });
-  // }, []);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getWish();
         const wishCheck = productId;
-        const hasProductId = checkWish.some((item) => item.productId === wishCheck);
+        const hasProductId = result.data.some((item: Wish) => item.productId === wishCheck);
         if (hasProductId) {
           setHeart('IconFullHeart');
         }
-        setCheckWish(result);
       } catch (error) {
         console.log(error);
       }
