@@ -1,17 +1,33 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useResetRecoilState } from 'recoil';
 
 import Button from '@/components/common/Button/Button.tsx';
 import Icon, { IconNameType } from '@/components/common/Icon.tsx';
+import { localStorageKey } from '@/constants';
 import { RoutePath } from '@/pages/routes.tsx';
+import { userState } from '@/recoil/userState.ts';
+import { removeItem } from '@/utils/localstorage.ts';
 import * as S from './MyPage.styles.tsx';
 
 export function MyPage() {
+  const resetUser = useResetRecoilState(userState);
+  const navigate = useNavigate();
+
+  // GYU-TODO: API 요청 후? buyer / seller 에 따른 분기 처리
   const isBuyer = true;
   const mainItemList: MainItem[] = isBuyer ? BUYER_MAIN_ITEMS : SELLER_MAIN_ITEMS;
 
   const handleClickMyInfo = () => {
     // GYU-TODO: isBuyer 여부에 따라 기능 정의
     // alert(isBuyer ? '구매자' : '판매자');
+  };
+
+  const handelSignOut = () => {
+    removeItem(localStorageKey.accessToken);
+    removeItem(localStorageKey.refreshToken);
+    resetUser();
+    alert('로그아웃 되었습니다.');
+    navigate('/');
   };
 
   return (
@@ -38,6 +54,14 @@ export function MyPage() {
             </S.MyPageItemWrapper>
           </Link>
         ))}
+        <S.MyPageItemWrapper onClick={handelSignOut}>
+          <S.MyPageItem>
+            <S.ItemContainer>
+              <Icon name={'IconSignOut'} size={20} />
+              {'로그아웃'}
+            </S.ItemContainer>
+          </S.MyPageItem>
+        </S.MyPageItemWrapper>
       </S.MyPageItemList>
     </S.MyPageWrapper>
   );
@@ -68,7 +92,7 @@ const BUYER_MAIN_ITEMS: MainItem[] = [
   {
     icon: 'IconTicket',
     label: '쿠폰',
-    href: '#',
+    href: '/mypage/coupon',
   },
   {
     icon: 'IconHeart',

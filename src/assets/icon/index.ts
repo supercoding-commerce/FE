@@ -22,6 +22,9 @@ export { ReactComponent as IconPCoin } from './PCoin.svg';
 export { ReactComponent as IconCard1 } from './Card1.svg';
 export { ReactComponent as IconCard2 } from './Card2.svg';
 export { ReactComponent as IconCard3 } from './Card3.svg';
+
+export { ReactComponent as IconArrowRightFill } from './ArrowRightFill.svg';
+
 export { ReactComponent as IconTop } from './Top.svg';
 export { ReactComponent as IconPants } from './Pants.svg';
 export { ReactComponent as IconDress } from './Dress.svg';
@@ -40,3 +43,8 @@ export { ReactComponent as IconGloves } from './Gloves.svg';
 export { ReactComponent as IconCap } from './Cap.svg';
 export { ReactComponent as IconShortDress } from './ShortDress.svg';
 export { ReactComponent as IconLongDress } from './LongDress.svg';
+export { ReactComponent as IconFullHeart } from './FullHeart.svg';
+export { ReactComponent as IconEmptyHeart } from './EmptyHeart.svg';
+export { ReactComponent as IconChat } from './Chat.svg';
+export { ReactComponent as IconSignOut } from './SignOut.svg';
+export { ReactComponent as IconSmile } from './Smile.svg';

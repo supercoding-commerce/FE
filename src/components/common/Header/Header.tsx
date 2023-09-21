@@ -24,7 +24,15 @@ export function Header() {
   return <DefaultHeader text={HEADER_TITLE[pathname] || ''} />;
 }
 
-const NO_HEADER_URL: RoutePath[] = ['/signup', '/signup/seller', '/signup/buyer', '/signin'];
+const NO_HEADER_URL: RoutePath[] = [
+  '/signup',
+  '/signup/seller',
+  '/signup/buyer',
+  '/signin',
+  '/product/search/category',
+  '/search',
+  '/product/search',
+];
 const SEARCH_HEADER_URL: RoutePath[] = ['/', '/category'];
 const PRODUCT_DETAIL_REGEX = new RegExp(/\/product\/\d+/);
 const HEADER_TITLE: { [key: RoutePath]: string } = {
@@ -34,4 +42,8 @@ const HEADER_TITLE: { [key: RoutePath]: string } = {
   '/mypage': 'My Page',
   '/mycart': 'Cart',
   '/paymoney': 'ClipPay',
+  '/detail': 'Detail',
+  '/mypage/coupon': '보유한 쿠폰',
+  '/purchase': '구매내역',
+  '/sold': '판매된 내역',
 };

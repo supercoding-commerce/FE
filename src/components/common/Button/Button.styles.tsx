@@ -20,6 +20,7 @@ export const Button = styled.button`
       &:disabled:hover {
         opacity: 0.4;
         background-color: var(--background-color);
+        cursor: auto;
       }
     }
 
@@ -33,6 +34,7 @@ export const Button = styled.button`
         opacity: 0.4;
         color: var(--color);
         border-color: var(--color);
+        cursor: auto;
       }
     }
 
@@ -45,6 +47,7 @@ export const Button = styled.button`
       &:hover:disabled {
         opacity: 0.4;
         color: gray;
+        cursor: auto;
       }
     }
   }
@@ -82,7 +85,7 @@ export const Button = styled.button`
     border-radius: 100%;
     width: var(--width);
     height: var(--height);
-    padding: 0px 0px;
+    padding: 0px 0px !important;
   }
 
   &.full-width {
