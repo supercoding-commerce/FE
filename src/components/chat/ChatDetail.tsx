@@ -43,12 +43,14 @@ const ChatDetail = ({
   // 이전의 메세지 기록 담기
   const [prevMsg, setPrevMsg] = useState<Msg[]>([]);
   // 떠난 판매자 또는 유저 name
-  const [leaveUser, setLeaveUser] = useState<string>('');
+  // const [leaveUser, setLeaveUser] = useState<string>('');
   // 판매자, 유저 전부 채팅방 떠났는지 확인
   const [userStatus, setUserStatus] = useState({
     [user.userName]: false,
     [seller.shopName]: false,
   });
+
+  console.log('detailMsg', msg);
 
   const loadPrevChat: () => Promise<void> = async () => {
     await client
@@ -140,16 +142,32 @@ const ChatDetail = ({
         (body) => {
           // message -> 백엔드랑 논의 완료 (백엔드에서 어떻게 보내주는지)
           const message = JSON.parse(body.body);
+          console.log(message);
           if (message.type === 'JOIN') {
-            console.log('연결되었습니다.');
+            const join = message.role === 'user' ? message.userName : message.shopName;
+            const msgContent = `${join}님이 채팅을 시작하셨습니다.`;
+            const msgSender = 'server';
+            const msg1 = { content: msgContent, sender: msgSender };
+            setMsg((prev) => [...prev, msg1]);
+
+            //
+            // setUserStatus((prevUserStatus) => ({
+            //   ...prevUserStatus,
+            //   [message.sender]: false, // 해당 유저의 상태를 퇴장으로 설정
+            // }));
           } else if (message.type === 'LEAVE') {
-            handleDisConnect();
-            const leave = message.sender;
-            setLeaveUser(leave);
+            // handleDisConnect();
+
             setUserStatus((prevUserStatus) => ({
               ...prevUserStatus,
               [message.sender]: true, // 해당 유저의 상태를 퇴장으로 설정
             }));
+
+            const leave = message.sender;
+            const msgContent = `${leave}님이 채팅을 종료하셨습니다.`;
+            const msgSender = 'server';
+            const msg1 = { content: msgContent, sender: msgSender };
+            setMsg((prev) => [...prev, msg1]);
           } else if (message.type === 'TERMINATE') {
             handleDisConnect();
             setUserStatus({
@@ -157,10 +175,14 @@ const ChatDetail = ({
               [seller.shopName]: false,
             });
           } else {
+            console.log('들어오나?');
             const msgContent = message.content;
             const msgSender = message.sender;
-            const msg1 = { content: msgContent, sender: msgSender };
+            const msg1 = { content: msgContent, sender: msgSender }; // currentMessage
+            // console.log('msg1', msg1, msg);
+
             setMsg((prev) => [...prev, msg1]);
+            console.log('setMsg 까지 호출', setMsg);
           }
         },
       );
@@ -184,7 +206,9 @@ const ChatDetail = ({
     // return () => {
     //   handleDisConnect();
     // };
-  }, [userStatus]);
+  }, []);
+
+  console.log('gyu msg', msg);
 
   return (
     <>
@@ -200,7 +224,7 @@ const ChatDetail = ({
         msg={msg}
         role={role}
         nickName={role === 'user' ? user.userName : seller.shopName}
-        leaveUser={leaveUser}
+        // leaveUser={leaveUser}
         shopName={seller.shopName}
         shopImageUrl={shopImageUrl}
       />

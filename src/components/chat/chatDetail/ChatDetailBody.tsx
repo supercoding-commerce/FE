@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import { Msg } from '@/components/chat/ChatDetail';
 import ChatDetailIntro from '@/components/chat/chatDetail/ChatDetailIntro';
-import ChatLeaveBox from '@/components/chat/chatDetail/ChatLeaveBox';
+// import ChatLeaveBox from '@/components/chat/chatDetail/ChatLeaveBox';
 import ChatLeftBox from '@/components/chat/chatDetail/ChatLeftBox';
 import ChatRightBox from '@/components/chat/chatDetail/ChatRightBox';
 import * as S from '../Chat.styles';
@@ -11,7 +11,7 @@ type MsgProps = {
   msg: Msg[];
   prevMsg: Msg[];
   nickName: string;
-  leaveUser: string;
+  // leaveUser: string;
   shopName: string;
   shopImageUrl: string;
   role: string;
@@ -21,7 +21,7 @@ const ChatDetailBody = ({
   prevMsg,
   msg,
   nickName,
-  leaveUser,
+  // leaveUser,
   shopName,
   shopImageUrl,
   role,
@@ -35,6 +35,8 @@ const ChatDetailBody = ({
     }
   }, [msg, prevMsg]);
 
+  // console.log(nickName, msg);
+
   return (
     <S.ChatDetailBody ref={RefViewControll}>
       <ChatDetailIntro shopName={shopName} shopImageUrl={shopImageUrl} />
@@ -42,17 +44,29 @@ const ChatDetailBody = ({
         return nickName === item.sender ? (
           <ChatRightBox key={idx} content={item.content} />
         ) : (
-          <ChatLeftBox key={idx} content={item.content} role={role} shopImageUrl={shopImageUrl} />
+          <ChatLeftBox
+            key={idx}
+            content={item.content}
+            role={role}
+            shopImageUrl={shopImageUrl}
+            sender={item.sender}
+          />
         );
       })}
       {msg.map((item, idx) => {
         return nickName === item.sender ? (
           <ChatRightBox key={idx} content={item.content} />
         ) : (
-          <ChatLeftBox key={idx} content={item.content} role={role} shopImageUrl={shopImageUrl} />
+          <ChatLeftBox
+            key={idx}
+            content={item.content}
+            role={role}
+            shopImageUrl={shopImageUrl}
+            sender={item.sender}
+          />
         );
       })}
-      {leaveUser.length > 0 ? <ChatLeaveBox content={leaveUser} /> : null}
+      {/* {leaveUser.length > 0 ? <ChatLeaveBox content={leaveUser} /> : null} */}
     </S.ChatDetailBody>
   );
 };
