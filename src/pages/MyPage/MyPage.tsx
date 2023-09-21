@@ -92,7 +92,7 @@ const BUYER_MAIN_ITEMS: MainItem[] = [
   {
     icon: 'IconTicket',
     label: '쿠폰',
-    href: '#',
+    href: '/mypage/coupon',
   },
   {
     icon: 'IconHeart',

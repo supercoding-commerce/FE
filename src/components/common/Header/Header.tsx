@@ -42,7 +42,7 @@ const HEADER_TITLE: { [key: RoutePath]: string } = {
   '/mypage': 'My Page',
   '/mycart': 'Cart',
   '/detail': 'Detail',
-  '/coupon': 'Coupon',
+  '/mypage/coupon': '보유한 쿠폰',
   '/purchase': '구매내역',
   '/sold': '판매된 내역',
 };

@@ -111,12 +111,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/coupon',
+        path: '/mypage/coupon',
         element: (
           <ProtectedRoute>
             <Coupon />
           </ProtectedRoute>
         ),
+      },
+      {
         path: '/purchase',
         element: <Purchase />,
       },
@@ -139,7 +141,7 @@ export type RoutePath =
   | '/mycart'
   | '/pay'
   | '/mypage'
-  | '/coupon'
+  | '/mypage/coupon'
   | '/purchase'
   | '/sold'
   | '/new/product'
