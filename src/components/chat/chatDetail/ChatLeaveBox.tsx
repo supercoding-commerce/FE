@@ -10,7 +10,7 @@ const ChatLeaveBox = ({ content }: MsgProps) => {
   return (
     <S.ChatLeaveBox>
       <div className="reavebox_wrapper">
-        <span>{content}님이 채팅을 종료하셨습니다.</span>
+        <span>{content}</span>
       </div>
     </S.ChatLeaveBox>
   );
