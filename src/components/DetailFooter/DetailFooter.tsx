@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { OrderNCartItemAPI, postCart, postPayment } from '@/apis/product';
-import { deleteWish, postWish } from '@/apis/wish';
+import { deleteWish, getWish, postWish } from '@/apis/wish';
 import Button from '@/components/common/Button/Button';
 import Icon, { IconNameType } from '@/components/common/Icon';
+import { Wish } from '@/components/Mypage-Wish/WishPage';
 import { DetailProduct } from '@/pages/DetailPage/DetailPage';
 import * as S from './DetailFooter.styles';
 
@@ -17,8 +18,9 @@ export type OnlyProductId = Pick<DetailProduct, 'productId'>;
 
 const DetailFooter = ({ orderNCartProduct, productId }: FooterProps) => {
   const [heart, setHeart] = useState<IconNameType>('IconEmptyHeart');
+  const [checkWish, setCheckWish] = useState<Wish[]>([]);
+
   const navigate = useNavigate();
-  console.log(orderNCartProduct);
 
   const isBuyer = true;
   const changeHeartHandler = (productId: number) => {
@@ -49,6 +51,34 @@ const DetailFooter = ({ orderNCartProduct, productId }: FooterProps) => {
         }
       });
   };
+
+  // useEffect(() => {
+  //   giveWish().then((result) => {
+  //     const wishCheck = productId;
+  //     const hasProductId = checkWish.some((item) => item.productId === wishCheck);
+  //     if (hasProductId) {
+  //       setHeart('IconFullHeart');
+  //     }
+  //     setCheckWish(result);
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getWish();
+        const wishCheck = productId;
+        const hasProductId = checkWish.some((item) => item.productId === wishCheck);
+        if (hasProductId) {
+          setHeart('IconFullHeart');
+        }
+        setCheckWish(result);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const nonSelectedProduct = orderNCartProduct.length === 0;
   return (

@@ -15,3 +15,19 @@ export const WishPage = styled.div`
   grid-gap: 10px;
   grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
 `;
+
+export const NoneWish = styled.div`
+  max-width: 420px;
+  height: calc(100vh - 60px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: ${theme.font.body1Bold};
+    margin-bottom: 5px;
+  }
+`;
