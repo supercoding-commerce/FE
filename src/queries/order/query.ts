@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import { getCartOrder, getProductOrder } from '@/apis/order.ts';
+import { getCartOrder, getProductOrder, getSellingProduct, OrderProduct } from '@/apis/order.ts';
 import { queryKeys } from '@/queries/queryKeys.ts';
 
 export const useGetOrders = (
@@ -15,4 +15,10 @@ export const useGetOrders = (
       ...options,
     },
   );
+};
+
+export const useGetSellingProduct = (
+  options?: Omit<UseQueryOptions<OrderProduct[]>, 'queryKey' | 'queryFn'>,
+) => {
+  return useQuery<OrderProduct[]>([queryKeys.order], () => getSellingProduct(), { ...options });
 };

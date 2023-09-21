@@ -5,19 +5,21 @@ import Button from '@/components/common/Button/Button.tsx';
 import Icon, { IconNameType } from '@/components/common/Icon.tsx';
 import { localStorageKey } from '@/constants';
 import { RoutePath } from '@/pages/routes.tsx';
+import { useGetUserInfo } from '@/queries/user/query.ts';
 import { userState } from '@/recoil/userState.ts';
 import { removeItem } from '@/utils/localstorage.ts';
 import * as S from './MyPage.styles.tsx';
 
 export function MyPage() {
   const resetUser = useResetRecoilState(userState);
-  const userInfo = useRecoilValue(userState);
+  const user = useRecoilValue(userState);
 
   const navigate = useNavigate();
+  const { data: userInfo } = useGetUserInfo();
 
   // GYU-TODO: API 요청 후? buyer / seller 에 따른 분기 처리
-  const isBuyer = true;
-  const mainItemList: MainItem[] = userInfo.role === 'USER' ? BUYER_MAIN_ITEMS : SELLER_MAIN_ITEMS;
+  const isBuyer = user.role === 'USER';
+  const mainItemList: MainItem[] = isBuyer ? BUYER_MAIN_ITEMS : SELLER_MAIN_ITEMS;
 
   const handleClickMyInfo = () => {
     // GYU-TODO: isBuyer 여부에 따라 기능 정의
@@ -32,11 +34,16 @@ export function MyPage() {
     navigate('/');
   };
 
+  if (!userInfo) return null;
   return (
     <S.MyPageWrapper>
       <S.UserInfoSection>
         <S.UserInfoContainer>
-          <S.Nickname>{isBuyer && '[등급]'} 닉네임</S.Nickname>
+          <S.Nickname>
+            {isBuyer
+              ? `[${userInfo?.grade || 'GREEN'}] ${userInfo?.nickname}`
+              : `${userInfo?.shopName}`}
+          </S.Nickname>
           <Button variant="main" size="small" onClick={handleClickMyInfo}>
             {isBuyer ? '내정보' : '스토어 정보'}
           </Button>
@@ -89,7 +96,7 @@ const BUYER_MAIN_ITEMS: MainItem[] = [
   {
     icon: 'IconDatabase',
     label: '포인트',
-    href: '#',
+    href: '/mypage/point-history',
   },
   {
     icon: 'IconTicket',
@@ -111,6 +118,6 @@ const SELLER_MAIN_ITEMS: MainItem[] = [
   {
     icon: 'IconBox',
     label: '판매중인 상품',
-    href: '#',
+    href: '/mypage/selling-product',
   },
 ];

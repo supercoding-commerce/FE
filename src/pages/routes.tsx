@@ -12,10 +12,12 @@ import Home from '@/pages/Home/Home.tsx';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
 import { Payment } from '@/pages/Payment/Payment';
 import { PayMoneyPage } from '@/pages/PayMoney/PayMoneyPage';
+import { PointHistory } from '@/pages/PointHistory/PointHistory.tsx';
 import ProductPage from '@/pages/ProductPage/ProductPage';
 import { ProtectedRoute } from '@/pages/ProtectedRoute.tsx';
 import Search from '@/pages/Search/Search';
 import SearchProduct from '@/pages/Search/SearchProduct';
+import { SellingProduct } from '@/pages/SellingProduct/SellingProduct.tsx';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
@@ -143,6 +145,18 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: '/mypage/selling-product',
+        element: (
+          <ProtectedRoute onlySeller>
+            <SellingProduct />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/mypage/point-history',
+        element: <PointHistory />,
+      },
     ],
   },
 ]);
@@ -160,6 +174,7 @@ export type RoutePath =
   | '/mypage'
   | '/mypage/coupon'
   | '/mypage/paymoney'
+  | '/mypage/selling-product'
   | '/purchase'
   | '/sold'
   | '/new/product'
