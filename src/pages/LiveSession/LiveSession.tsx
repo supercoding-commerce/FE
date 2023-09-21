@@ -27,6 +27,8 @@ const LiveSession = () => {
   const sessionName = 'ClipLiveSession';
   const userName = userInfo.email;
 
+  console.log(localUser);
+
   const joinSession = async () => {
     const OV = new OpenVidu();
     const mySession = OV.initSession();
@@ -151,7 +153,7 @@ const LiveSession = () => {
   //   console.log(token);
   // };
 
-  const checkHost = () => {};
+  // const checkHost = () => {};
   useEffect(() => {
     joinSession();
   }, []);
