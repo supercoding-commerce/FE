@@ -26,12 +26,7 @@ const ChatDetailBody = ({
   shopImageUrl,
   role,
 }: MsgProps) => {
-  console.log('msgArray', msg);
-  console.log('nickName', nickName);
-  console.log('leaveUser', leaveUser.length);
-
   const RefViewControll = useRef<HTMLDivElement>(null);
-  console.log('RefViewControll', RefViewControll.current?.scrollTop);
 
   //가장 최근 채팅 보여주기
   useEffect(() => {
