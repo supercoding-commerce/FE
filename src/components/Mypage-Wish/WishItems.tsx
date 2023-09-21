@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { deleteWish, postWish } from '@/apis/wish';
 import Icon, { IconNameType } from '@/components/common/Icon';
@@ -11,6 +12,7 @@ type WishItemProps = {
 
 export function WishItems({ item }: WishItemProps) {
   const [heart, setHeart] = useState<IconNameType>('IconFullHeart');
+  const navigate = useNavigate();
 
   const changeHeartHandler = (productId: number) => {
     setHeart(heart === 'IconEmptyHeart' ? 'IconFullHeart' : 'IconEmptyHeart');
@@ -24,7 +26,12 @@ export function WishItems({ item }: WishItemProps) {
   return (
     <S.WishItemsContainer>
       <S.WishItems>
-        <S.WishImage src={item.thumbnailUrl} />
+        <S.WishImage
+          src={item.thumbnailUrl}
+          onClick={() => {
+            navigate(`/product/${item.productId}`);
+          }}
+        />
         <S.BrandNameContainer>
           <S.BrandName>{item.shopName}</S.BrandName>
           <Icon name={heart} size={22} onClick={() => changeHeartHandler(item.productId)} />

@@ -22,6 +22,7 @@ export const WishImage = styled.img`
   width: 180px;
   height: 190px;
   margin-bottom: 3px;
+  cursor: pointer;
 `;
 export const BrandNameContainer = styled.div`
   display: flex;
