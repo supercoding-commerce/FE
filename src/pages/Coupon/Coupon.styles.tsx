@@ -19,5 +19,10 @@ export const Coupon = styled.div`
     align-items: center;
     flex-direction: column;
     width: 80%;
+
+    .coupon_wrapper {
+      margin: 10px 0px;
+      width: 100%;
+    }
   }
 `;
