@@ -20,6 +20,7 @@ export type DetailProduct = {
   productId: number;
   thumbnailUrl: string;
   shopName: string;
+  shopImageUrl: string;
   name: string;
   leftAmount: number;
   averageStarPoint: number;
@@ -42,8 +43,6 @@ const DetailPage = () => {
   const [prevCategory, setPrevCategory] = useState<string>('');
 
   const [isReview, setIsReview] = useState<boolean>(false);
-
-  console.log(product);
 
   useEffect(() => {
     getProduct(Number(productId))
@@ -104,6 +103,8 @@ const DetailPage = () => {
     }
   };
 
+  console.log(orderNCartProduct);
+
   return (
     <>
       <Chat
@@ -114,6 +115,7 @@ const DetailPage = () => {
         productId={product.productId}
         productName={product.name}
         isUser={product.seller}
+        shopImageUrl={product.shopImageUrl}
       />
       <DetailPageContainer>
         <DetailInfo product={product} />
@@ -136,7 +138,7 @@ const DetailPage = () => {
             />
           </>
         )}
-        <DetailFooter orderNCartProduct={orderNCartProduct} />
+        <DetailFooter productId={product.productId} orderNCartProduct={orderNCartProduct} />
       </DetailPageContainer>
     </>
   );

@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 
-export const MainPageContainer = styled.div`
-  /* padding: 0 20px; */
+export const MenuCon = styled.div`
   padding-top: 0;
   padding-bottom: 0;
   height: calc(100vh - 60px - 46px);
