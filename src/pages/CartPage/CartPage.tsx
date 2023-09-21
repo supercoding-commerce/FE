@@ -101,8 +101,14 @@ export function CartPage() {
 
   const postCartItemPayment = () => {
     const cartIds = cartItems.map((item) => item.cartId);
-    postPayment({ cartIdList: cartIds });
-    navigate('/pay');
+    postPayment({ cartIdList: cartIds }).then((data) => {
+      navigate('/pay', {
+        state: {
+          type: 'CART',
+          payload: data,
+        },
+      });
+    });
   };
 
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);

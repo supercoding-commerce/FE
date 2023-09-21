@@ -23,7 +23,14 @@ const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
   const postPaymentProduct = () => {
     if (orderNCartProduct.length === 0) return;
 
-    postPayment([...orderNCartProduct]).then(() => navigate('/pay'));
+    postPayment([...orderNCartProduct]).then(() =>
+      navigate('/pay', {
+        state: {
+          type: 'PAY',
+          payload: orderNCartProduct[0].productId,
+        },
+      }),
+    );
   };
 
   const postCartProduct = () => {
