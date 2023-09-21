@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import { Purchase } from '@/components/Mypage-Purchase/Purchase';
 import { SoldPage } from '@/components/Mypage-Sold/SoldPage';
+import { WishPage } from '@/components/Mypage-Wish/WishPage';
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
 import Menu from '@/pages/Category/Menu';
@@ -157,6 +158,14 @@ export const router = createBrowserRouter([
         path: '/mypage/point-history',
         element: <PointHistory />,
       },
+      {
+        path: '/mypage/wish',
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <WishPage />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
@@ -177,6 +186,7 @@ export type RoutePath =
   | '/mypage/selling-product'
   | '/purchase'
   | '/sold'
+  | '/wish'
   | '/new/product'
   | '/update/product'
   | '/search'

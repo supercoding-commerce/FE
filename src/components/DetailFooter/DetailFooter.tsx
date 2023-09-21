@@ -2,22 +2,32 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { OrderNCartItemAPI, postCart, postPayment } from '@/apis/product';
+import { deleteWish, postWish } from '@/apis/wish';
 import Button from '@/components/common/Button/Button';
 import Icon, { IconNameType } from '@/components/common/Icon';
+import { DetailProduct } from '@/pages/DetailPage/DetailPage';
 import * as S from './DetailFooter.styles';
 
 type FooterProps = {
   orderNCartProduct: OrderNCartItemAPI[];
+  productId: number;
 };
 
-const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
+export type OnlyProductId = Pick<DetailProduct, 'productId'>;
+
+const DetailFooter = ({ orderNCartProduct, productId }: FooterProps) => {
   const [heart, setHeart] = useState<IconNameType>('IconEmptyHeart');
   const navigate = useNavigate();
+  console.log(orderNCartProduct);
 
   const isBuyer = true;
-
-  const changeHeartHandler = () => {
+  const changeHeartHandler = (productId: number) => {
     setHeart(heart === 'IconEmptyHeart' ? 'IconFullHeart' : 'IconEmptyHeart');
+    if (heart === 'IconEmptyHeart') {
+      postWish(productId);
+    } else {
+      deleteWish(productId);
+    }
   };
 
   const postPaymentProduct = () => {
@@ -45,7 +55,12 @@ const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
     <>
       {isBuyer && (
         <S.BuyerDetailFooter>
-          <Icon onClick={changeHeartHandler} name={heart} size={25} style={{ cursor: 'pointer' }} />
+          <Icon
+            name={heart}
+            size={25}
+            style={{ cursor: 'pointer' }}
+            onClick={() => changeHeartHandler(productId)}
+          />
           <Button
             variant="outlined"
             size="medium"
