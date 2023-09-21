@@ -55,9 +55,10 @@ export function Payment() {
     const purchasePayload: PurchasePayload = {
       couponId: selectedCoupon?.couponId || 0,
       isUsePoint: pointActive,
-      orderIdList: orders.map((order) => order.orderId),
+      // orderIdList: orders.map((order) => order.orderId),
       // GYU-TODO: 단일로 처리해야함!?
-      // orderIdList: [orders[orders.length - 1].orderId],
+      // orderIdList: [orders[orders.length - (state.count || 1)].orderId],
+      orderIdList: orders.slice(orders.length - (state.count || 1)).map((order) => order.orderId),
       paymentMethod: 1,
       totalPrice: 총결제금액,
     };
@@ -78,7 +79,8 @@ export function Payment() {
   const 총결제금액 = 총상품가격 + 배송비 - 쿠폰적용금액 - 적립금;
 
   // GYU-TODO: 단일로 처리해야함!?
-  // const orderItem = orders[orders.length - 1];
+  // const orderItem = orders[orders.length - state.count || 1];
+  // const orderList = orders.slice(orders.length - (state.count || 1));
   return (
     <S.PaymentWrapper>
       <S.SectionsWrapper>
