@@ -46,5 +46,5 @@ const HEADER_TITLE: { [key: RoutePath]: string } = {
   '/mypage/coupon': 'Coupon',
   '/mypage/purchase': '구매내역',
   '/mypage/sold': '판매된 내역',
-  '/wish': 'WishList',
+  '/mypage/wish': 'WishList',
 };

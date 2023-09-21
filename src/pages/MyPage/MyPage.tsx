@@ -99,7 +99,7 @@ const BUYER_MAIN_ITEMS: MainItem[] = [
   {
     icon: 'IconHeart',
     label: '찜목록',
-    href: '#',
+    href: '/mypage/wish',
   },
 ];
 const SELLER_MAIN_ITEMS: MainItem[] = [
