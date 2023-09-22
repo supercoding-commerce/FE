@@ -139,7 +139,11 @@ const DetailPage = () => {
             />
           </>
         )}
-        <DetailFooter productId={product.productId} orderNCartProduct={orderNCartProduct} />
+        <DetailFooter
+          productId={product.productId}
+          shopName={product.shopName}
+          orderNCartProduct={orderNCartProduct}
+        />
       </DetailPageContainer>
     </>
   );
@@ -150,7 +154,7 @@ export default DetailPage;
 const DetailPageContainer = styled.div`
   max-width: 420px;
   z-index: 1;
-  height: calc(100vh - 60px - 60px);
+  height: calc(100vh - 60px- 60px);
   background-color: ${theme.color.backgroundColor};
   overflow-y: scroll;
   &::-webkit-scrollbar {
