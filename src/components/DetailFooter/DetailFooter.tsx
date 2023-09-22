@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import { OrderNCartItemAPI, postCart, postPayment } from '@/apis/product';
-import { getInfo } from '@/apis/user';
 import { deleteWish, getWish, postWish } from '@/apis/wish';
 import Button from '@/components/common/Button/Button';
 import Icon, { IconNameType } from '@/components/common/Icon';
@@ -15,18 +14,12 @@ import * as S from './DetailFooter.styles';
 type FooterProps = {
   orderNCartProduct: OrderNCartItemAPI[];
   productId: number;
-  shopName: string;
 };
 
 export type OnlyProductId = Pick<DetailProduct, 'productId'>;
 
-type SellerInformation = {
-  shopName: string;
-};
-
-const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) => {
+const DetailFooter = ({ orderNCartProduct, productId }: FooterProps) => {
   const [heart, setHeart] = useState<IconNameType>('IconEmptyHeart');
-  const [sellerInfo, setSellerInfo] = useState<SellerInformation>({ shopName: '' });
 
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userState);
@@ -85,14 +78,6 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
     fetchData();
   }, []);
 
-  useEffect(() => {
-    getInfo().then((result) => {
-      if (result) {
-        setSellerInfo(result);
-      }
-    });
-  }, []);
-
   const nonSelectedProduct = orderNCartProduct.length === 0;
   return (
     <>
@@ -128,7 +113,7 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
             구매하기
           </Button>
         </S.BuyerDetailFooter>
-      ) : userInfo.role === 'SELLER' && sellerInfo.shopName === shopName ? (
+      ) : (
         <S.SellerDetailFooter>
           <Button
             variant="outlined"
@@ -144,7 +129,7 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
             삭제
           </Button>
         </S.SellerDetailFooter>
-      ) : null}
+      )}
     </>
   );
 };
