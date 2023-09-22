@@ -27,11 +27,11 @@ export const theme = {
       font-weight: 600;
       line-height: normal;
     `,
-    h1: css`
+    h1Bold: css`
       font-family: SUITE;
-      font-size: 32px;
+      font-size: 30px;
       font-style: normal;
-      font-weight: 600;
+      font-weight: 700;
       line-height: 42px;
     `,
     h2: css`
@@ -85,6 +85,14 @@ export const theme = {
     body3: css`
       font-family: SUITE;
       font-size: 12px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 16px;
+      letter-spacing: 0.72px;
+    `,
+    body4: css`
+      font-family: SUITE;
+      font-size: 10px;
       font-style: normal;
       font-weight: 500;
       line-height: 16px;
