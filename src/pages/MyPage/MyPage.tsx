@@ -93,11 +93,11 @@ const BUYER_MAIN_ITEMS: MainItem[] = [
     label: '페이머니',
     href: '/mypage/paymoney',
   },
-  {
-    icon: 'IconDatabase',
-    label: '포인트',
-    href: '/mypage/point-history',
-  },
+  // {
+  //   icon: 'IconDatabase',
+  //   label: '포인트',
+  //   href: '/mypage/point-history',
+  // },
   {
     icon: 'IconTicket',
     label: '쿠폰',
