@@ -10,6 +10,10 @@ export const SearchHeaderContainer = styled.header`
   align-items: center;
   padding: 0 20px;
   background-color: #fff;
+  > h1 {
+    ${theme.font.h2}
+    cursor: pointer;
+  }
 `;
 
 export const IconsContainer = styled.div`
