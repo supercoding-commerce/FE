@@ -4,7 +4,7 @@ import { theme } from '@/styles/theme';
 
 export const FooterContainer = styled.footer`
   width: 100%;
-  height: 170px;
+  height: 150px;
   background-color: ${theme.color.black};
   display: flex;
   flex-direction: column;
@@ -21,16 +21,15 @@ export const SnsIconsBox = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
-  background-color: #4bffff;
   /* TODO-yukddong : sns아이콘 찾으면 추가하고 배경색 지우기 */
 `;
 
 export const Logo = styled.h1`
   color: ${theme.color.brand};
-  ${theme.font.h1}
+  ${theme.font.h1Bold}
 `;
 
 export const CopyRight = styled.p`
-  color: ${theme.color.backgroundColor};
-  ${theme.font.body3}
+  color: #eaeaea;
+  ${theme.font.body4}
 `;
