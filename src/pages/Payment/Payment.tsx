@@ -49,16 +49,18 @@ export function Payment() {
     });
   };
 
+  console.log('orders', orders);
+
   const handlePurchase = async () => {
     if (!orders || orders.length === 0) return;
 
     const purchasePayload: PurchasePayload = {
       couponId: selectedCoupon?.couponId || 0,
       isUsePoint: pointActive,
-      // orderIdList: orders.map((order) => order.orderId),
+      orderIdList: orders.map((order) => order.orderId),
       // GYU-TODO: 단일로 처리해야함!?
       // orderIdList: [orders[orders.length - (state.count || 1)].orderId],
-      orderIdList: orders.slice(orders.length - (state.count || 1)).map((order) => order.orderId),
+      // orderIdList: orders.slice(orders.length - (state.count || 1)).map((order) => order.orderId),
       paymentMethod: 1,
       totalPrice: 총결제금액,
     };
