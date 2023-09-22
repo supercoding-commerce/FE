@@ -2,7 +2,9 @@ import { KeyboardEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Icon from '@/components/common/Icon';
+import useDebounce from '@/hooks/useDebounce';
 import * as S from '@/pages/Search/Search.styles';
+import SearchList from '@/pages/Search/SearchList';
 import { getItem, removeItem, setItem } from '@/utils/localstorage';
 
 const Search = () => {
@@ -10,6 +12,33 @@ const Search = () => {
   const navigate = useNavigate();
   const [searchWords, setSearchWords] = useState<string[]>([]);
   const localStorageKey = 'searchWords';
+  const [searchData, setSearchData] = useState(null);
+
+  const debounceValue = useDebounce(searchWord);
+
+  useEffect(() => {
+    const getSearchProduct = async () => {
+      try {
+        const response = await fetch(
+          `https://pet-commerce.shop/v1/api/product/search?searchWord=${encodeURIComponent(
+            searchWord,
+          )}`,
+        );
+
+        if (!response.ok) {
+          throw new Error('no country found');
+        }
+        const data = await response.json();
+        setSearchData(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    if (debounceValue) {
+      getSearchProduct();
+    }
+  }, [debounceValue]);
 
   useEffect(() => {
     const searchWordsFromStorage = getItem<string[]>(localStorageKey) || [];
@@ -84,6 +113,7 @@ const Search = () => {
           ))}
         </S.TagWrap>
       </S.SearchContainer>
+      {searchWord ? <SearchList searchData={searchData} /> : ''}
     </>
   );
 };
