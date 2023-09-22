@@ -22,12 +22,14 @@ const Coupon = () => {
       ) : (
         <div className="coupon_container">
           {coupons?.map((coupon, index) => (
-            <CouponItem
-              key={index}
-              coupon={coupon}
-              selectedCoupon={coupon}
-              onSelectCoupon={() => coupon}
-            />
+            <div className="coupon_wrapper">
+              <CouponItem
+                key={index}
+                coupon={coupon}
+                selectedCoupon={coupon}
+                onSelectCoupon={() => coupon}
+              />
+            </div>
           ))}
         </div>
       )}

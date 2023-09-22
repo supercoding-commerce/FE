@@ -97,7 +97,10 @@ const DetailPage = () => {
 
   /** handleCategory() : 상세정보/리뷰 카테고리 내용 전환 */
   const handleCategory = (category: string) => {
-    if (category !== prevCategory) {
+    if (prevCategory.length === 0 && category === '상품정보') {
+      return;
+    } else if (category !== prevCategory) {
+      // 현재 카테고리와 이전 카테고리가 다를 때만 업데이트
       setIsReview((prev) => !prev);
       setPrevCategory(category);
     }
@@ -136,7 +139,7 @@ const DetailPage = () => {
             />
           </>
         )}
-        <DetailFooter orderNCartProduct={orderNCartProduct} />
+        <DetailFooter productId={product.productId} orderNCartProduct={orderNCartProduct} />
       </DetailPageContainer>
     </>
   );

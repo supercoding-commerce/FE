@@ -29,8 +29,18 @@ const ChatSend = ({ sendMessage }: sendMessageProps) => {
           size="sm"
           placeholder="메시지를 입력해주세요."
           style={{ width: '350px', height: '45px', borderRadius: '999px' }}
-          rightSlot={<Icon name="IconAirplane" onClick={() => sendMessage(text)} type="submit" />}
+          rightSlot={
+            <Icon
+              name="IconAirplane"
+              onClick={(e) => {
+                e.preventDefault(); // 아이콘 클릭 이벤트의 기본 동작을 막음
+                handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+              }}
+              type="submit"
+            />
+          }
           onChange={(e) => inputHandle(e.target.value)}
+          value={text}
         />
       </form>
     </S.ChatInput>

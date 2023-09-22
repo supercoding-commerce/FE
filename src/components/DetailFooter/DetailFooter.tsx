@@ -1,29 +1,51 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import { OrderNCartItemAPI, postCart, postPayment } from '@/apis/product';
+import { deleteWish, getWish, postWish } from '@/apis/wish';
 import Button from '@/components/common/Button/Button';
 import Icon, { IconNameType } from '@/components/common/Icon';
+import { Wish } from '@/components/Mypage-Wish/WishPage';
+import { DetailProduct } from '@/pages/DetailPage/DetailPage';
+import { userState } from '@/recoil/userState';
 import * as S from './DetailFooter.styles';
 
 type FooterProps = {
   orderNCartProduct: OrderNCartItemAPI[];
+  productId: number;
 };
 
-const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
+export type OnlyProductId = Pick<DetailProduct, 'productId'>;
+
+const DetailFooter = ({ orderNCartProduct, productId }: FooterProps) => {
   const [heart, setHeart] = useState<IconNameType>('IconEmptyHeart');
+
   const navigate = useNavigate();
+  const userInfo = useRecoilValue(userState);
 
-  const isBuyer = true;
-
-  const changeHeartHandler = () => {
+  const changeHeartHandler = (productId: number) => {
     setHeart(heart === 'IconEmptyHeart' ? 'IconFullHeart' : 'IconEmptyHeart');
+    if (heart === 'IconEmptyHeart') {
+      postWish(productId);
+    } else {
+      deleteWish(productId);
+    }
   };
 
   const postPaymentProduct = () => {
     if (orderNCartProduct.length === 0) return;
 
-    postPayment([...orderNCartProduct]).then(() => navigate('/pay'));
+    postPayment([...orderNCartProduct]).then(() =>
+      navigate('/pay', {
+        state: {
+          type: 'PAY',
+          payload: orderNCartProduct[0].productId,
+          // GYU-TODO: 임시로 구현 (클라작업을 위함)
+          count: orderNCartProduct.length,
+        },
+      }),
+    );
   };
 
   const postCartProduct = () => {
@@ -40,12 +62,33 @@ const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
       });
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getWish();
+        const wishCheck = productId;
+        const hasProductId = result.data.some((item: Wish) => item.productId === wishCheck);
+        if (hasProductId) {
+          setHeart('IconFullHeart');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const nonSelectedProduct = orderNCartProduct.length === 0;
   return (
     <>
-      {isBuyer && (
+      {userInfo.role === 'USER' ? (
         <S.BuyerDetailFooter>
-          <Icon onClick={changeHeartHandler} name={heart} size={25} style={{ cursor: 'pointer' }} />
+          <Icon
+            name={heart}
+            size={25}
+            style={{ cursor: 'pointer' }}
+            onClick={() => changeHeartHandler(productId)}
+          />
           <Button
             variant="outlined"
             size="medium"
@@ -70,8 +113,7 @@ const DetailFooter = ({ orderNCartProduct }: FooterProps) => {
             구매하기
           </Button>
         </S.BuyerDetailFooter>
-      )}
-      {!isBuyer && (
+      ) : (
         <S.SellerDetailFooter>
           <Button
             variant="outlined"
