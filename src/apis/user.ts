@@ -64,3 +64,12 @@ export const checkShopName = async (payload: string) => {
   });
   return response;
 };
+
+export const getKakaoLoginCode = async (payload: string) => {
+  const response = await client.get(`${USER_URL}/kakao/callback`, {
+    params: {
+      code: payload,
+    },
+  });
+  return response;
+};
