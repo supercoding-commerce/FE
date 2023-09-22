@@ -1,5 +1,13 @@
+import CategoryHeader from '@/components/common/Header/CategoryHeader';
+import MainPage from '@/components/MainPage/MainPage';
+
 function Home() {
-  return <div></div>;
+  return (
+    <>
+      <CategoryHeader />
+      <MainPage />
+    </>
+  );
 }
 
 export default Home;

@@ -27,6 +27,7 @@ export const SelectedBox = styled.div`
 `;
 
 export const OptionBox = styled.div`
+  position: relative;
   width: 100%;
   max-height: 150px;
   overflow-y: scroll;
@@ -50,6 +51,7 @@ export const OptionBox = styled.div`
 `;
 
 export const OptionUl = styled.ul`
+  position: relative;
   width: 100%;
   height: auto;
   transition: all ease-in-out 1s;
@@ -61,9 +63,9 @@ export const OptionUl = styled.ul`
     align-items: center;
     padding: 0 15px;
     text-overflow: ellipsis;
+    background-color: white;
     cursor: pointer;
     &:hover {
-      /* background-color: #f1f1f1; */
       background-color: ${theme.color.black};
       color: ${theme.color.brand};
     }

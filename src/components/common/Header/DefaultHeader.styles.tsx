@@ -15,7 +15,7 @@ export const HeaderContainer = styled.div`
 // TODO-yukddong : Icon 추가되면 적용예정
 export const IconBox = styled.div`
   position: absolute;
-  left: 40px;
+  left: 30px;
   width: 24px;
   height: 24px;
 `;

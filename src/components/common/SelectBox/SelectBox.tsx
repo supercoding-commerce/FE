@@ -19,12 +19,7 @@ function SelectBox({
   onChange,
   value,
 }: SelectBoxProps) {
-  // 1. UI먼저 구현 ( 하드코딩 )
-  // 2. Box 클릭했을 때 option 오픈
-  // 3. option 클릭했을 때 선택부분 텍스트 변경, option 리스트 닫기
-  // 4. props값 받아서 전달하기
   const [openOption, setOpenOption] = useState(false);
-
   return (
     <S.SelectContainer style={{ '--width': width, '--height': height } as CSSProperties}>
       <S.SelectedBox

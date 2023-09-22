@@ -20,6 +20,7 @@ export const Button = styled.button`
       &:disabled:hover {
         opacity: 0.4;
         background-color: var(--background-color);
+        cursor: auto;
       }
     }
 
@@ -33,6 +34,7 @@ export const Button = styled.button`
         opacity: 0.4;
         color: var(--color);
         border-color: var(--color);
+        cursor: auto;
       }
     }
 
@@ -45,6 +47,7 @@ export const Button = styled.button`
       &:hover:disabled {
         opacity: 0.4;
         color: gray;
+        cursor: auto;
       }
     }
   }
@@ -53,27 +56,28 @@ export const Button = styled.button`
     &_large {
       width: var(--width);
       height: 64px;
-      font-size: 18px;
+      ${theme.font.body0};
       padding: 10px 12px;
     }
     &_medium {
       height: 40px;
       border-radius: 8px;
-      font-size: 16px;
+      ${theme.font.body1};
       padding: 8px 12px;
       width: var(--width);
     }
     &_small {
       height: 26px;
       border-radius: 20px;
-      font-size: 12px;
+      ${theme.font.body3};
       padding: 7px 12px;
       width: var(--width);
     }
     &_xsmall {
       height: 20px;
       border-radius: 3px;
-      font-size: 10px;
+      padding: 2px;
+      ${theme.font.body3};
     }
   }
 
@@ -81,7 +85,7 @@ export const Button = styled.button`
     border-radius: 100%;
     width: var(--width);
     height: var(--height);
-    padding: 0px 0px;
+    padding: 0px 0px !important;
   }
 
   &.full-width {

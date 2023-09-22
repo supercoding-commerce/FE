@@ -5,7 +5,6 @@ import styled from '@emotion/styled';
 import { theme } from '@/styles/theme';
 
 const inputWrapperStyle = css`
-  margin: 15px;
   padding: 10px;
   display: inline-flex;
   align-items: center;
@@ -31,7 +30,7 @@ const inputWrapperStyle = css`
     &_outline {
       height: 45px;
       background-color: transparent;
-      border-radius: 25px;
+      border-radius: 8px;
       border: 2px solid ${theme.color.borderColor};
       &:focus-within {
         border: 2px solid black;
@@ -48,7 +47,7 @@ const inputWrapperStyle = css`
   }
 
   &.full-width {
-    width: 100%;
+    width: 100% !important;
   }
 
   &.error {

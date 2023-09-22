@@ -1,18 +1,29 @@
-import { createBrowserRouter, useLocation } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
-import Test from '@/components/Test/Test.tsx';
+import { Purchase } from '@/components/Mypage-Purchase/Purchase';
+import { SoldPage } from '@/components/Mypage-Sold/SoldPage';
+import { WishPage } from '@/components/Mypage-Wish/WishPage';
+import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
+import { CartPage } from '@/pages/CartPage/CartPage';
+import Menu from '@/pages/Category/Menu';
+import Coupon from '@/pages/Coupon/Coupon';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
+import DetailPage from '@/pages/DetailPage/DetailPage';
 import Home from '@/pages/Home/Home.tsx';
+import KakaoCallbackPage from '@/pages/KakaoCallbackPage/KakaoCallbackPage';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
+import { Payment } from '@/pages/Payment/Payment';
+import { PayMoneyPage } from '@/pages/PayMoney/PayMoneyPage';
+import { PointHistory } from '@/pages/PointHistory/PointHistory.tsx';
+import ProductPage from '@/pages/ProductPage/ProductPage';
+import { ProtectedRoute } from '@/pages/ProtectedRoute.tsx';
+import Search from '@/pages/Search/Search';
+import SearchProduct from '@/pages/Search/SearchProduct';
+import { SellingProduct } from '@/pages/SellingProduct/SellingProduct.tsx';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
-
-// GYU-TODO: DELETE
-function TestCompoennt() {
-  const location = useLocation();
-  return <div>{location.pathname}</div>;
-}
+import { UpdateProduct } from '@/pages/UpdateProduct/UpdateProduct.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -26,14 +37,25 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/product/:id',
-        element: <TestCompoennt />,
+        path: '/product/:productId',
+        element: <DetailPage />,
       },
       {
         path: '/category',
-        element: <TestCompoennt />,
+        element: <Menu />,
       },
-
+      {
+        path: '/product/search/category',
+        element: <ProductPage />,
+      },
+      {
+        path: '/product/search',
+        element: <SearchProduct />,
+      },
+      {
+        path: '/search',
+        element: <Search />,
+      },
       // 회원가입 / 로그인
       {
         path: '/signup',
@@ -51,61 +73,105 @@ export const router = createBrowserRouter([
         path: '/signin',
         element: <SignInPage />,
       },
+      {
+        path: '/v1/api/user/kakao/callback',
+        element: <KakaoCallbackPage />,
+      },
 
       // 마이페이지 및 결제 등
       {
         path: '/mycart',
-        element: <TestCompoennt />,
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <CartPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/pay',
-        element: <TestCompoennt />,
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <Payment />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/mypage',
-        element: <MyPage />,
+        element: (
+          <ProtectedRoute>
+            <MyPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/mypage/paymoney',
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <PayMoneyPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/new/product',
         element: (
-          <>
-            <span>new test</span>
-            <TestCompoennt />
-          </>
+          <ProtectedRoute onlySeller>
+            <AddProduct />
+          </ProtectedRoute>
         ),
       },
       {
         path: '/update/product',
         element: (
-          <>
-            <span>update test</span>
-            <TestCompoennt />
-          </>
+          <ProtectedRoute onlySeller>
+            <UpdateProduct />
+          </ProtectedRoute>
         ),
       },
       {
-        path: 'test',
-        element: <Test />,
+        path: '/mypage/coupon',
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <Coupon />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/mypage/purchase',
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <Purchase />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/mypage/sold',
+        element: (
+          <ProtectedRoute onlySeller>
+            <SoldPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/mypage/selling-product',
+        element: (
+          <ProtectedRoute onlySeller>
+            <SellingProduct />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/mypage/point-history',
+        element: <PointHistory />,
+      },
+      {
+        path: '/mypage/wish',
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <WishPage />
+          </ProtectedRoute>
+        ),
       },
     ],
-  },
-  {
-    path: '/new/product',
-    element: (
-      <>
-        <span>new test</span>
-        <TestCompoennt />
-      </>
-    ),
-  },
-  {
-    path: '/update/product',
-    element: (
-      <>
-        <span>update test</span>
-        <TestCompoennt />
-      </>
-    ),
   },
 ]);
 
@@ -115,11 +181,20 @@ export type RoutePath =
   | '/signup/buyer'
   | '/signin'
   | '/'
-  | '/product/:id'
+  | '/product/:productId'
   | '/category'
   | '/mycart'
   | '/pay'
   | '/mypage'
+  | '/mypage/coupon'
+  | '/mypage/paymoney'
+  | '/mypage/selling-product'
+  | '/purchase'
+  | '/sold'
+  | '/wish'
   | '/new/product'
   | '/update/product'
+  | '/search'
+  | '/product/search/category'
+  | '/product/search'
   | string;

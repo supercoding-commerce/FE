@@ -8,7 +8,7 @@ export const Counter = styled.span`
   height: 34px;
   border: 1px solid black;
   border-radius: 4px;
-  background-color: #e7e7e7;
+  background-color: ${theme.color.backgroundColor};
 `;
 
 export const MinusBtn = styled.div`
@@ -22,7 +22,7 @@ export const MinusBtn = styled.div`
   cursor: pointer;
   ${theme.font.body0}
 
-  & div {
+  & p {
     &:hover {
       color: ${theme.color.brandHover};
       transition: 0.15s ease-in-out;
@@ -72,7 +72,7 @@ export const PlusBtn = styled.div`
   cursor: pointer;
   ${theme.font.body1}
 
-  div {
+  p {
     &:hover {
       color: ${theme.color.brandHover};
       transition: 0.15s ease-in-out;

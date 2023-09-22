@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 export const theme = {
   color: {
     black: '#000000',
+    white: '#ffffff',
     pink: '#FE4977',
     blue: '#6A8DFF',
     orange: '#F49325',
@@ -47,6 +48,12 @@ export const theme = {
       font-weight: 500;
       line-height: normal;
     `,
+    body0ExtraBold: css`
+      font-family: SUITE;
+      font-size: 18px;
+      font-weight: 800;
+      line-height: normal;
+    `,
     body1: css`
       font-family: SUITE;
       font-size: 16px;
@@ -54,11 +61,25 @@ export const theme = {
       font-weight: 500;
       line-height: 24px;
     `,
+    body1Bold: css`
+      font-family: SUITE;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 24px;
+    `,
     body2: css`
       font-family: SUITE;
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
+      line-height: normal;
+    `,
+    body2Bold: css`
+      font-family: SUITE;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
       line-height: normal;
     `,
     body3: css`
