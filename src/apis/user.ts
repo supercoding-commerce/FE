@@ -48,9 +48,9 @@ export const checkEmail = async (payload: string) => {
 };
 
 export const checkNickName = async (payload: string) => {
-  const response = await client.get(`${USER_URL}/checkNickName`, {
+  const response = await client.get(`${USER_URL}/checkNickname`, {
     params: {
-      nickName: payload,
+      nickname: payload,
     },
   });
   return response;
@@ -60,6 +60,15 @@ export const checkShopName = async (payload: string) => {
   const response = await client.get(`${USER_URL}/checkShopName`, {
     params: {
       shopName: payload,
+    },
+  });
+  return response;
+};
+
+export const getKakaoLoginCode = async (payload: string) => {
+  const response = await client.get(`${USER_URL}/kakao/callback`, {
+    params: {
+      code: payload,
     },
   });
   return response;

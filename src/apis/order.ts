@@ -20,3 +20,13 @@ export const getSellingProduct = async (): Promise<OrderProduct[]> => {
   const response = await client.get(`${ORDER_URL}/seller/selling-product`);
   return response.data;
 };
+
+export const getCartOrder = async (orderTag: string): Promise<Order[]> => {
+  const response = await client.get<Order[]>(`${ORDER_URL}/cart/${orderTag}`);
+  return response.data.map((order) => ({ ...order, options: JSON.parse(order.options ?? []) }));
+};
+
+export const getProductOrder = async (productId: string): Promise<Order[]> => {
+  const response = await client.get<Order[]>(`${ORDER_URL}/product/${productId}`);
+  return response.data.map((order) => ({ ...order, options: JSON.parse(order.options ?? []) }));
+};

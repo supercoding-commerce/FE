@@ -15,6 +15,9 @@ import { parseJwt } from '@/utils/parseJwt';
 // TODO-YD: 버튼 활성화유지를 위해 잠시 주석처리
 // import { validateEmail, validatePassword } from '@/utils/validate';
 
+const KAKAO_AUTH_CLIENTID = import.meta.env.VITE_KAKAO_AUTH_CLIENTID;
+const KAKAO_REDIRECT_URL = import.meta.env.VITE_KAKAO_REDIRECT_URL;
+
 export interface userInfoProps {
   email: string;
   password: string;
@@ -49,8 +52,8 @@ const SignInPage = () => {
     });
   };
 
-  const kakaoLogin = () => {
-    console.log('카카오 로그인 링크');
+  const kakaoLoginHandler = () => {
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_AUTH_CLIENTID}&redirect_uri=${KAKAO_REDIRECT_URL}&response_type=code`;
   };
 
   return (
@@ -106,7 +109,7 @@ const SignInPage = () => {
         height={'64px'}
         backgroundColor="#FEE608"
         isFullWidth
-        onClick={kakaoLogin}
+        onClick={kakaoLoginHandler}
       >
         <S.KakaoFontBox>
           <Icon name="IconKakao" size={19} />
