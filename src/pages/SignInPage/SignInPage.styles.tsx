@@ -5,14 +5,15 @@ import { theme } from '@/styles/theme';
 export const SignInContainer = styled.main`
   width: 100%;
   height: calc(100vh - 170px);
-  padding: 180px 30px 0 30px;
+  padding: 120px 30px 0 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
 export const SignInLogo = styled.h1`
-  margin-bottom: 80px;
+  margin-bottom: 50px;
+  ${theme.font.h0}
 `;
 
 export const SignInForm = styled.form`

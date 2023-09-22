@@ -12,7 +12,8 @@ export const SignUpContainer = styled.main`
 `;
 
 export const SingUpLogo = styled.h1`
-  margin-bottom: 180px;
+  margin-bottom: 100px;
+  ${theme.font.h0}
 `;
 
 export const BtnBox = styled.div`
