@@ -8,7 +8,7 @@ export const SignUpContainer = styled.main`
   flex-direction: column;
   align-items: center;
   padding: 200px 30px 0 30px;
-  height: calc(100vh - 170px);
+  height: calc(100vh - 150px);
 `;
 
 export const SingUpLogo = styled.h1`

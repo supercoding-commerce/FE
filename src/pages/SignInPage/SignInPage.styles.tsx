@@ -4,7 +4,7 @@ import { theme } from '@/styles/theme';
 
 export const SignInContainer = styled.main`
   width: 100%;
-  height: calc(100vh - 170px);
+  height: calc(100vh - 150px);
   padding: 120px 30px 0 30px;
   display: flex;
   flex-direction: column;

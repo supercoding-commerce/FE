@@ -44,3 +44,7 @@ export const Input = styled.input`
     width: 160px;
   }
 `;
+
+export const Logo = styled.h1`
+  ${theme.font.body0ExtraBold};
+`;
