@@ -22,7 +22,6 @@ const AllProductList: React.FC = () => {
     await axios
       .get(`https://pet-commerce.shop/v1/api/product?pageNumber=${page}`)
       .then((res) => {
-        console.log(res.data);
         setProducts((prevProducts) => [...prevProducts, ...res.data]);
         setPage((prevPage) => prevPage + 1);
       })
