@@ -36,8 +36,7 @@ export const DetailInformation = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
-  /* background-color: aliceblue; */
+  margin-bottom: 60px;
 
   .information_container {
     display: flex;

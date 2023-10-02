@@ -2,6 +2,25 @@ import styled from '@emotion/styled';
 
 import { theme } from '@/styles/theme';
 
+export const SignUpContainerBox = styled.div`
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: #535353;
+    border-radius: 30px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #cecece;
+  }
+`;
+
 export const SingUpUserContainer = styled.main`
   width: 100%;
   height: auto;

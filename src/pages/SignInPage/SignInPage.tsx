@@ -3,6 +3,7 @@ import { useSetRecoilState } from 'recoil';
 
 import { signIn } from '@/apis/user';
 import Button from '@/components/common/Button/Button';
+import Footer from '@/components/common/Footer/Footer';
 import Icon from '@/components/common/Icon';
 import { Input } from '@/components/common/Input/Input';
 import { localStorageKey } from '@/constants';
@@ -57,66 +58,69 @@ const SignInPage = () => {
   };
 
   return (
-    <S.SignInContainer>
-      <S.SignInLogo>로고</S.SignInLogo>
-      <S.SignInForm onSubmit={submitHandler}>
-        <div>
-          <label htmlFor="email">ID</label>
-          <Input
-            onChange={inputChangeHandler}
-            value={form.email}
-            name="email"
-            id="email"
-            type="email"
-            variant="underline"
+    <>
+      <S.SignInContainer>
+        <S.SignInLogo>Clip</S.SignInLogo>
+        <S.SignInForm onSubmit={submitHandler}>
+          <div>
+            <label htmlFor="email">ID</label>
+            <Input
+              onChange={inputChangeHandler}
+              value={form.email}
+              name="email"
+              id="email"
+              type="email"
+              variant="underline"
+              isFullWidth
+              placeholder="아이디를 입력해주세요."
+            />
+          </div>
+          <div>
+            <label htmlFor="password">PW</label>
+            <Input
+              onChange={inputChangeHandler}
+              value={form.password}
+              name="password"
+              id="password"
+              type="password"
+              variant="underline"
+              isFullWidth
+              placeholder="패스워드를 입력해주세요."
+            />
+          </div>
+          <Button
+            variant="contained"
             isFullWidth
-            placeholder="아이디를 입력해주세요."
-          />
-        </div>
-        <div>
-          <label htmlFor="password">PW</label>
-          <Input
-            onChange={inputChangeHandler}
-            value={form.password}
-            name="password"
-            id="password"
-            type="password"
-            variant="underline"
-            isFullWidth
-            placeholder="패스워드를 입력해주세요."
-          />
-        </div>
+            size="large"
+            height={'64px'}
+            // TODO-YD : 현재 테스트용 계정의 비밀번호가 유효성검사를 통과하지 않아서 임시로 disabled를 풀어놨습니다.
+            // disabled={!isValid}
+            backgroundColor={theme.color.brand}
+          >
+            로그인
+          </Button>
+        </S.SignInForm>
+        <S.OrBox>
+          <S.LineDiv />
+          <span>OR</span>
+          <S.LineDiv />
+        </S.OrBox>
         <Button
           variant="contained"
-          isFullWidth
           size="large"
           height={'64px'}
-          // TODO-YD : 현재 테스트용 계정의 비밀번호가 유효성검사를 통과하지 않아서 임시로 disabled를 풀어놨습니다.
-          // disabled={!isValid}
-          backgroundColor={theme.color.brand}
+          backgroundColor="#FEE608"
+          isFullWidth
+          onClick={kakaoLoginHandler}
         >
-          로그인
+          <S.KakaoFontBox>
+            <Icon name="IconKakao" size={19} />
+            <span>카카오 로그인</span>
+          </S.KakaoFontBox>
         </Button>
-      </S.SignInForm>
-      <S.OrBox>
-        <S.LineDiv />
-        <span>OR</span>
-        <S.LineDiv />
-      </S.OrBox>
-      <Button
-        variant="contained"
-        size="large"
-        height={'64px'}
-        backgroundColor="#FEE608"
-        isFullWidth
-        onClick={kakaoLoginHandler}
-      >
-        <S.KakaoFontBox>
-          <Icon name="IconKakao" size={19} />
-          <span>카카오 로그인</span>
-        </S.KakaoFontBox>
-      </Button>
-    </S.SignInContainer>
+      </S.SignInContainer>
+      <Footer />
+    </>
   );
 };
 
