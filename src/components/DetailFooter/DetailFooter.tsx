@@ -36,8 +36,14 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
     setHeart(heart === 'IconEmptyHeart' ? 'IconFullHeart' : 'IconEmptyHeart');
     if (heart === 'IconEmptyHeart') {
       postWish(productId);
+      Toast.success('찜한 상품에 추가했습니다', {
+        icon: <Icon name="IconFullHeart" size={24} />,
+      });
     } else {
       deleteWish(productId);
+      Toast.success('찜한 상품에서 삭제했습니다', {
+        icon: <Icon name="IconEmptyHeart" size={24} />,
+      });
     }
   };
 
