@@ -7,6 +7,7 @@ import { getInfo } from '@/apis/user';
 import { deleteWish, getWish, postWish } from '@/apis/wish';
 import Button from '@/components/common/Button/Button';
 import Icon, { IconNameType } from '@/components/common/Icon';
+import { StyledToastContainer, Toast } from '@/components/common/Toastify/Toastify';
 import { Wish } from '@/components/Mypage-Wish/WishPage';
 import { DetailProduct } from '@/pages/DetailPage/DetailPage';
 import { userState } from '@/recoil/userState';
@@ -64,7 +65,7 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
       })
       .catch((error) => {
         if (error.response.status === 409) {
-          alert('이미 장바구니에 담긴 상품입니다.');
+          Toast.success('이미 장바구니에 담긴 상품입니다.');
         }
       });
   };
@@ -116,6 +117,7 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
           >
             장바구니
           </Button>
+          <StyledToastContainer limit={1} />
           <Button
             variant="main"
             size="medium"
