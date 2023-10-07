@@ -45,6 +45,9 @@ export const Toast = {
 
 export const StyledToastContainer = styled(ToastContainer)`
   margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .Toastify__toast {
     background-color: black;
     color: white;
