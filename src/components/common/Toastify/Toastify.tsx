@@ -16,6 +16,7 @@ type ToastifyOptions = {
   autoClose: number;
   closeOnClick: boolean;
   hideProgressBar: boolean;
+  icon?: ReactNode;
 };
 
 const defaultOption: ToastifyOptions = {
@@ -30,12 +31,14 @@ export const Toast = {
     toast.success(message, {
       ...defaultOption,
       ...options,
+      icon: options.icon || defaultOption.icon,
     });
   },
   error: (message: ReactNode, options: ToastOptions = {}) => {
     toast.error(message, {
       ...defaultOption,
       ...options,
+      icon: options.icon || defaultOption.icon,
     });
   },
 };
