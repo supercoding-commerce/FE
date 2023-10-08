@@ -50,7 +50,7 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
   const postPaymentProduct = () => {
     if (orderNCartProduct.length === 0) return;
 
-    postPayment([...orderNCartProduct]).then((s) =>
+    postPayment([...orderNCartProduct]).then(() =>
       navigate('/pay', {
         state: {
           type: 'PAY',
