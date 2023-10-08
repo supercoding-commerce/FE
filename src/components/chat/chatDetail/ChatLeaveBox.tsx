@@ -1,10 +1,9 @@
+import { Message } from '@/models/chat';
 import * as S from '../Chat.styles';
 
-type MsgProps = {
-  content?: string;
-};
+type MessageProps = Pick<Message, 'content'>;
 
-const ChatLeaveBox = ({ content }: MsgProps) => {
+const ChatLeaveBox = ({ content }: MessageProps) => {
   console.log('ChatLeaveBox', content);
 
   return (
