@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Purchase } from '@/components/Mypage-Purchase/Purchase';
 import { SoldPage } from '@/components/Mypage-Sold/SoldPage';
 import { WishPage } from '@/components/Mypage-Wish/WishPage';
+import StompClientProvider from '@/context/StompClientProvider';
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
 import Menu from '@/pages/Category/Menu';
@@ -38,7 +39,11 @@ export const router = createBrowserRouter([
       },
       {
         path: '/product/:productId',
-        element: <DetailPage />,
+        element: (
+          <StompClientProvider>
+            <DetailPage />
+          </StompClientProvider>
+        ),
       },
       {
         path: '/category',
