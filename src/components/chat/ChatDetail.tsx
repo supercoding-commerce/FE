@@ -7,7 +7,7 @@ import ChatDetailBody from '@/components/chat/chatDetail/ChatDetailBody';
 import ChatDetailHeader from '@/components/chat/chatDetail/ChatDetailHeader';
 import ChatSend from '@/components/chat/chatDetail/ChatSend';
 import { useChat } from '@/hooks/useChat';
-import { Message } from '@/models/\bchat';
+import { Message } from '@/models/chat';
 
 export type ChatUserProps = {
   customRoomId: string | null;

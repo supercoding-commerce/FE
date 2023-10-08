@@ -1,38 +1,43 @@
 import { useEffect, useRef } from 'react';
 
-import { Msg } from '@/components/chat/ChatDetail';
 import ChatDetailIntro from '@/components/chat/chatDetail/ChatDetailIntro';
-// import ChatLeaveBox from '@/components/chat/chatDetail/ChatLeaveBox';
 import ChatLeftBox from '@/components/chat/chatDetail/ChatLeftBox';
 import ChatRightBox from '@/components/chat/chatDetail/ChatRightBox';
+import { Message } from '@/models/chat';
 import * as S from '../Chat.styles';
 
 type MsgProps = {
-  msg: Msg[];
-  prevMsg: Msg[];
+  message: Message[];
+  prevMessage: Message[];
   nickName: string;
-  // leaveUser: string;
   shopName: string;
   shopImageUrl: string;
   role: string;
 };
 
-const ChatDetailBody = ({ prevMsg, msg, nickName, shopName, shopImageUrl, role }: MsgProps) => {
+const ChatDetailBody = ({
+  prevMessage,
+  message,
+  nickName,
+  shopName,
+  shopImageUrl,
+  role,
+}: MsgProps) => {
   const RefViewControll = useRef<HTMLDivElement>(null);
 
   //가장 최근 채팅 보여주기
   useEffect(() => {
-    if (RefViewControll.current && prevMsg.length > 0) {
+    if (RefViewControll.current && prevMessage.length > 0) {
       RefViewControll.current.scrollTop = RefViewControll.current.scrollHeight;
     }
-  }, [msg, prevMsg]);
+  }, [message, prevMessage]);
 
   // console.log(nickName, msg);
 
   return (
     <S.ChatDetailBody ref={RefViewControll}>
       <ChatDetailIntro shopName={shopName} shopImageUrl={shopImageUrl} />
-      {prevMsg.map((item, idx) => {
+      {prevMessage.map((item, idx) => {
         return nickName === item.sender ? (
           <ChatRightBox key={idx} content={item.content} />
         ) : (
@@ -45,7 +50,7 @@ const ChatDetailBody = ({ prevMsg, msg, nickName, shopName, shopImageUrl, role }
           />
         );
       })}
-      {msg.map((item, idx) => {
+      {message.map((item, idx) => {
         return nickName === item.sender ? (
           <ChatRightBox key={idx} content={item.content} />
         ) : (

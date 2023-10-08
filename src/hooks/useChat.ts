@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Client } from '@stomp/stompjs';
 
 import { ChatUserProps } from '@/components/chat/ChatDetail';
-import { Message } from '@/models/\bchat';
+import { Message } from '@/models/chat';
 
 type useChatProps = Pick<
   ChatUserProps, //
