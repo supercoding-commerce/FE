@@ -8,6 +8,7 @@ import { deleteWish, getWish, postWish } from '@/apis/wish';
 import Button from '@/components/common/Button/Button';
 import Icon, { IconNameType } from '@/components/common/Icon';
 import { Toast } from '@/components/common/Toastify/Toastify';
+import { CartModal } from '@/components/DetailFooter/CartModal/CartModal';
 import { Wish } from '@/components/Mypage-Wish/WishPage';
 import { DetailProduct } from '@/pages/DetailPage/DetailPage';
 import { userState } from '@/recoil/userState';
@@ -28,6 +29,7 @@ type SellerInformation = {
 const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) => {
   const [heart, setHeart] = useState<IconNameType>('IconEmptyHeart');
   const [sellerInfo, setSellerInfo] = useState<SellerInformation>({ shopName: '' });
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userState);
@@ -66,7 +68,8 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
     postCart(orderNCartProduct)
       .then((result) => {
         if (result.status === 200) {
-          navigate('/mycart');
+          setShowModal(true);
+          setTimeout(() => setShowModal(false), 3000);
         }
       })
       .catch((error) => {
@@ -105,6 +108,7 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
     <>
       {userInfo.role === 'USER' ? (
         <S.BuyerDetailFooter>
+          {showModal && <CartModal />}
           <Icon
             name={heart}
             size={25}
