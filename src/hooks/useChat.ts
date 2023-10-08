@@ -2,12 +2,19 @@ import { useEffect, useState } from 'react';
 import { Client } from '@stomp/stompjs';
 
 import { ChatUserProps } from '@/components/chat/ChatDetail';
-import { Message } from '@/models/chat';
+import { Message, ReceivedMessage } from '@/models/chat';
 
-type useChatProps = Pick<
-  ChatUserProps, //
-  'customRoomId' | 'seller' | 'user' | 'role' | 'product'
-> & { stompClient: Client };
+type useChatProps = Pick<ChatUserProps, 'customRoomId' | 'seller' | 'user' | 'role' | 'product'> & {
+  stompClient: Client;
+};
+
+type JoinMessage = {
+  customRoomId: string | null;
+  shopName: string;
+  userName: string;
+  role: string;
+  type: string;
+};
 
 export function useChat({ customRoomId, seller, user, role, product, stompClient }: useChatProps) {
   const [isConnected, setIsConnected] = useState(false);
@@ -15,11 +22,61 @@ export function useChat({ customRoomId, seller, user, role, product, stompClient
 
   const [message, setMessage] = useState<Message[]>([]);
 
+  /** handleDisConnect() : 채팅 소켓 연결 끊기 */
   const handleDisConnect = () => {
     if (stompClient.connected) {
       // 전역에 만들어진 클라이언트 소켓 객체를 연결 종료하고 삭제.
       stompClient.deactivate();
       console.log('연결이 끊겼습니다.');
+    }
+  };
+
+  /** userJoin() : 유저가 채팅방 처음 들어왔을때 */
+  const userJoin = (joinMessage: JoinMessage) => {
+    stompClient.publish({
+      destination: `/app/chat.addUser/${seller.sellerId}/${product.productId}/${user.userId}`,
+      body: JSON.stringify(joinMessage),
+    });
+  };
+
+  /** userSubscribe() : 유저의 채팅 구독 상태 및 상대 전달 */
+  const userSubscribe = () => {
+    stompClient.subscribe(
+      `/topic/${seller.sellerId}/${product.productId}/${user.userId}`,
+      (body) => {
+        const message = JSON.parse(body.body);
+        setReceivedMessage(message);
+        console.log(message);
+      },
+    );
+  };
+
+  /** messageTypeJoin() : receivedMessage type이 JOIN일때 */
+  const messageTypeJoin = (receivedMessage: ReceivedMessage) => {
+    const join =
+      receivedMessage.role === 'user' ? receivedMessage.userName : receivedMessage.shopName;
+    const messageContent = `${join}님이 채팅을 시작하셨습니다.`;
+    const messageSender = 'server';
+    const message = { content: messageContent, sender: messageSender };
+    setMessage((prev) => [...prev, message]);
+  };
+
+  /** messageTypeLeave() : receivedMessage type이 Leave일때 */
+  const messageTypeLeave = (receivedMessage: ReceivedMessage) => {
+    const leaver = receivedMessage.userName || receivedMessage.shopName;
+    const messageContent = `${leaver}님이 채팅을 종료하셨습니다.`;
+    const messageSender = 'server';
+    const message = { content: messageContent, sender: messageSender };
+    setMessage((prev) => [...prev, message]);
+  };
+
+  /** messageTypeChat() : receivedMessage type이 CHAT일때 */
+  const messageTypeChat = (receivedMessage: ReceivedMessage) => {
+    const messageContent = receivedMessage.content;
+    const messageSender = receivedMessage.sender;
+    if (messageContent && messageSender) {
+      const message = { content: messageContent, sender: messageSender };
+      setMessage((prev) => [...prev, message]);
     }
   };
 
@@ -33,45 +90,15 @@ export function useChat({ customRoomId, seller, user, role, product, stompClient
       type: 'JOIN',
     };
 
-    // function userJoin() {
-    //   stompClient.publish({
-    //     destination: `/app/chat.addUser/${seller.sellerId}/${product.productId}/${user.userId}`,
-    //     body: JSON.stringify(joinMessage),
-    //   });
-    // }
-
     stompClient.onConnect = () => {
       if (isConnected) return;
 
-      // clean code early return -> 일반적이지 않은 경우를 먼저 반환?
-      // 예외조건 먼저 처리
-      // if(!A)  return;
-      // if(!B) return;
-      // if(C) return;
+      userJoin(joinMessage);
 
-      // 정상적인 로직 수행
-      // ...
-
-      // 이미 연결되어 있지 않을 경우에만 JOIN 메시지 전송
-      // if (!isConnected) {
-      stompClient.subscribe(
-        `/topic/${seller.sellerId}/${product.productId}/${user.userId}`,
-        (body) => {
-          const message = JSON.parse(body.body);
-          setReceivedMessage(message);
-          console.log(message);
-        },
-      );
-
-      // userJoin();
-      stompClient.publish({
-        destination: `/app/chat.addUser/${seller.sellerId}/${product.productId}/${user.userId}`,
-        body: JSON.stringify(joinMessage),
-      });
+      userSubscribe();
 
       // 연결 상태를 true로 설정
       setIsConnected(true);
-      // }
     };
 
     stompClient.onStompError = (frame) => {
@@ -91,32 +118,16 @@ export function useChat({ customRoomId, seller, user, role, product, stompClient
 
   // 소켓에서 이벤트 수신에 따른 로직 처리
   useEffect(() => {
-    console.log('GYU MESSAGE receivedMessage', receivedMessage);
     // Early return
     if (!receivedMessage) return;
 
-    let join;
-    let messageContent;
-    let messageSender;
-    let message: Message;
-    let leaver;
-
     switch (receivedMessage.type) {
       case 'JOIN':
-        join =
-          receivedMessage.role === 'user' ? receivedMessage.userName : receivedMessage.shopName;
-        messageContent = `${join}님이 채팅을 시작하셨습니다.`;
-        messageSender = 'server';
-        message = { content: messageContent, sender: messageSender };
-        setMessage((prev) => [...prev, message]);
+        messageTypeJoin(receivedMessage);
         break;
 
       case 'LEAVE':
-        leaver = receivedMessage.userName || receivedMessage.shopName;
-        messageContent = `${leaver}님이 채팅을 종료하셨습니다.`;
-        messageSender = 'server';
-        message = { content: messageContent, sender: messageSender };
-        setMessage((prev) => [...prev, message]);
+        messageTypeLeave(receivedMessage);
         break;
 
       case 'TERMINATE':
@@ -124,29 +135,13 @@ export function useChat({ customRoomId, seller, user, role, product, stompClient
         break;
 
       case 'CHAT':
-        messageContent = receivedMessage.content;
-        messageSender = receivedMessage.sender;
-        if (messageContent && messageSender) {
-          const message = { content: messageContent, sender: messageSender };
-          setMessage((prev) => [...prev, message]);
-        }
+        messageTypeChat(receivedMessage);
         break;
 
       default:
-        // sentry - 에러 로깅!
-        console.error('존재하지 않는 이벤트 입니다.');
+      // TODO: sentry - 에러 로깅
     }
   }, [receivedMessage]);
 
   return message;
 }
-
-type ReceivedMessage = {
-  type: string;
-  shopName: string;
-  userName: string;
-  role: string;
-  customRoomId: string;
-  content?: string;
-  sender?: string;
-};
