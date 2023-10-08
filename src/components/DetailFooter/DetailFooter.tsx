@@ -7,6 +7,7 @@ import { getInfo } from '@/apis/user';
 import { deleteWish, getWish, postWish } from '@/apis/wish';
 import Button from '@/components/common/Button/Button';
 import Icon, { IconNameType } from '@/components/common/Icon';
+import { Toast } from '@/components/common/Toastify/Toastify';
 import { CartModal } from '@/components/DetailFooter/CartModal/CartModal';
 import { Wish } from '@/components/Mypage-Wish/WishPage';
 import { DetailProduct } from '@/pages/DetailPage/DetailPage';
@@ -37,8 +38,14 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
     setHeart(heart === 'IconEmptyHeart' ? 'IconFullHeart' : 'IconEmptyHeart');
     if (heart === 'IconEmptyHeart') {
       postWish(productId);
+      Toast.success('찜한 상품에 추가했습니다', {
+        icon: <Icon name="IconFullHeart" size={24} />,
+      });
     } else {
       deleteWish(productId);
+      Toast.success('찜한 상품에서 삭제했습니다', {
+        icon: <Icon name="IconEmptyHeart" size={24} />,
+      });
     }
   };
 
@@ -67,7 +74,7 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
       })
       .catch((error) => {
         if (error.response.status === 409) {
-          alert('이미 장바구니에 담긴 상품입니다.');
+          Toast.error('이미 장바구니에 담긴 상품입니다.');
         }
       });
   };
