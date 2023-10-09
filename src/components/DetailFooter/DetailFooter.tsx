@@ -7,6 +7,8 @@ import { getInfo } from '@/apis/user';
 import { deleteWish, getWish, postWish } from '@/apis/wish';
 import Button from '@/components/common/Button/Button';
 import Icon, { IconNameType } from '@/components/common/Icon';
+import { Toast } from '@/components/common/Toastify/Toastify';
+import { CartModal } from '@/components/DetailFooter/CartModal/CartModal';
 import { Wish } from '@/components/Mypage-Wish/WishPage';
 import { DetailProduct } from '@/pages/DetailPage/DetailPage';
 import { userState } from '@/recoil/userState';
@@ -27,6 +29,7 @@ type SellerInformation = {
 const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) => {
   const [heart, setHeart] = useState<IconNameType>('IconEmptyHeart');
   const [sellerInfo, setSellerInfo] = useState<SellerInformation>({ shopName: '' });
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userState);
@@ -35,8 +38,14 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
     setHeart(heart === 'IconEmptyHeart' ? 'IconFullHeart' : 'IconEmptyHeart');
     if (heart === 'IconEmptyHeart') {
       postWish(productId);
+      Toast.success('찜한 상품에 추가했습니다', {
+        icon: <Icon name="IconFullHeart" size={24} />,
+      });
     } else {
       deleteWish(productId);
+      Toast.success('찜한 상품에서 삭제했습니다', {
+        icon: <Icon name="IconEmptyHeart" size={24} />,
+      });
     }
   };
 
@@ -59,12 +68,13 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
     postCart(orderNCartProduct)
       .then((result) => {
         if (result.status === 200) {
-          navigate('/mycart');
+          setShowModal(true);
+          setTimeout(() => setShowModal(false), 3000);
         }
       })
       .catch((error) => {
         if (error.response.status === 409) {
-          alert('이미 장바구니에 담긴 상품입니다.');
+          Toast.error('이미 장바구니에 담긴 상품입니다.');
         }
       });
   };
@@ -98,6 +108,7 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
     <>
       {userInfo.role === 'USER' ? (
         <S.BuyerDetailFooter>
+          {showModal && <CartModal />}
           <Icon
             name={heart}
             size={25}

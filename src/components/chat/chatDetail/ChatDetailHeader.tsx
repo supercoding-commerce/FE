@@ -2,20 +2,12 @@ import Icon from '@/components/common/Icon';
 import * as S from '../Chat.styles';
 
 type headerProps = {
-  handleLeave: () => void;
-  handleTerminate: () => void;
   clickPrevButton: () => void;
   handleOpen: () => void;
   shopName: string;
 };
 
-const ChatDetailHeader = ({
-  handleLeave,
-  handleTerminate,
-  clickPrevButton,
-  handleOpen,
-  shopName,
-}: headerProps) => {
+const ChatDetailHeader = ({ clickPrevButton, handleOpen, shopName }: headerProps) => {
   return (
     <S.ChatDetailHeader>
       <div className="arrow_btn_wrapper">
@@ -25,8 +17,6 @@ const ChatDetailHeader = ({
           cursor={'pointer'}
           size={30}
           onClick={() => {
-            handleLeave();
-            handleTerminate();
             clickPrevButton();
           }}
         />
@@ -41,8 +31,6 @@ const ChatDetailHeader = ({
           cursor={'pointer'}
           size={25}
           onClick={() => {
-            handleLeave();
-            handleTerminate();
             handleOpen();
           }}
         />
