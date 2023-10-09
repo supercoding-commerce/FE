@@ -1,12 +1,17 @@
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
 import { router } from '@/pages/routes.tsx';
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
     <RecoilRoot>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </RecoilRoot>
   );
 }
