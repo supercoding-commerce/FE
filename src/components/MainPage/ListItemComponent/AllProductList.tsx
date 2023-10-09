@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from 'react-query';
 
-import { fetchProducts } from '@/apis/mainscroll';
+import { fetchProducts } from '@/apis/product';
 import ListItem from '@/components/MainPage/ListItemComponent/ListItem';
 import * as S from '../ListItemComponent/AllProductList.styles';
 
