@@ -24,7 +24,7 @@ const ListItem: React.FC<ListItemProps> = ({ imageUrl, name, price, shopName, pr
         <S.ProductImg src={imageUrl} alt="" />
       </S.ListItem>
       <S.Description>
-        <S.Price>{price}원</S.Price>
+        <S.Price>{price.toLocaleString('ko-KR')}원</S.Price>
         <S.Name>{name}</S.Name>
         <S.DetailDescription>{shopName}</S.DetailDescription>
       </S.Description>
