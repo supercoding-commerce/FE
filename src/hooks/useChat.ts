@@ -5,7 +5,7 @@ import { ChatUserProps } from '@/components/chat/ChatDetail';
 import { Message, ReceivedMessage } from '@/models/chat';
 
 type useChatProps = Pick<ChatUserProps, 'customRoomId' | 'seller' | 'user' | 'role' | 'product'> & {
-  stompClient: Client;
+  stompClient: Client | null;
 };
 
 type JoinMessage = {
@@ -19,21 +19,19 @@ type JoinMessage = {
 export function useChat({ customRoomId, seller, user, role, product, stompClient }: useChatProps) {
   const [isConnected, setIsConnected] = useState(false);
   const [receivedMessage, setReceivedMessage] = useState<ReceivedMessage | null>(null);
-
   const [message, setMessage] = useState<Message[]>([]);
 
   /** handleDisConnect() : 채팅 소켓 연결 끊기 */
   const handleDisConnect = () => {
-    if (stompClient.connected) {
+    if (stompClient?.connected) {
       // 전역에 만들어진 클라이언트 소켓 객체를 연결 종료하고 삭제.
       stompClient.deactivate();
-      console.log('연결이 끊겼습니다.');
     }
   };
 
   /** userJoin() : 유저가 채팅방 처음 들어왔을때 */
   const userJoin = (joinMessage: JoinMessage) => {
-    stompClient.publish({
+    stompClient?.publish({
       destination: `/app/chat.addUser/${seller.sellerId}/${product.productId}/${user.userId}`,
       body: JSON.stringify(joinMessage),
     });
@@ -41,12 +39,11 @@ export function useChat({ customRoomId, seller, user, role, product, stompClient
 
   /** userSubscribe() : 유저의 채팅 구독 상태 및 상대 전달 */
   const userSubscribe = () => {
-    stompClient.subscribe(
+    stompClient?.subscribe(
       `/topic/${seller.sellerId}/${product.productId}/${user.userId}`,
       (body) => {
         const message = JSON.parse(body.body);
         setReceivedMessage(message);
-        console.log(message);
       },
     );
   };
@@ -90,6 +87,7 @@ export function useChat({ customRoomId, seller, user, role, product, stompClient
       type: 'JOIN',
     };
 
+    if (!stompClient) return;
     stompClient.onConnect = () => {
       if (isConnected) return;
 
@@ -107,7 +105,7 @@ export function useChat({ customRoomId, seller, user, role, product, stompClient
       setIsConnected(false);
     };
 
-    stompClient.activate();
+    stompClient?.activate();
 
     return () => {
       handleDisConnect();

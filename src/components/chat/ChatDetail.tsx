@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Client } from '@stomp/stompjs';
 
 import { client } from '@/apis';
 import { ProductInfo, SellerInfo, UserInfo } from '@/components/chat/Chat';
@@ -7,6 +6,7 @@ import ChatDetailBody from '@/components/chat/chatDetail/ChatDetailBody';
 import ChatDetailHeader from '@/components/chat/chatDetail/ChatDetailHeader';
 import ChatSend from '@/components/chat/chatDetail/ChatSend';
 import { useChat } from '@/hooks/useChat';
+import { useStompClient } from '@/hooks/useStompClient';
 import { Message } from '@/models/chat';
 
 export type ChatUserProps = {
@@ -30,11 +30,7 @@ const ChatDetail = ({
   clickPrevButton,
   handleOpen,
 }: ChatUserProps) => {
-  const [stompClient] = useState(
-    new Client({
-      brokerURL: `${import.meta.env.VITE_API_CHAT_URL}/chat`,
-    }),
-  );
+  const stompClient = useStompClient();
 
   // 이전의 메세지 기록 담기
   const [prevMessage, setPrevMessage] = useState<Message[]>([]);
@@ -48,13 +44,10 @@ const ChatDetail = ({
     stompClient,
   });
 
-  console.log('GYU MSG', message);
-
   const loadPrevChat: () => Promise<void> = async () => {
     await client
       .get(`/v1/api/chat/detail/${customRoomId}`)
       .then((res) => {
-        console.log(res);
         const data = res.data.chats;
         const prevMessage: Message[] = Object.values(data);
         setPrevMessage([...prevMessage]);
