@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Client } from '@stomp/stompjs';
 
-import { client } from '@/apis';
+import { prevChat } from '@/apis/chat';
 import { ProductInfo, SellerInfo, UserInfo } from '@/components/chat/Chat';
 import ChatDetailBody from '@/components/chat/chatDetail/ChatDetailBody';
 import ChatDetailHeader from '@/components/chat/chatDetail/ChatDetailHeader';
@@ -51,10 +51,9 @@ const ChatDetail = ({
   console.log('GYU MSG', message);
 
   const loadPrevChat: () => Promise<void> = async () => {
-    await client
-      .get(`/v1/api/chat/detail/${customRoomId}`)
+    prevChat(customRoomId)
       .then((res) => {
-        console.log(res);
+        console.log('res', res);
         const data = res.data.chats;
         const prevMessage: Message[] = Object.values(data);
         setPrevMessage([...prevMessage]);

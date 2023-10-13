@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { client } from '@/apis';
+import { sellerChat, userChat } from '@/apis/chat';
 import ChatBody from '@/components/chat/chatList/ChatBody';
 import ChatHeader from '@/components/chat/chatList/ChatHeader';
 
@@ -42,8 +42,7 @@ const ChatList = ({ handleOpen, clickListBox, seller, isSeller, product }: chatP
 
   const loadUserChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;
-    await client
-      .get(`/v1/api/chat/user/${sellerId}`)
+    userChat(sellerId)
       .then((res) => {
         const data = res.data.chatList;
         const img = res.data.shopImage;
@@ -58,8 +57,7 @@ const ChatList = ({ handleOpen, clickListBox, seller, isSeller, product }: chatP
   const loadSellerChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;
     const productId = product.productId;
-    await client
-      .get(`/v1/api/chat/seller/${sellerId}/${productId}`)
+    sellerChat(sellerId, productId)
       .then((res) => {
         const data = res.data.chatList;
         const img = res.data.shopImage;
