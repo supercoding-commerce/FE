@@ -8,6 +8,15 @@ export async function getReview(productId: number) {
   return response;
 }
 
+export async function postReview(reviewData: FormData) {
+  const response = await client.post(`${BASE_URL1}`, reviewData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response;
+}
+
 export async function deleteReview(reviewId: number) {
   const response = await client.delete(`${BASE_URL1}/${reviewId}`);
   return response;
