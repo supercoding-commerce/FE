@@ -93,8 +93,8 @@ const ReviewWrite = ({
     }
 
     try {
-      const responseData = postReview(reviewData);
-      handleNewReview(await responseData);
+      const responseData = await postReview(reviewData);
+      handleNewReview(responseData);
     } catch (error) {
       console.error('Error creating review:', error);
     }
