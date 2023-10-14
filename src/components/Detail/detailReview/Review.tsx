@@ -9,7 +9,7 @@ import ReviewWrite from '@/components/Detail/detailReview/ReviewWrite';
 export type DetailReview = {
   productId: number;
   productName?: string;
-  options?: string[];
+  options?: string;
   reviewId?: number;
   author?: string;
   title: string;
