@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
-import { postReview } from '@/apis/review';
+import { client } from '@/apis';
 import Button from '@/components/common/Button/Button';
 import Icon from '@/components/common/Icon';
 import { Rating } from '@/components/common/Rating/Rating';
@@ -93,7 +93,13 @@ const ReviewWrite = ({
     }
 
     try {
-      const responseData = await postReview(reviewData);
+      const response = await client.post('/v1/api/review', reviewData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      const responseData = response.data;
       handleNewReview(responseData);
     } catch (error) {
       console.error('Error creating review:', error);
