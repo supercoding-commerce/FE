@@ -48,13 +48,11 @@ const ChatDetail = ({
     stompClient,
   });
 
-  console.log('GYU MSG', message);
-
   const loadPrevChat: () => Promise<void> = async () => {
+    if (!customRoomId) return;
     prevChat(customRoomId)
-      .then((res) => {
-        console.log('res', res);
-        const data = res.data.chats;
+      .then((resData) => {
+        const data = resData;
         const prevMessage: Message[] = Object.values(data);
         setPrevMessage([...prevMessage]);
       })

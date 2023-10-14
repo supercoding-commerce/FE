@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import { sellerChat, userChat } from '@/apis/chat';
+import { sellerChatList, userChatList } from '@/apis/chat';
 import ChatBody from '@/components/chat/chatList/ChatBody';
 import ChatHeader from '@/components/chat/chatList/ChatHeader';
+import { Message } from '@/models/chat';
+
+export type Chats = {
+  [timestamp: string]: Message;
+};
 
 export type list = {
   chatId: string;
@@ -14,11 +19,8 @@ export type list = {
   userName: string;
   productName: string;
   imageUrl: string;
-  chats: null | string;
-  lastChat: {
-    sender: string;
-    content: string;
-  };
+  chats: Chats;
+  lastChat: Message;
 };
 
 type chatProps = {
@@ -42,10 +44,10 @@ const ChatList = ({ handleOpen, clickListBox, seller, isSeller, product }: chatP
 
   const loadUserChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;
-    userChat(sellerId)
-      .then((res) => {
-        const data = res.data.chatList;
-        const img = res.data.shopImage;
+    userChatList(sellerId)
+      .then((resData) => {
+        const data = resData.chatList;
+        const img = resData.shopImage;
         setList([...data]);
         setShopImg(img);
       })
@@ -57,10 +59,10 @@ const ChatList = ({ handleOpen, clickListBox, seller, isSeller, product }: chatP
   const loadSellerChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;
     const productId = product.productId;
-    sellerChat(sellerId, productId)
-      .then((res) => {
-        const data = res.data.chatList;
-        const img = res.data.shopImage;
+    sellerChatList(sellerId, productId)
+      .then((resData) => {
+        const data = resData.chatList;
+        const img = resData.shopImage;
         setList([...data]);
         setShopImg(img);
       })
