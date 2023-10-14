@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getReview } from '@/apis/review';
+import { getReview } from '@/apis/product';
 import ReviewBox from '@/components/Detail/detailReview/ReviewBox';
 import ReviewButton from '@/components/Detail/detailReview/ReviewButton';
 import ReviewFilterButton from '@/components/Detail/detailReview/ReviewFilterButton';
@@ -9,7 +9,7 @@ import ReviewWrite from '@/components/Detail/detailReview/ReviewWrite';
 export type DetailReview = {
   productId: number;
   productName?: string;
-  options?: string;
+  options?: string[];
   reviewId?: number;
   author?: string;
   title: string;
@@ -58,7 +58,8 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
   useEffect(() => {
     if (isReview) {
       getReview(productId).then((reviewData) => {
-        setReview(reviewData);
+        if (!reviewData) return;
+        setReview([...reviewData]);
       });
     }
   }, [isReview, productId]);
