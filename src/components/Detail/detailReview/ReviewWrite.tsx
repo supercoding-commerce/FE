@@ -18,12 +18,8 @@ type writeProps = {
   handleNewReview: (newReview: DetailReview) => void;
 };
 
-export type FormData = {
-  productId: number;
+type FormData = Pick<DetailReview, 'productId' | 'title' | 'content' | 'starPoint'> & {
   orderId: string;
-  title: string;
-  content: string;
-  starPoint: number;
 };
 
 const ReviewWrite = ({
@@ -93,9 +89,7 @@ const ReviewWrite = ({
     }
 
     try {
-      const response = await postReview(reviewData);
-
-      const responseData = response.data;
+      const responseData = await postReview(reviewData);
       handleNewReview(responseData);
     } catch (error) {
       console.error('Error creating review:', error);

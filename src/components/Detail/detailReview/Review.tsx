@@ -8,15 +8,15 @@ import ReviewWrite from '@/components/Detail/detailReview/ReviewWrite';
 
 export type DetailReview = {
   productId: number;
-  productName: string;
-  options: string;
-  reviewId: number;
-  author: string;
+  productName?: string;
+  options?: string;
+  reviewId?: number;
+  author?: string;
   title: string;
   content: string;
   starPoint: number;
-  imageUrl: string;
-  createdAt: string;
+  imageUrl?: string;
+  createdAt?: string;
 };
 
 type OrderList = {
@@ -57,11 +57,8 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
   // axios 요청
   useEffect(() => {
     if (isReview) {
-      getReview(productId).then((result) => {
-        if (result.status === 200) {
-          const data = result.data;
-          setReview(data);
-        }
+      getReview(productId).then((reviewData) => {
+        setReview(reviewData);
       });
     }
   }, [isReview, productId]);
@@ -79,6 +76,7 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
   /** 최신순 재배열 */
   const byLatest = () => {
     const sortedReviews = review.sort((a, b) => {
+      if (!a.createdAt || !b.createdAt) return 0;
       const dateA = new Date(a.createdAt).getTime();
       const dateB = new Date(b.createdAt).getTime();
       return dateB - dateA;

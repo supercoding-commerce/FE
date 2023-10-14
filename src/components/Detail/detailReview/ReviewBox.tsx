@@ -11,16 +11,16 @@ type ReviewProps = {
 };
 
 const ReviewBox = ({ review, handleDeleteReview }: ReviewProps) => {
+  if (!review.options) return;
   const options = JSON.parse(review.options);
 
   /** deleteReviews() : 해당 리뷰 삭제 */
   const deleteReviews = () => {
-    deleteReview(review.reviewId).then((result) => {
-      if (result.status === 200) {
-        //TODO: alert -> 모달로 변경
-        alert('해당 리뷰가 삭제되었습니다.');
-        handleDeleteReview(review.reviewId);
-      }
+    if (!review.reviewId) return;
+    deleteReview(review.reviewId).then((deleteReviewId) => {
+      //TODO: alert -> 모달로 변경
+      if (!deleteReviewId) return;
+      handleDeleteReview(deleteReviewId);
     });
   };
 
