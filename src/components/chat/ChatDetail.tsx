@@ -57,7 +57,7 @@ const ChatDetail = ({
         setPrevMessage([...prevMessage]);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 

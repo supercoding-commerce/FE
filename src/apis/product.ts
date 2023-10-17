@@ -48,7 +48,7 @@ export const fetchProducts = async (pageNumber: number) => {
 export async function getReview(productId: number): Promise<DetailReview[] | void> {
   const response = await client.get(`${BASE_URL}/review/${productId}`);
   if (response.status !== 200) {
-    return console.log(`리뷰 불러오기 에러! ${response.status}`);
+    return console.error(`리뷰 불러오기 에러! ${response.status}`);
   }
   if (response.status === 200) {
     return response.data;

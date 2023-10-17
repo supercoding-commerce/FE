@@ -5,11 +5,11 @@ import ChatBody from '@/components/chat/chatList/ChatBody';
 import ChatHeader from '@/components/chat/chatList/ChatHeader';
 import { Message } from '@/models/chat';
 
-export type Chats = {
+export type Chat = {
   [timestamp: string]: Message;
 };
 
-export type list = {
+export type List = {
   chatId: string;
   customRoomId: string;
   sellerId: number;
@@ -19,7 +19,7 @@ export type list = {
   userName: string;
   productName: string;
   imageUrl: string;
-  chats: Chats;
+  chats: Chat;
   lastChat: Message;
 };
 
@@ -38,7 +38,7 @@ type chatProps = {
 };
 
 const ChatList = ({ handleOpen, clickListBox, seller, isSeller, product }: chatProps) => {
-  const [list, setList] = useState<list[]>([]);
+  const [list, setList] = useState<List[]>([]);
 
   const [shopImg, setShopImg] = useState<string>('');
 

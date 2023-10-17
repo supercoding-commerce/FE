@@ -16,7 +16,7 @@ export async function postReview(reviewData: FormData): Promise<DetailReview> {
 export async function deleteReview(reviewId: number): Promise<number | void> {
   const response = await client.delete(`${BASE_URL}/${reviewId}`);
   if (response.status !== 200) {
-    return console.log(`리뷰 삭제 에러! ${response.status}`);
+    return console.error(`리뷰 삭제 에러! ${response.status}`);
   }
   if (response.status === 200) {
     alert('해당 리뷰가 삭제되었습니다.');

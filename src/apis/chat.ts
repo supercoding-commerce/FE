@@ -1,14 +1,14 @@
 import { client } from '@/apis';
-import { Chats, list } from '@/components/chat/ChatList';
+import { Chat, List } from '@/components/chat/ChatList';
 
 const CHAT_URL = '/v1/api/chat';
 
 type ChatList = {
   shopImage: string;
-  chatList: list[];
+  chatList: List[];
 };
 
-export const prevChat = async (customRoomId: string): Promise<Chats> => {
+export const prevChat = async (customRoomId: string): Promise<Chat> => {
   const response = await client.get(`${CHAT_URL}/detail/${customRoomId}`);
   const chats = response.data.chats;
   return chats;
