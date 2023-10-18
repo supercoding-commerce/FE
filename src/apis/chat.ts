@@ -8,7 +8,7 @@ type ChatList = {
   chatList: List[];
 };
 
-export const prevChat = async (customRoomId: string): Promise<Chat> => {
+export const loadPrevChat = async (customRoomId: string): Promise<Chat> => {
   const response = await client.get(`${CHAT_URL}/detail/${customRoomId}`);
   const chats = response.data.chats;
   return chats;
