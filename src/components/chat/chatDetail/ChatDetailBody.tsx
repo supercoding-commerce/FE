@@ -32,8 +32,6 @@ const ChatDetailBody = ({
     }
   }, [message, prevMessage]);
 
-  // console.log(nickName, msg);
-
   return (
     <S.ChatDetailBody ref={RefViewControll}>
       <ChatDetailIntro shopName={shopName} shopImageUrl={shopImageUrl} />

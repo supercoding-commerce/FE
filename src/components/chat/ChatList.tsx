@@ -52,7 +52,7 @@ const ChatList = ({ handleOpen, clickListBox, seller, isSeller, product }: chatP
         setShopImg(img);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
@@ -67,7 +67,7 @@ const ChatList = ({ handleOpen, clickListBox, seller, isSeller, product }: chatP
         setShopImg(img);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 

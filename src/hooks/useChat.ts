@@ -46,7 +46,6 @@ export function useChat({ customRoomId, seller, user, role, product, stompClient
       (body) => {
         const message = JSON.parse(body.body);
         setReceivedMessage(message);
-        console.log(message);
       },
     );
   };
@@ -102,7 +101,7 @@ export function useChat({ customRoomId, seller, user, role, product, stompClient
     };
 
     stompClient.onStompError = (frame) => {
-      console.log('연결 실패', frame);
+      console.error('연결 실패', frame);
       // 연결이 실패하면 연결 상태를 false로 설정
       setIsConnected(false);
     };
