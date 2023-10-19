@@ -61,23 +61,6 @@ const ChatDetail = ({
       });
   }, []);
 
-  /** sendMessage() : 유저가 상대방에게 메세지 보낼때 */
-  const sendMessage = (text: string) => {
-    const messageContent = text;
-    if (messageContent && stompClient) {
-      const chatMessage = {
-        customRoomId: customRoomId,
-        sender: role === 'user' ? user.userName : seller.shopName,
-        content: messageContent,
-        type: 'CHAT',
-      };
-      stompClient.publish({
-        destination: `/app/chat.sendMessage/${seller.sellerId}/${product.productId}/${user.userId}`,
-        body: JSON.stringify(chatMessage),
-      });
-    }
-  };
-
   return (
     <>
       <ChatDetailHeader
@@ -93,7 +76,14 @@ const ChatDetail = ({
         shopName={seller.shopName}
         shopImageUrl={shopImageUrl}
       />
-      <ChatSend sendMessage={sendMessage} />
+      <ChatSend
+        role={role}
+        stompClient={stompClient}
+        customRoomId={customRoomId}
+        user={user}
+        seller={seller}
+        product={product}
+      />
     </>
   );
 };

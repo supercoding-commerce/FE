@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Client } from '@stomp/stompjs';
 
-import { ChatUserProps } from '@/components/chat/ChatDetail';
+import { UseSendMessage } from '@/hooks/useSendMessage';
 import { Message, ReceivedMessage } from '@/models/chat';
 
-type useChatProps = Pick<ChatUserProps, 'customRoomId' | 'seller' | 'user' | 'role' | 'product'> & {
-  stompClient: Client;
-};
+export type useChatProps = Omit<UseSendMessage, 'text'>;
 
 type JoinMessage = {
   customRoomId: string | null;
