@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Client } from '@stomp/stompjs';
 
-import { prevChat } from '@/apis/chat';
+import { loadPrevChat } from '@/apis/chat';
 import { ProductInfo, SellerInfo, UserInfo } from '@/components/chat/Chat';
 import ChatDetailBody from '@/components/chat/chatDetail/ChatDetailBody';
 import ChatDetailHeader from '@/components/chat/chatDetail/ChatDetailHeader';
@@ -48,9 +48,9 @@ const ChatDetail = ({
     stompClient,
   });
 
-  const loadPrevChat: () => Promise<void> = async () => {
+  useEffect(() => {
     if (!customRoomId) return;
-    prevChat(customRoomId)
+    loadPrevChat(customRoomId)
       .then((resData) => {
         const data = resData;
         const prevMessage: Message[] = Object.values(data);
@@ -59,28 +59,7 @@ const ChatDetail = ({
       .catch((err) => {
         console.error(err);
       });
-  };
-
-  useEffect(() => {
-    loadPrevChat();
   }, []);
-
-  /** sendMessage() : 유저가 상대방에게 메세지 보낼때 */
-  const sendMessage = (text: string) => {
-    const messageContent = text;
-    if (messageContent && stompClient) {
-      const chatMessage = {
-        customRoomId: customRoomId,
-        sender: role === 'user' ? user.userName : seller.shopName,
-        content: messageContent,
-        type: 'CHAT',
-      };
-      stompClient.publish({
-        destination: `/app/chat.sendMessage/${seller.sellerId}/${product.productId}/${user.userId}`,
-        body: JSON.stringify(chatMessage),
-      });
-    }
-  };
 
   return (
     <>
@@ -97,7 +76,14 @@ const ChatDetail = ({
         shopName={seller.shopName}
         shopImageUrl={shopImageUrl}
       />
-      <ChatSend sendMessage={sendMessage} />
+      <ChatSend
+        role={role}
+        stompClient={stompClient}
+        customRoomId={customRoomId}
+        user={user}
+        seller={seller}
+        product={product}
+      />
     </>
   );
 };
