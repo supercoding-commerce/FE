@@ -1,12 +1,12 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
-import { postReview } from '@/apis/review';
 import Button from '@/components/common/Button/Button';
 import Icon from '@/components/common/Icon';
 import { Rating } from '@/components/common/Rating/Rating';
 import SelectBox from '@/components/common/SelectBox/SelectBox';
 import { Textarea } from '@/components/common/Textarea';
 import { DetailReview } from '@/components/Detail/detailReview/Review';
+import { useCreateReview } from '@/queries/review/mutation';
 import { theme } from '@/styles/theme';
 import * as S from '../Detail.styles';
 
@@ -15,19 +15,13 @@ type writeProps = {
   stringOrderList: string[];
   productId: number;
   handleWriteButton: () => void;
-  handleNewReview: (newReview: DetailReview) => void;
 };
 
 type FormData = Pick<DetailReview, 'productId' | 'title' | 'content' | 'starPoint'> & {
   orderId: string;
 };
 
-const ReviewWrite = ({
-  stringOrderList,
-  productId,
-  handleWriteButton,
-  handleNewReview,
-}: writeProps) => {
+const ReviewWrite = ({ stringOrderList, productId, handleWriteButton }: writeProps) => {
   const [option, setOption] = useState<string>('');
 
   // 파일 이름을 저장할 상태를 만듭니다.
@@ -39,6 +33,8 @@ const ReviewWrite = ({
     content: '',
     starPoint: 0,
   });
+
+  const { createReviewMutate } = useCreateReview();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -88,12 +84,11 @@ const ReviewWrite = ({
       reviewData.append('multipartFile', selectedFile);
     }
 
-    try {
-      const responseData = await postReview(reviewData);
-      handleNewReview(responseData);
-    } catch (error) {
-      console.error('Error creating review:', error);
-    }
+    createReviewMutate(reviewData, {
+      onSuccess: () => {
+        alert('리뷰 추가 성공111');
+      },
+    });
   };
 
   return (
@@ -135,7 +130,7 @@ const ReviewWrite = ({
             size="medium"
             backgroundColor={theme.color.black}
             color={theme.color.green}
-            onClick={() => handleClickAddReview()}
+            onClick={handleClickAddReview}
           >
             작성 완료
           </Button>

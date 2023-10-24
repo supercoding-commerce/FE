@@ -3,15 +3,13 @@ import { DetailReview } from '@/components/Detail/detailReview/Review';
 
 const BASE_URL = '/v1/api/review';
 
-export async function postReview(reviewData: FormData): Promise<DetailReview> {
-  const response = await client.post(`${BASE_URL}`, reviewData, {
+export const postReview = async (payload: FormData): Promise<DetailReview> => {
+  return client.post(BASE_URL, payload, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
-  const data = response.data;
-  return data;
-}
+};
 
 export async function deleteReview(reviewId: number): Promise<number | void> {
   const response = await client.delete(`${BASE_URL}/${reviewId}`);
