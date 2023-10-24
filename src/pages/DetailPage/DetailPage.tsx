@@ -134,7 +134,7 @@ const DetailPage = () => {
           <>
             <Review
               productId={Number(productId)}
-              isReview={isReview}
+              // isReview={isReview}
               orderList={product.orderList}
             />
           </>

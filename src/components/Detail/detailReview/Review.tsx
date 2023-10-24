@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { getReview } from '@/apis/product';
 import ReviewBox from '@/components/Detail/detailReview/ReviewBox';
 import ReviewButton from '@/components/Detail/detailReview/ReviewButton';
 import ReviewFilterButton from '@/components/Detail/detailReview/ReviewFilterButton';
 import ReviewWrite from '@/components/Detail/detailReview/ReviewWrite';
+import { useGetReview } from '@/queries/review/query';
 
 export type DetailReview = {
   productId: number;
@@ -27,14 +27,19 @@ type OrderList = {
 
 type reviewProps = {
   productId: number;
-  isReview: boolean;
   orderList: OrderList;
 };
 
-const Review = ({ productId, isReview, orderList }: reviewProps) => {
+const Review = ({ productId, orderList }: reviewProps) => {
   const [review, setReview] = useState<DetailReview[]>([]);
   const [isWrite, setIsWrite] = useState<boolean>(false);
   const [filterOrderLists, setFilterOrderLists] = useState<OrderList>([]);
+
+  const { data: reviewList } = useGetReview(productId);
+
+  useEffect(() => {
+    if (reviewList) setReview([...reviewList]);
+  }, [reviewList]);
 
   /** filterOrderList() : 이미 작성했던 오더리스트 제외 필터링 */
   const filterOrderList = () => {
@@ -53,16 +58,6 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
     `${item.orderId}-${JSON.parse(item.orderOption)[0]}`;
 
   const stringOrderList = filterOrderLists.map(combineOrderIdAndOption);
-
-  // axios 요청
-  useEffect(() => {
-    if (isReview) {
-      getReview(productId).then((reviewData) => {
-        if (!reviewData) return;
-        setReview([...reviewData]);
-      });
-    }
-  }, [isReview, productId]);
 
   const handleWriteButton = () => {
     setIsWrite((prev) => !prev);
@@ -85,13 +80,6 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
     setReview([...sortedReviews]);
   };
 
-  /** handleNewReview() : 내가 작성한 새로운 리뷰 실시간 반영(임시) */
-  const handleNewReview = (newReview?: DetailReview) => {
-    if (newReview) {
-      setReview((prevReview) => [newReview, ...prevReview]);
-    }
-  };
-
   /** handleDeleteReview() : 내가 삭제한 리뷰 실시간 반영(임시) */
   const handleDeleteReview = (deleteReview?: number) => {
     if (deleteReview) {
@@ -109,7 +97,6 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
           stringOrderList={stringOrderList}
           productId={productId}
           handleWriteButton={handleWriteButton}
-          handleNewReview={handleNewReview}
         />
       )}
       <ReviewFilterButton byRating={byRating} byLatest={byLatest} />
