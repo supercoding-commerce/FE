@@ -86,7 +86,7 @@ const ReviewWrite = ({ stringOrderList, productId, handleWriteButton }: writePro
 
     createReviewMutate(reviewData, {
       onSuccess: () => {
-        alert('리뷰 추가 성공111');
+        alert('리뷰 추가 성공');
       },
     });
   };

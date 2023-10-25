@@ -8,7 +8,6 @@ export const useCreateReview = () => {
 
   const mutation = useMutation((payload: FormData) => postReview(payload), {
     onSuccess: async () => {
-      console.log('업데이트');
       await queryClient.invalidateQueries([queryKeys.review]);
     },
   });
