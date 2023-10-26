@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { fetchCategoryProducts } from '@/apis/categoryProduct';
 import * as S from '@/components/MainPage/ListItemComponent/AllProductList.styles';
@@ -29,57 +30,56 @@ const CategoryList: React.FC<CategoryListProps> = ({
   gender,
   searchWord,
 }) => {
-  const [products, setProducts] = useState<Product[]>([]);
   const [ref, inView] = useInView();
-  const pageRef = useRef(1);
 
-  const productFetch = async () => {
-    try {
-      const response = await fetchCategoryProducts(
-        category,
-        pageRef.current,
-        age,
-        gender,
-        filter,
-        searchWord,
-      );
-      console.log('RESPONSE', response);
-      setProducts((prevProducts) => [...(pageRef.current === 1 ? [] : prevProducts), ...response]);
-      pageRef.current = pageRef.current + 1;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } =
+    useInfiniteQuery(
+      ['categoryProducts', category, age, gender, filter, searchWord],
+      async ({ pageParam = 1 }) =>
+        fetchCategoryProducts(category, pageParam, age, gender, filter, searchWord),
+      {
+        getNextPageParam: (lastPage, pages) => {
+          if (lastPage.length === 0) {
+            return undefined;
+          }
+          return pages.length + 1;
+        },
+      },
+    );
 
   useEffect(() => {
     // 불필요 통신 막기 위함
     if (filter === '필터옵션' && age === '나이' && gender === '성별') return;
 
-    pageRef.current = 1;
-    productFetch();
-  }, [filter, age, gender]);
+    fetchNextPage();
+  }, [filter, age, gender, fetchNextPage]);
 
   useEffect(() => {
-    if (inView) {
-      productFetch();
+    if (inView && hasNextPage) {
+      fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, hasNextPage, fetchNextPage]);
 
-  console.log('pageRef.current', pageRef.current);
-  console.log('category', category);
   return (
     <S.ListContainer>
-      {products.map((product, index) => (
-        <ListItem
-          key={index}
-          productId={product.productId}
-          imageUrl={product.imageUrl}
-          name={product.name}
-          price={product.price}
-          shopName={product.shopName}
-        />
-      ))}
-      <div ref={ref}></div> {/* 여기에 닿으면 스크롤 */}
+      {data?.pages.map((page) =>
+        page.map((product: Product, index: number) => (
+          <ListItem
+            key={index}
+            productId={product.productId}
+            imageUrl={product.imageUrl}
+            name={product.name}
+            price={product.price}
+            shopName={product.shopName}
+          />
+        )),
+      )}
+      {isFetching ? (
+        <p>🔎 로딩 중...</p>
+      ) : status === 'error' ? (
+        <p>😥 데이터를 불러오는데 실패했습니다</p>
+      ) : null}
+      {hasNextPage && !isFetchingNextPage && <div ref={ref}></div>}
     </S.ListContainer>
   );
 };
