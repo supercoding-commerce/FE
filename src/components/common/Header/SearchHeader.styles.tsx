@@ -10,6 +10,10 @@ export const SearchHeaderContainer = styled.header`
   align-items: center;
   padding: 0 20px;
   background-color: #fff;
+  > h1 {
+    ${theme.font.h2}
+    cursor: pointer;
+  }
 `;
 
 export const IconsContainer = styled.div`
@@ -39,4 +43,8 @@ export const Input = styled.input`
   &.open {
     width: 160px;
   }
+`;
+
+export const Logo = styled.h1`
+  ${theme.font.body0ExtraBold};
 `;

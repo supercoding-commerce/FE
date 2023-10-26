@@ -28,7 +28,7 @@ export async function deleteAll() {
 export type PaymentItem = {
   cartIdList: number[];
 };
-export async function postPayment(payload: PaymentItem) {
+export async function postPayment(payload: PaymentItem): Promise<string> {
   const response = await client.post('/v1/api/order/cart', payload);
-  return response;
+  return response.data;
 }

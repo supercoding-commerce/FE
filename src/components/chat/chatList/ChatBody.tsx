@@ -1,9 +1,9 @@
-import { list } from '@/components/chat/ChatList';
+import { List } from '@/components/chat/ChatList';
 import ChatBox from '@/components/chat/chatList/ChatBox';
 import * as S from '../Chat.styles';
 
 type ChatBodyProps = {
-  chatList: list[];
+  chatList: List[];
   clickListBox: (customRoomId: string, userId: number, userName: string) => void;
 };
 

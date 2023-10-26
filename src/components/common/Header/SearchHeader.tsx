@@ -22,7 +22,14 @@ const SearchHeader = () => {
   return (
     <S.SearchHeaderContainer>
       {/* 로고나오면 로고로 대체 */}
-      <h1>로고자리</h1>
+      <S.Logo
+        onClick={() => {
+          navigate('/');
+        }}
+        style={{ cursor: 'pointer' }}
+      >
+        CLIP
+      </S.Logo>
       <S.IconsContainer>
         <Icon
           name="IconSearch"

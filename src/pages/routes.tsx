@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import { Purchase } from '@/components/Mypage-Purchase/Purchase';
 import { SoldPage } from '@/components/Mypage-Sold/SoldPage';
+import { WishPage } from '@/components/Mypage-Wish/WishPage';
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
 import Menu from '@/pages/Category/Menu';
@@ -9,13 +10,16 @@ import Coupon from '@/pages/Coupon/Coupon';
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
 import DetailPage from '@/pages/DetailPage/DetailPage';
 import Home from '@/pages/Home/Home.tsx';
+import KakaoCallbackPage from '@/pages/KakaoCallbackPage/KakaoCallbackPage';
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
 import { Payment } from '@/pages/Payment/Payment';
 import { PayMoneyPage } from '@/pages/PayMoney/PayMoneyPage';
+import { PointHistory } from '@/pages/PointHistory/PointHistory.tsx';
 import ProductPage from '@/pages/ProductPage/ProductPage';
 import { ProtectedRoute } from '@/pages/ProtectedRoute.tsx';
 import Search from '@/pages/Search/Search';
 import SearchProduct from '@/pages/Search/SearchProduct';
+import { SellingProduct } from '@/pages/SellingProduct/SellingProduct.tsx';
 import SignInPage from '@/pages/SignInPage/SignInPage';
 import SignUpPage from '@/pages/SignUpPage/SignUpPage';
 import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
@@ -68,6 +72,10 @@ export const router = createBrowserRouter([
       {
         path: '/signin',
         element: <SignInPage />,
+      },
+      {
+        path: '/v1/api/user/kakao/callback',
+        element: <KakaoCallbackPage />,
       },
 
       // 마이페이지 및 결제 등
@@ -143,6 +151,26 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: '/mypage/selling-product',
+        element: (
+          <ProtectedRoute onlySeller>
+            <SellingProduct />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/mypage/point-history',
+        element: <PointHistory />,
+      },
+      {
+        path: '/mypage/wish',
+        element: (
+          <ProtectedRoute onlyBuyer>
+            <WishPage />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
@@ -160,8 +188,10 @@ export type RoutePath =
   | '/mypage'
   | '/mypage/coupon'
   | '/mypage/paymoney'
+  | '/mypage/selling-product'
   | '/purchase'
   | '/sold'
+  | '/wish'
   | '/new/product'
   | '/update/product'
   | '/search'

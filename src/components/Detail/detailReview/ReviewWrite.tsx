@@ -1,7 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
-import { client } from '@/apis';
-// import { client } from '@/apis';
+import { postReview } from '@/apis/review';
 import Button from '@/components/common/Button/Button';
 import Icon from '@/components/common/Icon';
 import { Rating } from '@/components/common/Rating/Rating';
@@ -19,12 +18,8 @@ type writeProps = {
   handleNewReview: (newReview: DetailReview) => void;
 };
 
-export type FormData = {
-  productId: number;
+type FormData = Pick<DetailReview, 'productId' | 'title' | 'content' | 'starPoint'> & {
   orderId: string;
-  title: string;
-  content: string;
-  starPoint: number;
 };
 
 const ReviewWrite = ({
@@ -94,13 +89,7 @@ const ReviewWrite = ({
     }
 
     try {
-      const response = await client.post('/v1/api/review', reviewData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      const responseData = response.data;
+      const responseData = await postReview(reviewData);
       handleNewReview(responseData);
     } catch (error) {
       console.error('Error creating review:', error);
