@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useModal } from '@ebay/nice-modal-react';
 
 import { PurchasePayload } from '@/apis/payment.ts';
@@ -14,8 +14,19 @@ import { theme } from '@/styles/theme.ts';
 import * as S from './Payment.styles';
 
 export function Payment() {
+  const { state } = useLocation();
+
   const { data: user } = useGetUserInfo();
-  const { data: orders } = useGetOrders();
+  const { data: orders } = useGetOrders(state?.type, state?.payload, {
+    enabled: !!(state && state.type),
+  });
+
+  useEffect(() => {
+    if (!state || !state.type) {
+      alert('잘못된 접근');
+      navigate('/');
+    }
+  }, []);
 
   const [pointActive, togglePoint] = useToggle();
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | undefined>(undefined);
@@ -38,6 +49,8 @@ export function Payment() {
     });
   };
 
+  console.log('orders', orders);
+
   const handlePurchase = async () => {
     if (!orders || orders.length === 0) return;
 
@@ -45,12 +58,15 @@ export function Payment() {
       couponId: selectedCoupon?.couponId || 0,
       isUsePoint: pointActive,
       orderIdList: orders.map((order) => order.orderId),
+      // GYU-TODO: 단일로 처리해야함!?
+      // orderIdList: [orders[orders.length - (state.count || 1)].orderId],
+      // orderIdList: orders.slice(orders.length - (state.count || 1)).map((order) => order.orderId),
       paymentMethod: 1,
       totalPrice: 총결제금액,
     };
     purchaseMutate(purchasePayload, {
       onSuccess: () => {
-        alert('주문 완료');
+        alert('구매 완료');
         navigate('/');
       },
     });
@@ -61,9 +77,12 @@ export function Payment() {
   const 총상품가격 = getTotalPrice(orders);
   const 배송비 = getDeliveryFee(총상품가격);
   const 쿠폰적용금액 = applyCoupon(selectedCoupon, 총상품가격);
-  const 적립금 = pointActive ? 100 : 0;
+  const 적립금 = pointActive ? user.point : 0;
   const 총결제금액 = 총상품가격 + 배송비 - 쿠폰적용금액 - 적립금;
 
+  // GYU-TODO: 단일로 처리해야함!?
+  // const orderItem = orders[orders.length - state.count || 1];
+  // const orderList = orders.slice(orders.length - (state.count || 1));
   return (
     <S.PaymentWrapper>
       <S.SectionsWrapper>
@@ -142,6 +161,18 @@ export function Payment() {
                 </S.OrderItemInfoWrapper>
               </S.OrderItem>
             ))}
+            {/* GYU-TODO: 단일로 처리해야함!?*/}
+            {/* GYU-TODO: 백엔드 API 수정되면 수정 */}
+            {/*<S.OrderItem>*/}
+            {/*  <img src={orderItem.imageUrl} alt="thumbnail" />*/}
+            {/*  <S.OrderItemInfoWrapper>*/}
+            {/*    <span className={'name'}>{orderItem.productName}</span>*/}
+            {/*    <span className={'option'}>{(orderItem.options ?? [])[0]}</span>*/}
+            {/*    <span className={'info'}>*/}
+            {/*      {moneyFormat(orderItem.price)}원 - {orderItem.quantity}개*/}
+            {/*    </span>*/}
+            {/*  </S.OrderItemInfoWrapper>*/}
+            {/*</S.OrderItem>*/}
           </S.OrderList>
         </S.OrderSection>
       </S.SectionsWrapper>

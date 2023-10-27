@@ -1,15 +1,20 @@
 import * as S from '@/components/common/Footer/DefaultFooter.styles';
+import Icon from '@/components/common/Icon';
 
 const DefaultFooter = () => {
+  const InstagramSize = '22px';
+  const FacebookSize = '30px';
+  const YoutubeSize = '34px';
   return (
     <S.FooterContainer>
+      <S.Logo>CLIP</S.Logo>
       <S.SnsIconsBox>
-        <p>인스타</p>
-        <p>페북</p>
-        <p>유튜브</p>
+        <Icon name="IconInstagram" style={{ width: InstagramSize, height: InstagramSize }} />
+        <Icon name="IconFacebook" style={{ width: FacebookSize, height: FacebookSize }} />
+        <Icon name="IconYoutube" style={{ width: YoutubeSize, height: YoutubeSize }} />
       </S.SnsIconsBox>
-      <S.Logo>로고</S.Logo>
-      <S.CopyRight> &#169; 2023 로오고 Corp. All rights reserved.</S.CopyRight>
+
+      <S.CopyRight> &#169; 2023 CLIP Corp. All rights reserved.</S.CopyRight>
     </S.FooterContainer>
   );
 };

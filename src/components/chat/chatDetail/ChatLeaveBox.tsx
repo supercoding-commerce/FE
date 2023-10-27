@@ -1,16 +1,13 @@
+import { Message } from '@/models/chat';
 import * as S from '../Chat.styles';
 
-type MsgProps = {
-  content?: string;
-};
+type MessageProps = Pick<Message, 'content'>;
 
-const ChatLeaveBox = ({ content }: MsgProps) => {
-  console.log('ChatLeaveBox', content);
-
+const ChatLeaveBox = ({ content }: MessageProps) => {
   return (
     <S.ChatLeaveBox>
       <div className="reavebox_wrapper">
-        <span>{content}님이 채팅을 종료하셨습니다.</span>
+        <span>{content}</span>
       </div>
     </S.ChatLeaveBox>
   );

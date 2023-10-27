@@ -1,7 +1,8 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useInfiniteQuery } from 'react-query';
 
+import { fetchProducts } from '@/apis/product';
 import ListItem from '@/components/MainPage/ListItemComponent/ListItem';
 import * as S from '../ListItemComponent/AllProductList.styles';
 
@@ -14,43 +15,43 @@ interface Product {
 }
 
 const AllProductList: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [page, setPage] = useState<number>(1);
   const [ref, inView] = useInView();
-
-  const productFetch = async () => {
-    await axios
-      .get(`https://pet-commerce.shop/v1/api/product?pageNumber=${page}`)
-      .then((res) => {
-        console.log(res.data);
-        setProducts((prevProducts) => [...prevProducts, ...res.data]);
-        setPage((prevPage) => prevPage + 1);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } =
+    useInfiniteQuery('products', async ({ pageParam = 1 }) => fetchProducts(pageParam), {
+      getNextPageParam: (lastPage, pages) => {
+        if (lastPage.length === 0) {
+          return undefined;
+        }
+        return pages.length + 1;
+      },
+    });
 
   useEffect(() => {
-    if (inView) {
-      console.log(inView, '무한 스크롤 요청 🎃');
-      productFetch();
+    if (inView && hasNextPage) {
+      fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, hasNextPage, fetchNextPage]);
 
   return (
     <S.ListContainer>
-      {products.map((product, index) => (
-        <ListItem
-          productId={product.productId}
-          key={index}
-          imageUrl={product.imageUrl}
-          name={product.name}
-          price={product.price}
-          shopName={product.shopName}
-        />
-      ))}
-      <div ref={ref}></div> {/* 여기에 닿으면 스크롤 */}
+      {data?.pages.map((page) =>
+        page.map((product: Product) => (
+          <ListItem
+            productId={product.productId}
+            key={product.productId}
+            imageUrl={product.imageUrl}
+            name={product.name}
+            price={product.price}
+            shopName={product.shopName}
+          />
+        )),
+      )}
+      {isFetching ? (
+        <p>🔎Loading...</p>
+      ) : status === 'error' ? (
+        <p>😥데이터를 불러오는데 실패했습니다</p>
+      ) : null}
+      {hasNextPage && !isFetchingNextPage && <div ref={ref}></div>}
     </S.ListContainer>
   );
 };

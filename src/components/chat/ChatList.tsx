@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
 
-import { client } from '@/apis';
+import { sellerChatList, userChatList } from '@/apis/chat';
 import ChatBody from '@/components/chat/chatList/ChatBody';
 import ChatHeader from '@/components/chat/chatList/ChatHeader';
+import { Message } from '@/models/chat';
 
-export type list = {
+export type Chat = {
+  [timestamp: string]: Message;
+};
+
+export type List = {
   chatId: string;
   customRoomId: string;
   sellerId: number;
@@ -14,15 +19,13 @@ export type list = {
   userName: string;
   productName: string;
   imageUrl: string;
-  chats: null | string;
-  lastChat: {
-    sender: string;
-    content: string;
-  };
+  chats: Chat;
+  lastChat: Message;
 };
 
 type chatProps = {
   clickListBox: (customRoomId: string, userId: number, userName: string) => void;
+  handleOpen: () => void;
   seller: {
     sellerId: number;
     shopName: string;
@@ -34,39 +37,37 @@ type chatProps = {
   isSeller: boolean;
 };
 
-const ChatList = ({ clickListBox, seller, isSeller, product }: chatProps) => {
-  const [list, setList] = useState<list[]>([]);
+const ChatList = ({ handleOpen, clickListBox, seller, isSeller, product }: chatProps) => {
+  const [list, setList] = useState<List[]>([]);
 
   const [shopImg, setShopImg] = useState<string>('');
 
   const loadUserChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;
-    await client
-      .get(`/v1/api/chat/user/${sellerId}`)
-      .then((res) => {
-        const data = res.data.chatList;
-        const img = res.data.shopImage;
+    userChatList(sellerId)
+      .then((resData) => {
+        const data = resData.chatList;
+        const img = resData.shopImage;
         setList([...data]);
         setShopImg(img);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
   const loadSellerChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;
     const productId = product.productId;
-    await client
-      .get(`/v1/api/chat/seller/${sellerId}/${productId}`)
-      .then((res) => {
-        const data = res.data.chatList;
-        const img = res.data.shopImage;
+    sellerChatList(sellerId, productId)
+      .then((resData) => {
+        const data = resData.chatList;
+        const img = resData.shopImage;
         setList([...data]);
         setShopImg(img);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
@@ -77,7 +78,7 @@ const ChatList = ({ clickListBox, seller, isSeller, product }: chatProps) => {
 
   return (
     <div>
-      <ChatHeader shopName={seller.shopName} shopImg={shopImg} />
+      <ChatHeader shopName={seller.shopName} shopImg={shopImg} handleOpen={handleOpen} />
       <ChatBody chatList={list} clickListBox={clickListBox} />
     </div>
   );

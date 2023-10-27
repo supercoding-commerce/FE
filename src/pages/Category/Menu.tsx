@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Category, { CategoryProps } from '@/components/common/Category/Category';
 import CategoryHeader from '@/components/common/Header/CategoryHeader';
+import * as S from '@/pages/Category/Menu.styles';
 const Menu = () => {
   const navigate = useNavigate();
 
@@ -132,12 +133,12 @@ const Menu = () => {
   ];
 
   return (
-    <div style={{ width: '100%' }}>
+    <S.MenuCon style={{ width: '100%' }}>
       <CategoryHeader />
       {topOptions?.map((item, idx) => {
         return <Category key={idx} icon={item.icon} title={item.title} options={item.options} />;
       })}
-    </div>
+    </S.MenuCon>
   );
 };
 

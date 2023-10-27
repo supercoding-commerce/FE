@@ -12,6 +12,22 @@ export const CartPageContainer = styled.div`
   }
 `;
 
+export const NoneCart = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: ${theme.font.body1Bold};
+    margin-bottom: 5px;
+  }
+`;
+
 export const AllDelete = styled.div`
   width: 100%;
   padding: 12px 0 12px 0;

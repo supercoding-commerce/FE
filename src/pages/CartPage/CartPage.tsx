@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { deleteAll, deleteCartItem, getCart, postPayment, putCart } from '@/apis/cart';
 import Button from '@/components/common/Button/Button';
@@ -27,6 +28,7 @@ export type OrderCart = {
 
 export function CartPage() {
   const [cartItems, setCartItems] = useState<Cart[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCart().then((result) => {
@@ -99,7 +101,14 @@ export function CartPage() {
 
   const postCartItemPayment = () => {
     const cartIds = cartItems.map((item) => item.cartId);
-    postPayment({ cartIdList: cartIds });
+    postPayment({ cartIdList: cartIds }).then((data) => {
+      navigate('/pay', {
+        state: {
+          type: 'CART',
+          payload: data,
+        },
+      });
+    });
   };
 
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -117,14 +126,15 @@ export function CartPage() {
   if (deliveryPrice === '3,000원') {
     finalTotalPrice += 3000;
   }
+  const noneCartItem = cartItems.length === 0;
 
   return (
     <S.CartPageContainer>
-      <S.AllDelete>
-        <p onClick={deleteAllHandler}>전체삭제</p>
-      </S.AllDelete>
-      {cartItems ? (
+      {cartItems && cartItems.length > 0 ? (
         <>
+          <S.AllDelete>
+            <p onClick={deleteAllHandler}>전체삭제</p>
+          </S.AllDelete>
           <CartItem
             cartItems={cartItems}
             onDelete={deleteItemHandler}
@@ -146,13 +156,34 @@ export function CartPage() {
               <S.FinalPriceTitle>총 결제 금액</S.FinalPriceTitle>
               <S.FinalPriceValue>{finalTotalPrice.toLocaleString()}원</S.FinalPriceValue>
             </S.FinalPrice>
-            <Button variant="main" size="medium" isFullWidth onClick={postCartItemPayment}>
+            <Button
+              variant="main"
+              size="medium"
+              isFullWidth
+              onClick={postCartItemPayment}
+              disabled={noneCartItem}
+            >
               구매하기({cartItems.length})
             </Button>
           </S.GoToPay>
         </>
       ) : (
-        <p>장바구니에 담긴 상품이 없습니다.</p>
+        <S.NoneCart>
+          <p>장바구니에 담긴 상품이 없습니다.</p>
+          <Button
+            variant="main"
+            size="medium"
+            width="120px"
+            color="black"
+            isCircle={false}
+            isFullWidth={false}
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            상품 보러 가기
+          </Button>
+        </S.NoneCart>
       )}
     </S.CartPageContainer>
   );
