@@ -86,15 +86,6 @@ const Review = ({ productId, orderList }: reviewProps) => {
     setIsWrite((prev) => !prev);
   };
 
-  /** handleDeleteReview() : 내가 삭제한 리뷰 실시간 반영(임시) */
-  // const handleDeleteReview = (deleteReview?: number) => {
-  //   if (deleteReview) {
-  //     const filter = reviewList.filter((review) => review.reviewId !== deleteReview);
-  //     console.log(filter);
-  //     setReview([…filter]);
-  //   }
-  // };
-
   if (!reviewList) return null;
   return (
     <>

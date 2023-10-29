@@ -7,7 +7,6 @@ import * as S from '../Detail.styles';
 type ReviewProps = {
   key: number;
   review: DetailReview;
-  // handleDeleteReview: (deleteReview: number) => void;
 };
 
 const ReviewBox = ({ review }: ReviewProps) => {
