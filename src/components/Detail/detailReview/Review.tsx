@@ -99,7 +99,7 @@ const Review = ({ productId, orderList }: reviewProps) => {
         />
       )}
       <ReviewFilterButton filter={filter} onChangeFilter={setFilter} />
-      {reviewList?.map((item, idx) => {
+      {reviewList.map((item, idx) => {
         return <ReviewBox key={idx} review={item} />;
       })}
     </>
