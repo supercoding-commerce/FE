@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { postReview } from '@/apis/review';
+import { deleteReview, postReview } from '@/apis/review';
 import { queryKeys } from '@/queries/queryKeys.ts';
 
 export const useCreateReview = () => {
@@ -13,4 +13,16 @@ export const useCreateReview = () => {
   });
 
   return { ...mutation, createReviewMutate: mutation.mutate };
+};
+
+export const useDeleteReview = () => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation((reviewId: number) => deleteReview(reviewId), {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries([queryKeys.review]);
+    },
+  });
+
+  return { ...mutation, deleteReviewMutate: mutation.mutate };
 };
