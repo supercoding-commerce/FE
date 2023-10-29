@@ -10,7 +10,7 @@ type ReviewProps = {
   handleDeleteReview: (deleteReview: number) => void;
 };
 
-const ReviewBox = ({ review, handleDeleteReview }: ReviewProps) => {
+const ReviewBox = ({ review }: ReviewProps) => {
   if (!review.options) return;
   const options = JSON.parse(review.options);
 
@@ -20,7 +20,7 @@ const ReviewBox = ({ review, handleDeleteReview }: ReviewProps) => {
     deleteReview(review.reviewId).then((deleteReviewId) => {
       //TODO: alert -> 모달로 변경
       if (!deleteReviewId) return;
-      handleDeleteReview(deleteReviewId);
+      // handleDeleteReview(deleteReviewId);
     });
   };
 

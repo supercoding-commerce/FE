@@ -30,21 +30,44 @@ type reviewProps = {
   orderList: OrderList;
 };
 
+export type Filter = '별점순' | '최신순';
+
 const Review = ({ productId, orderList }: reviewProps) => {
-  const [review, setReview] = useState<DetailReview[]>([]);
   const [isWrite, setIsWrite] = useState<boolean>(false);
   const [filterOrderLists, setFilterOrderLists] = useState<OrderList>([]);
 
-  const { data: reviewList } = useGetReview(productId);
+  // rating, latest
+  const [filter, setFilter] = useState<'별점' | '최신순'>('별점');
 
-  useEffect(() => {
-    if (reviewList) setReview([...reviewList]);
-  }, [reviewList]);
+  /** 별점순 재배열 */
+  const byRating = (data: DetailReview[]) => {
+    const star = data?.sort((a, b) => b.starPoint - a.starPoint);
+    return star;
+  };
+
+  /** 최신순 재배열 */
+  const byLatest = (data: DetailReview[]) => {
+    const sortedReviews = data?.sort((a, b) => {
+      if (!a.createdAt || !b.createdAt) return 0;
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return dateB - dateA;
+    });
+    return sortedReviews;
+  };
+
+  /**  react-query data 불러오기 */
+  const { data: reviewList } = useGetReview(productId, {
+    // select : reactQuery에서 서버에서 가져온 데이터를 변형하고 선택적 가공 가능.
+    select: (data) => {
+      return filter === '별점' ? byRating(data) || [] : byLatest(data) || [];
+    },
+  });
 
   /** filterOrderList() : 이미 작성했던 오더리스트 제외 필터링 */
   const filterOrderList = () => {
     const filter = orderList.filter((orderList) => !orderList.isReviewed);
-    setFilterOrderLists([...filter]);
+    setFilterOrderLists(filter);
   };
 
   useEffect(() => {
@@ -63,31 +86,16 @@ const Review = ({ productId, orderList }: reviewProps) => {
     setIsWrite((prev) => !prev);
   };
 
-  /** 별점순 재배열 */
-  const byRating = () => {
-    const star = review.sort((a, b) => b.starPoint - a.starPoint);
-    setReview([...star]);
-  };
-
-  /** 최신순 재배열 */
-  const byLatest = () => {
-    const sortedReviews = review.sort((a, b) => {
-      if (!a.createdAt || !b.createdAt) return 0;
-      const dateA = new Date(a.createdAt).getTime();
-      const dateB = new Date(b.createdAt).getTime();
-      return dateB - dateA;
-    });
-    setReview([...sortedReviews]);
-  };
-
   /** handleDeleteReview() : 내가 삭제한 리뷰 실시간 반영(임시) */
-  const handleDeleteReview = (deleteReview?: number) => {
-    if (deleteReview) {
-      const filter = review.filter((review) => review.reviewId !== deleteReview);
-      setReview([...filter]);
-    }
-  };
+  // const handleDeleteReview = (deleteReview?: number) => {
+  //   if (deleteReview) {
+  //     const filter = reviewList.filter((review) => review.reviewId !== deleteReview);
+  //     console.log(filter);
+  //     setReview([…filter]);
+  //   }
+  // };
 
+  if (!reviewList) return null;
   return (
     <>
       <ReviewButton handleWriteButton={handleWriteButton} />
@@ -99,9 +107,9 @@ const Review = ({ productId, orderList }: reviewProps) => {
           handleWriteButton={handleWriteButton}
         />
       )}
-      <ReviewFilterButton byRating={byRating} byLatest={byLatest} />
-      {review?.map((item, idx) => {
-        return <ReviewBox key={idx} review={item} handleDeleteReview={handleDeleteReview} />;
+      <ReviewFilterButton filter={filter} onChangeFilter={setFilter} />
+      {reviewList?.map((item, idx) => {
+        return <ReviewBox key={idx} review={item} />;
       })}
     </>
   );
