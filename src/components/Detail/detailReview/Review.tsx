@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { getReview } from '@/apis/product';
 import ReviewBox from '@/components/Detail/detailReview/ReviewBox';
 import ReviewButton from '@/components/Detail/detailReview/ReviewButton';
 import ReviewFilterButton from '@/components/Detail/detailReview/ReviewFilterButton';
 import ReviewWrite from '@/components/Detail/detailReview/ReviewWrite';
+import { useGetReview } from '@/queries/review/query';
 
 export type DetailReview = {
   productId: number;
@@ -27,19 +27,47 @@ type OrderList = {
 
 type reviewProps = {
   productId: number;
-  isReview: boolean;
   orderList: OrderList;
 };
 
-const Review = ({ productId, isReview, orderList }: reviewProps) => {
-  const [review, setReview] = useState<DetailReview[]>([]);
+export type Filter = '별점순' | '최신순';
+
+const Review = ({ productId, orderList }: reviewProps) => {
   const [isWrite, setIsWrite] = useState<boolean>(false);
   const [filterOrderLists, setFilterOrderLists] = useState<OrderList>([]);
+
+  // rating, latest
+  const [filter, setFilter] = useState<'별점' | '최신순'>('별점');
+
+  /** 별점순 재배열 */
+  const byRating = (data: DetailReview[]) => {
+    const star = data?.sort((a, b) => b.starPoint - a.starPoint);
+    return star;
+  };
+
+  /** 최신순 재배열 */
+  const byLatest = (data: DetailReview[]) => {
+    const sortedReviews = data?.sort((a, b) => {
+      if (!a.createdAt || !b.createdAt) return 0;
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return dateB - dateA;
+    });
+    return sortedReviews;
+  };
+
+  /**  react-query data 불러오기 */
+  const { data: reviewList } = useGetReview(productId, {
+    // select : reactQuery에서 서버에서 가져온 데이터를 변형하고 선택적 가공 가능.
+    select: (data) => {
+      return filter === '별점' ? byRating(data) || [] : byLatest(data) || [];
+    },
+  });
 
   /** filterOrderList() : 이미 작성했던 오더리스트 제외 필터링 */
   const filterOrderList = () => {
     const filter = orderList.filter((orderList) => !orderList.isReviewed);
-    setFilterOrderLists([...filter]);
+    setFilterOrderLists(filter);
   };
 
   useEffect(() => {
@@ -54,52 +82,11 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
 
   const stringOrderList = filterOrderLists.map(combineOrderIdAndOption);
 
-  // axios 요청
-  useEffect(() => {
-    if (isReview) {
-      getReview(productId).then((reviewData) => {
-        if (!reviewData) return;
-        setReview([...reviewData]);
-      });
-    }
-  }, [isReview, productId]);
-
   const handleWriteButton = () => {
     setIsWrite((prev) => !prev);
   };
 
-  /** 별점순 재배열 */
-  const byRating = () => {
-    const star = review.sort((a, b) => b.starPoint - a.starPoint);
-    setReview([...star]);
-  };
-
-  /** 최신순 재배열 */
-  const byLatest = () => {
-    const sortedReviews = review.sort((a, b) => {
-      if (!a.createdAt || !b.createdAt) return 0;
-      const dateA = new Date(a.createdAt).getTime();
-      const dateB = new Date(b.createdAt).getTime();
-      return dateB - dateA;
-    });
-    setReview([...sortedReviews]);
-  };
-
-  /** handleNewReview() : 내가 작성한 새로운 리뷰 실시간 반영(임시) */
-  const handleNewReview = (newReview?: DetailReview) => {
-    if (newReview) {
-      setReview((prevReview) => [newReview, ...prevReview]);
-    }
-  };
-
-  /** handleDeleteReview() : 내가 삭제한 리뷰 실시간 반영(임시) */
-  const handleDeleteReview = (deleteReview?: number) => {
-    if (deleteReview) {
-      const filter = review.filter((review) => review.reviewId !== deleteReview);
-      setReview([...filter]);
-    }
-  };
-
+  if (!reviewList) return null;
   return (
     <>
       <ReviewButton handleWriteButton={handleWriteButton} />
@@ -109,12 +96,11 @@ const Review = ({ productId, isReview, orderList }: reviewProps) => {
           stringOrderList={stringOrderList}
           productId={productId}
           handleWriteButton={handleWriteButton}
-          handleNewReview={handleNewReview}
         />
       )}
-      <ReviewFilterButton byRating={byRating} byLatest={byLatest} />
-      {review?.map((item, idx) => {
-        return <ReviewBox key={idx} review={item} handleDeleteReview={handleDeleteReview} />;
+      <ReviewFilterButton filter={filter} onChangeFilter={setFilter} />
+      {reviewList.map((item, idx) => {
+        return <ReviewBox key={idx} review={item} />;
       })}
     </>
   );

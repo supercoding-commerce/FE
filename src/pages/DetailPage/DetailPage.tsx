@@ -131,13 +131,7 @@ const DetailPage = () => {
         {!isReview ? (
           <InformationBox productImage={product.imageUrls} />
         ) : (
-          <>
-            <Review
-              productId={Number(productId)}
-              isReview={isReview}
-              orderList={product.orderList}
-            />
-          </>
+          <Review productId={Number(productId)} orderList={product.orderList} />
         )}
         <DetailFooter
           productId={product.productId}

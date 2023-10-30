@@ -11,15 +11,15 @@ import * as S from '../ProductPage/ProductPage.styles';
 type FilterOption = '필터옵션' | '나이' | '성별';
 
 const ProductPage: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<FilterOption>();
   const [searchParams] = useSearchParams();
   const subcategory = searchParams.get('subcategory');
+  const searchWord = searchParams.get('searchWord');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedOption, setSelectedOption] = useState<FilterOption>();
   const [filter, setFilter] = useState<string>('필터옵션');
   const [ageCategory, setAgeCategory] = useState<string>('나이');
   const [genderCategory, setGenderCategory] = useState<string>('성별');
-  const searchWord = searchParams.get('searchWord');
-  console.log(searchWord);
+
   const openModal = () => {
     setIsModalOpen(true);
   };

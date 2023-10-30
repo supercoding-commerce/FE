@@ -3,4 +3,5 @@ export const queryKeys = {
   user: 'user',
   order: 'order',
   coupon: 'coupon',
+  review: 'review',
 } as const;

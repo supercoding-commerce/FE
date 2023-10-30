@@ -1,28 +1,30 @@
-import { deleteReview } from '@/apis/review';
 import Icon from '@/components/common/Icon';
 import { Rating } from '@/components/common/Rating/Rating';
 import { DetailReview } from '@/components/Detail/detailReview/Review';
+import { useDeleteReview } from '@/queries/review/mutation';
 import * as S from '../Detail.styles';
 
 type ReviewProps = {
   key: number;
   review: DetailReview;
-  handleDeleteReview: (deleteReview: number) => void;
 };
 
-const ReviewBox = ({ review, handleDeleteReview }: ReviewProps) => {
-  if (!review.options) return;
-  const options = JSON.parse(review.options);
+const ReviewBox = ({ review }: ReviewProps) => {
+  const { deleteReviewMutate } = useDeleteReview();
 
   /** deleteReviews() : 해당 리뷰 삭제 */
-  const deleteReviews = () => {
-    if (!review.reviewId) return;
-    deleteReview(review.reviewId).then((deleteReviewId) => {
-      //TODO: alert -> 모달로 변경
-      if (!deleteReviewId) return;
-      handleDeleteReview(deleteReviewId);
+  const deleteReviews = async () => {
+    const reviewId = review.reviewId;
+    if (!reviewId) return;
+    deleteReviewMutate(reviewId, {
+      onSuccess: () => {
+        alert('리뷰 삭제 성공');
+      },
     });
   };
+
+  if (!review.options) return;
+  const options = JSON.parse(review.options);
 
   return (
     <S.DetailReviewBox>
