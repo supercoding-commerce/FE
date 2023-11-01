@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { sellerChatList, userChatList } from '@/apis/chat';
 import ChatBody from '@/components/chat/chatList/ChatBody';
 import ChatHeader from '@/components/chat/chatList/ChatHeader';
+import { useSSE } from '@/hooks/useSSE';
 import { Message } from '@/models/chat';
 
 export type Chat = {
@@ -35,12 +36,26 @@ type chatProps = {
     productName: string;
   };
   isSeller: boolean;
+  role: string;
+  customRoomId: string;
 };
 
-const ChatList = ({ handleOpen, clickListBox, seller, isSeller, product }: chatProps) => {
+const ChatList = ({
+  handleOpen,
+  clickListBox,
+  seller,
+  isSeller,
+  product,
+  customRoomId,
+  role,
+}: chatProps) => {
   const [list, setList] = useState<List[]>([]);
 
   const [shopImg, setShopImg] = useState<string>('');
+
+  const message = useSSE(customRoomId, role);
+
+  console.log(message);
 
   const loadUserChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;

@@ -100,10 +100,12 @@ const Chat = ({
         <S.Chat>
           {isCustomRoomId ? (
             <ChatList
+              customRoomId={customRoomId}
               handleOpen={handleOpen}
               clickListBox={clickListBox}
               seller={seller}
               isSeller={isSeller}
+              role={role}
               product={product}
             />
           ) : (
@@ -124,10 +126,12 @@ const Chat = ({
         <S.Chat>
           {!isCustomRoomId ? (
             <ChatList
+              customRoomId={customRoomId}
               handleOpen={handleOpen}
               clickListBox={clickListBox}
               seller={seller}
               isSeller={isSeller}
+              role={role}
               product={product}
             />
           ) : (
