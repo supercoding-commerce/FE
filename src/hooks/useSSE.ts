@@ -9,22 +9,38 @@ type chatAlarm = {
   sender: string;
 };
 
-export const useSSE = (customRoomId: string, role: string) => {
-  console.log('useSSE', customRoomId);
-  console.log('role', role);
-  const [message, setMessage] = useState<chatAlarm[]>([]);
+export const useSSE = (role: string, sellerId: number, userId: number) => {
+  const [eventSource, setEventSource] = useState(
+    new EventSource(`${import.meta.env.VITE_API_SSE_URL}/chat-alarm/${role}/${sellerId}`),
+  );
+  const [message, setMessage] = useState<chatAlarm>();
 
-  console.log(message);
+  console.log('useSSE', message);
+  console.log('role', role);
+  console.log('sellerId', sellerId);
+  console.log('userId', userId);
 
   useEffect(() => {
-    const eventSource = new EventSource(
-      `${import.meta.env.VITE_API_SSE_URL}/chat-alarm/${role}/${customRoomId}`,
-    );
+    if (role === 'user') {
+      setEventSource(
+        new EventSource(
+          `${import.meta.env.VITE_API_SSE_URL}/chat-alarm/${role}/${sellerId}/${userId}`,
+        ),
+      );
+    } else {
+      setEventSource(
+        new EventSource(`${import.meta.env.VITE_API_SSE_URL}/chat-alarm/${role}/${sellerId}`),
+      );
+    }
 
+    console.log('start');
+    console.log('eventSource', eventSource);
+
+    if (!eventSource) return;
     eventSource.addEventListener('sse', function (event) {
       const message = JSON.parse(event.data);
       console.log('새로운 채팅 알람: ', message);
-      setMessage((prevMessages) => [...prevMessages, message]);
+      setMessage({ ...message });
     });
 
     eventSource.onerror = function (error) {
@@ -38,12 +54,7 @@ export const useSSE = (customRoomId: string, role: string) => {
         console.log('EventSource closed');
       }
     });
-
-    return () => {
-      eventSource.close();
-      console.log('EventSource closed');
-    };
-  }, [customRoomId, role]);
+  }, [sellerId, role]);
 
   return message;
 };
