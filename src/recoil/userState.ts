@@ -1,7 +1,11 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
-const { persistAtom } = recoilPersist();
+import { localStorageKey } from '@/constants';
+
+const { persistAtom } = recoilPersist({
+  key: localStorageKey.user,
+});
 
 export interface UserType {
   email: string;
