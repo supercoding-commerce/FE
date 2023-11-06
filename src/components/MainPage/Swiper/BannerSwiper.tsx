@@ -62,10 +62,9 @@ const CustomSwiperSlide = styled(SwiperSlide)`
 `;
 
 const slideData = [
-  'https://cf.image-farm.s.zigzag.kr/original/cms/2023/09/13/202309130058279070_037976.jpg?width=1125&height=900&quality=100&format=webp',
-  'https://cf.image-farm.s.zigzag.kr/original/cms/2023/09/15/202309150039129700_018407.jpg',
-  'https://cf.image-farm.s.zigzag.kr/original/cms/2023/09/11/202309110141027973_095041.jpg',
-  'https://cf.image-farm.s.zigzag.kr/original/cms/2023/09/12/202309120611403936_041355.jpg',
+  'https://i.postimg.cc/8PzLM1h3/23231.png',
+  'https://i.postimg.cc/mD7KY3Gb/wewe.png',
+  'https://i.postimg.cc/qqkD29LL/529f73b41a06cd4951aaea5a9b0bcc28.png',
 ];
 
 const BannerSwiper: React.FC = () => {
