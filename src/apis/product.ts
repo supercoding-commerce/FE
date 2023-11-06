@@ -42,7 +42,8 @@ export async function deleteProduct(productId: number) {
 
 export const fetchProducts = async (pageNumber: number) => {
   const response = await client.get(`/v1/api/product?pageNumber=${pageNumber}&sortBy=createdAt`);
-  return response.data;
+  const reversedData = response.data.reverse();
+  return reversedData;
 };
 
 export async function getReview(productId: number): Promise<DetailReview[]> {
