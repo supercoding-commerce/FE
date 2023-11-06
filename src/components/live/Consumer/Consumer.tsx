@@ -1,5 +1,5 @@
 import { Device, types } from 'mediasoup-client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 // import { socketState } from "../recoil/socket";
 import { Socket } from 'socket.io-client';
@@ -12,6 +12,7 @@ interface ConsumerProps {
 }
 
 const Consumer = ({ currentSocket }: ConsumerProps) => {
+  const [loading, setLoading] = useState<boolean>(true);
   const producerVideoRef = useRef<HTMLVideoElement>(null);
   const producerAudioRef = useRef<HTMLAudioElement>(null);
   const { email } = useRecoilValue(userState);
@@ -172,41 +173,51 @@ const Consumer = ({ currentSocket }: ConsumerProps) => {
           rtpParameters: response.rtpParameters,
         });
 
-        console.log('consumer', consumer);
         const track = consumer?.track;
-        // destructure and retrieve the video track from the producer
-        // const { _track } = consumer;
-        console.log('track', track);
         if (track && producerAudioRef.current) {
           const remoteStream = new MediaStream();
           remoteStream.addTrack(track);
           producerAudioRef.current.srcObject = remoteStream;
         }
-
-        // // the server consumer started with media paused
-        // // so we need to inform the server to resume
-        // socket.emit('producerresume');
       },
     );
   };
   console.log('current', currentSocket);
 
+  // const audioContext = new window.AudioContext();
+  // const delayNode = audioContext.createDelay(5.0); // 최대 5초까지 지연 가능
+  // delayNode.delayTime.value = 0.005; // 오디오를 5ms 지연
+
+  // const adjustAudioDelay = (stream: MediaStream) => {
+  //   const audioTrack = stream.getAudioTracks()[0];
+  //   if (audioTrack) {
+  //     const mediaStreamAudioSourceNode = audioContext.createMediaStreamSource(
+  //       new MediaStream([audioTrack]),
+  //     );
+  //     mediaStreamAudioSourceNode.connect(delayNode);
+  //     delayNode.connect(audioContext.destination);
+  //   }
+  // };
+
   useEffect(() => {
     if (!currentSocket) return;
 
-    getRtpCapabilities();
+    setTimeout(() => {
+      getRtpCapabilities();
+    }, 5000);
   }, [currentSocket]);
 
-  useEffect(() => {
-    if (producerAudioRef.current && producerAudioRef.current.srcObject) {
-      const stream = producerAudioRef.current.srcObject as MediaStream;
-      adjustAudioDelay(stream);
-    }
-  }, [producerAudioRef.current?.srcObject]);
+  // useEffect(() => {
+  //   if (producerAudioRef.current && producerAudioRef.current.srcObject) {
+  //     const stream = producerAudioRef.current.srcObject as MediaStream;
+  //     adjustAudioDelay(stream);
+  //   }
+  // }, [producerAudioRef.current?.srcObject]);
+
   return (
     <VideoContainer>
       <h2>나는 시청자란다.</h2>
-      <Video ref={producerVideoRef} autoPlay />
+      <Video ref={producerVideoRef} autoPlay muted />
       <audio ref={producerAudioRef} autoPlay />
     </VideoContainer>
   );
