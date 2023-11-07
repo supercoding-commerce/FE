@@ -9,11 +9,9 @@ interface ConnectSocketProps {
 const VITE_RTC_SERVER_URL = import.meta.env.VITE_RTC_SERVER_URL;
 
 export const connectSocket = ({ session_id, user_id, setCurrentSocket }: ConnectSocketProps) => {
-  const socket: Socket = io(
-    `${VITE_RTC_SERVER_URL}?user_id=${
-      user_id === '' ? 'qqqqqq123' : user_id
-    }&session_id=${session_id}`,
-  );
+  const socket: Socket = io(`${VITE_RTC_SERVER_URL}?user_id=${user_id}&session_id=${session_id}`);
+
+  console.log('connect socketId', user_id);
 
   socket.on('connect', () => {
     setCurrentSocket(socket);

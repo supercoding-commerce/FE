@@ -1,3 +1,4 @@
+import { getRandomValues } from 'crypto';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -20,7 +21,7 @@ const LiveSession = () => {
   const [currentSocket, setCurrentSocket] = useState<Socket>();
   const isHost = userInfo.email === 'ekfhd5537@naver.com';
   const sessionName = 'ClipLiveSession';
-  const userName = userInfo.email;
+  const userName = userInfo.email ? userInfo.email : 'qqqq1234'; //랜덤한 고유값으로 값을 줘야함
 
   useEffect(() => {
     connectSocket({
@@ -36,7 +37,7 @@ const LiveSession = () => {
         {isHost ? (
           <Producer currentSocket={currentSocket} />
         ) : (
-          <Consumer currentSocket={currentSocket} />
+          <Consumer currentSocket={currentSocket} userName={userName} />
         )}
       </LiveStreamContainer>
       <LiveStreamInfo>
