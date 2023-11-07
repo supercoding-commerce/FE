@@ -8,20 +8,20 @@ import SearchList from '@/pages/Search/SearchList';
 import { getItem, removeItem, setItem } from '@/utils/localstorage';
 
 const Search = () => {
-  const [searchWord, setSearchWord] = useState('');
+  const [currentSearchTerm, setCurrentSearchTerm] = useState<string>(''); //현재 검색어
   const navigate = useNavigate();
-  const [searchWords, setSearchWords] = useState<string[]>([]);
+  const [recentSearchTerms, setRecentSearchTerms] = useState<string[]>([]); // 최근 검색어
   const localStorageKey = 'searchWords';
-  const [searchData, setSearchData] = useState(null);
+  const [searchResults, setSearchResults] = useState(null); // 검색 결과 데이터
 
-  const debounceValue = useDebounce(searchWord);
+  const debounceValue = useDebounce<string>(currentSearchTerm);
 
   useEffect(() => {
     const getSearchProduct = async () => {
       try {
         const response = await fetch(
           `https://pet-commerce.shop/v1/api/product/search?searchWord=${encodeURIComponent(
-            searchWord,
+            currentSearchTerm,
           )}`,
         );
 
@@ -29,7 +29,7 @@ const Search = () => {
           throw new Error('no country found');
         }
         const data = await response.json();
-        setSearchData(data);
+        setSearchResults(data);
       } catch (err) {
         console.error(err);
       }
@@ -42,7 +42,7 @@ const Search = () => {
 
   useEffect(() => {
     const searchWordsFromStorage = getItem<string[]>(localStorageKey) || [];
-    setSearchWords(searchWordsFromStorage);
+    setRecentSearchTerms(searchWordsFromStorage);
   }, []);
 
   const handleGoBack = () => {
@@ -53,9 +53,9 @@ const Search = () => {
     if (e.key === 'Enter') {
       const newSearchWord = e.currentTarget.value;
 
-      setSearchWords((prev) => [...prev, newSearchWord]);
+      setRecentSearchTerms((prev) => [...prev, newSearchWord]);
 
-      setItem(localStorageKey, [...searchWords, newSearchWord]);
+      setItem(localStorageKey, [...recentSearchTerms, newSearchWord]);
 
       navigate(`/product/search?searchWord=${encodeURIComponent(newSearchWord)}`);
     }
@@ -63,15 +63,15 @@ const Search = () => {
 
   /**선택삭제 함수 */
   const deleteTag = (wordToDelete: string) => {
-    const updatedSearchWords = searchWords.filter((word) => word !== wordToDelete);
+    const updatedSearchWords = recentSearchTerms.filter((word) => word !== wordToDelete);
 
-    setSearchWords(updatedSearchWords);
+    setRecentSearchTerms(updatedSearchWords);
     setItem(localStorageKey, updatedSearchWords);
   };
 
   /**최근검색어 전체삭제 함수 */
   const handleDeleteAll = () => {
-    setSearchWords([]);
+    setRecentSearchTerms([]);
     removeItem(localStorageKey);
   };
 
@@ -86,20 +86,20 @@ const Search = () => {
           <S.Input
             onKeyDown={handleKeyDown}
             placeholder="검색어를 입력하세요"
-            value={searchWord}
-            onChange={(e) => setSearchWord(e.target.value)}
+            value={currentSearchTerm}
+            onChange={(e) => setCurrentSearchTerm(e.target.value)}
           />
         </S.InputDiv>
       </S.SearchHeader>
       <S.SearchContainer>
-        {searchWords.length > 0 && (
+        {recentSearchTerms.length > 0 && (
           <S.TitleContainer>
             <S.RecentSearch>최근검색어</S.RecentSearch>
             <S.DeleteAll onClick={handleDeleteAll}>전체삭제</S.DeleteAll>
           </S.TitleContainer>
         )}
         <S.TagWrap>
-          {searchWords.map((word: string, index: number) => (
+          {recentSearchTerms.map((word: string, index: number) => (
             <S.TagContainer key={index}>
               <S.TagRecentSearch to={`/product/search?searchWord=${encodeURIComponent(word)}`}>
                 {word}
@@ -113,7 +113,7 @@ const Search = () => {
           ))}
         </S.TagWrap>
       </S.SearchContainer>
-      {searchWord ? <SearchList searchData={searchData} /> : ''}
+      {currentSearchTerm ? <SearchList searchData={searchResults} /> : ''}
     </>
   );
 };
