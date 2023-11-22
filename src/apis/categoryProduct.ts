@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const fetchCategoryProducts = async (
+export const getCategoryProducts = async (
   category: string | null,
   pageRef: number,
   age: string | null,

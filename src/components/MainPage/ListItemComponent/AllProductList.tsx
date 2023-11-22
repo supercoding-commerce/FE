@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from 'react-query';
 
-import { fetchProducts } from '@/apis/product';
+import { getScrollProducts } from '@/apis/product';
 import ListItem from '@/components/MainPage/ListItemComponent/ListItem';
 import * as S from '../ListItemComponent/AllProductList.styles';
 
@@ -17,7 +17,7 @@ interface Product {
 const AllProductList: React.FC = () => {
   const [ref, inView] = useInView();
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } =
-    useInfiniteQuery('products', async ({ pageParam = 1 }) => fetchProducts(pageParam), {
+    useInfiniteQuery('products', async ({ pageParam = 1 }) => getScrollProducts(pageParam), {
       getNextPageParam: (lastPage, pages) => {
         if (lastPage.length === 0) {
           return undefined;

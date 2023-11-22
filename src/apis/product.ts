@@ -40,7 +40,7 @@ export async function deleteProduct(productId: number) {
   return client.delete(`/v1/api/product/${productId}`);
 }
 
-export const fetchProducts = async (pageNumber: number) => {
+export const getScrollProducts = async (pageNumber: number) => {
   const response = await client.get(`/v1/api/product?pageNumber=${pageNumber}&sortBy=createdAt`);
   return response.data;
 };
