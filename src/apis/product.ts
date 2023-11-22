@@ -45,6 +45,13 @@ export const fetchProducts = async (pageNumber: number) => {
   return response.data;
 };
 
+export const getSearchProducts = async (currentSearchTerm: string) => {
+  const response = await client.get(
+    `${BASE_URL}/search?searchWord=${encodeURIComponent(currentSearchTerm)}`,
+  );
+  return response.data;
+};
+
 export async function getReview(productId: number): Promise<DetailReview[]> {
   const response = await client.get(`${BASE_URL}/review/${productId}`);
   return response.data;
