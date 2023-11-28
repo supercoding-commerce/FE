@@ -30,10 +30,9 @@ const ProductPage: React.FC = () => {
 
   const handleOptionSelect = (option: FilterOption) => {
     closeModal();
-
     switch (selectedOption) {
       case '필터옵션':
-        setFilter(option as FilterOption);
+        setFilter(option as FilterOption); 
         break;
       case '나이':
         setAgeCategory(option as FilterOption);
