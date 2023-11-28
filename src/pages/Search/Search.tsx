@@ -1,6 +1,7 @@
 import { KeyboardEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { getSearchProducts } from '@/apis/product';
 import Icon from '@/components/common/Icon';
 import useDebounce from '@/hooks/useDebounce';
 import * as S from '@/pages/Search/Search.styles';
@@ -19,17 +20,9 @@ const Search = () => {
   useEffect(() => {
     const getSearchProduct = async () => {
       try {
-        const response = await fetch(
-          `https://pet-commerce.shop/v1/api/product/search?searchWord=${encodeURIComponent(
-            currentSearchTerm,
-          )}`,
-        );
+        const searchData = await getSearchProducts(currentSearchTerm);
 
-        if (!response.ok) {
-          throw new Error('no country found');
-        }
-        const data = await response.json();
-        setSearchResults(data);
+        setSearchResults(searchData);
       } catch (err) {
         console.error(err);
       }
