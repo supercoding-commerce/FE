@@ -30,7 +30,6 @@ const ProductPage: React.FC = () => {
 
   const handleOptionSelect = (option: FilterOption) => {
     closeModal();
-    console.log(selectedOption);
     switch (selectedOption) {
       case '필터옵션':
         setFilter(option as FilterOption); //as FilterOption 지우기
