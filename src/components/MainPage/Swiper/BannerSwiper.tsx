@@ -1,76 +1,34 @@
 import 'swiper/css';
 import 'swiper/css/pagination';
+import React from 'react';
 import { Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import styled from '@emotion/styled';
 
-import { BannerSwiperContainer } from './BannerSwiper.styles';
+import * as S from '../Swiper/BannerSwiper.styles';
 
-const CustomSwiper = styled(Swiper)`
-  width: 100%;
-  height: 200px;
+interface Slide {
+  srcWebp: string;
+  srcPng: string;
+}
 
-  .swiper-pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    bottom: 10px;
-  }
-
-  .swiper-pagination-bullet {
-    margin: 0 9px;
-    position: relative;
-    width: 6px;
-    height: 6px;
-    background-color: #fff;
-    opacity: 0.4;
-    @extend %transition_all_03s;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 10px;
-      height: 10px;
-      transform: translate(-50%, -50%);
-      border: 0px solid #fff;
-      border-radius: 50%;
-      @extend %transition_all_03s;
-    }
-
-    &:hover,
-    &.swiper-pagination-bullet-active {
-      opacity: 1;
-    }
-
-    &.swiper-pagination-bullet-active {
-      &::before {
-        border-width: 1px;
-      }
-    }
-  }
-`;
-
-const CustomSwiperSlide = styled(SwiperSlide)`
-  width: 100%;
-  border-radius: 20px;
-  border: 2px solid black;
-  background-size: cover;
-  background-position: center;
-  padding-bottom: 30%;
-`;
-
-const slideData = [
-  'https://i.postimg.cc/8PzLM1h3/23231.png',
-  'https://i.postimg.cc/mD7KY3Gb/wewe.png',
-  'https://i.postimg.cc/qqkD29LL/529f73b41a06cd4951aaea5a9b0bcc28.png',
+const slideData: Slide[] = [
+  {
+    srcWebp: 'https://i.postimg.cc/T16SBK4t/23231-2.webp',
+    srcPng: 'https://i.postimg.cc/8PzLM1h3/23231.png',
+  },
+  {
+    srcWebp: 'https://i.postimg.cc/vZVrx0B6/wewe-1.webp',
+    srcPng: 'https://i.postimg.cc/mD7KY3Gb/wewe.png',
+  },
+  {
+    srcWebp: 'https://i.postimg.cc/DZjJMG0T/529f73b41a06cd4951aaea5a9b0bcc28-1.webp',
+    srcPng: 'https://i.postimg.cc/qqkD29LL/529f73b41a06cd4951aaea5a9b0bcc28.png',
+  },
 ];
 
 const BannerSwiper: React.FC = () => {
   return (
-    <BannerSwiperContainer>
-      <CustomSwiper
+    <S.BannerSwiperContainer>
+      <S.CustomSwiper
         className="banner"
         modules={[Pagination]}
         spaceBetween={0}
@@ -78,10 +36,21 @@ const BannerSwiper: React.FC = () => {
         pagination={{ clickable: true }}
       >
         {slideData.map((image, index) => (
-          <CustomSwiperSlide key={index} style={{ backgroundImage: `url(${image})` }} />
+          <S.CustomSwiperSlide key={index}>
+            <picture>
+              <source srcSet={image.srcWebp} type="image/webp" />
+              <source srcSet={image.srcPng} type="image/png" />
+              <img
+                src={image.srcPng}
+                alt={`EventBanner-${index + 1}`}
+                style={{ width: '100%', aspectRatio: '16/9' }}
+                loading="lazy"
+              />
+            </picture>
+          </S.CustomSwiperSlide>
         ))}
-      </CustomSwiper>
-    </BannerSwiperContainer>
+      </S.CustomSwiper>
+    </S.BannerSwiperContainer>
   );
 };
 
