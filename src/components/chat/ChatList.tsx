@@ -4,7 +4,7 @@ import { sellerChatList, userChatList } from '@/apis/chat';
 import ChatBody from '@/components/chat/chatList/ChatBody';
 import ChatHeader from '@/components/chat/chatList/ChatHeader';
 import { useSSE } from '@/hooks/useSSE';
-import { Message } from '@/models/chat';
+import { Message, UserInfo } from '@/models/chat';
 
 export type Chat = {
   [timestamp: string]: Message;
@@ -31,31 +31,34 @@ type chatProps = {
     sellerId: number;
     shopName: string;
   };
+  user: UserInfo;
   product: {
     productId: number;
     productName: string;
   };
   isSeller: boolean;
   role: string;
-  customRoomId: string;
 };
 
 const ChatList = ({
   handleOpen,
   clickListBox,
   seller,
+  user,
   isSeller,
   product,
-  customRoomId,
   role,
 }: chatProps) => {
   const [list, setList] = useState<List[]>([]);
 
   const [shopImg, setShopImg] = useState<string>('');
 
-  const message = useSSE(customRoomId, role);
+  const message = useSSE(role, seller.sellerId, user.userId);
+  console.log('chatListMessage', message);
 
-  console.log(message);
+  // useEffect(() => {
+  //   setList([...message]);
+  // }, []);
 
   const loadUserChatList: () => Promise<void> = async () => {
     const sellerId = seller.sellerId;

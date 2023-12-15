@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type chatAlarm = {
   content: string;
@@ -10,51 +10,33 @@ type chatAlarm = {
 };
 
 export const useSSE = (role: string, sellerId: number, userId: number) => {
-  const [eventSource, setEventSource] = useState(
-    new EventSource(`${import.meta.env.VITE_API_SSE_URL}/chat-alarm/${role}/${sellerId}`),
-  );
   const [message, setMessage] = useState<chatAlarm>();
 
-  console.log('useSSE', message);
-  console.log('role', role);
-  console.log('sellerId', sellerId);
-  console.log('userId', userId);
+  const isUser =
+    role === 'user'
+      ? `${import.meta.env.VITE_API_SSE_URL}/chat-alarm/${role}/${sellerId}/${userId}`
+      : `${import.meta.env.VITE_API_SSE_URL}/chat-alarm/${role}/${sellerId}`;
 
-  useEffect(() => {
-    if (role === 'user') {
-      setEventSource(
-        new EventSource(
-          `${import.meta.env.VITE_API_SSE_URL}/chat-alarm/${role}/${sellerId}/${userId}`,
-        ),
-      );
-    } else {
-      setEventSource(
-        new EventSource(`${import.meta.env.VITE_API_SSE_URL}/chat-alarm/${role}/${sellerId}`),
-      );
-    }
+  const eventSource = new EventSource(isUser);
+  console.log('EventSource opened');
 
-    console.log('start');
-    console.log('eventSource', eventSource);
+  eventSource.addEventListener('sse', function (event) {
+    const message = JSON.parse(event.data);
+    console.log('새로운 채팅 알람: ', message);
+    setMessage({ ...message });
+  });
 
-    if (!eventSource) return;
-    eventSource.addEventListener('sse', function (event) {
-      const message = JSON.parse(event.data);
-      console.log('새로운 채팅 알람: ', message);
-      setMessage({ ...message });
-    });
+  eventSource.onerror = function (error) {
+    console.error('EventSource failed:', error);
+    eventSource.close();
+  };
 
-    eventSource.onerror = function (error) {
-      console.error('EventSource failed:', error);
+  window.addEventListener('unload', function () {
+    if (eventSource) {
       eventSource.close();
-    };
-
-    window.addEventListener('unload', function () {
-      if (eventSource) {
-        eventSource.close();
-        console.log('EventSource closed');
-      }
-    });
-  }, [sellerId, role]);
+      console.log('EventSource closed');
+    }
+  });
 
   return message;
 };

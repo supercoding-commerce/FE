@@ -71,7 +71,7 @@ const Chat = ({
   };
 
   /** clickListBox() : 채팅list에서 해당 채팅방으로 들어가기 위해
-   * 1. isNowChatRoom를 false,
+   * 1. isNowChatRoom로 분기처리,
    * 2. ChatBody.tsx에서 custumroomId를 받아와서 ChatList.tsx로 넘겨줌.
    * 3. seller일때 현재 디테일에서 넘어오는 userId, userName값은 판매자의 정보여서 ChatList.tsx에서
         문의한 구매자의 userId값, userName값을 가져옴.
@@ -93,10 +93,10 @@ const Chat = ({
         <S.Chat>
           {!isNowChatRoom ? (
             <ChatList
-              customRoomId={customRoomId}
               handleOpen={handleOpen}
               clickListBox={clickListBox}
               seller={seller}
+              user={user}
               isSeller={isSeller}
               role={role}
               product={product}
@@ -119,10 +119,10 @@ const Chat = ({
         <S.Chat>
           {isNowChatRoom ? (
             <ChatList
-              customRoomId={customRoomId}
               handleOpen={handleOpen}
               clickListBox={clickListBox}
               seller={seller}
+              user={user}
               isSeller={isSeller}
               role={role}
               product={product}
