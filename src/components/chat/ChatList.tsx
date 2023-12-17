@@ -24,7 +24,7 @@ export type List = {
   lastChat: Message;
 };
 
-type chatProps = {
+type ChatProps = {
   clickListBox: (customRoomId: string, userId: number, userName: string) => void;
   handleOpen: () => void;
   seller: {
@@ -48,23 +48,18 @@ const ChatList = ({
   isSeller,
   product,
   role,
-}: chatProps) => {
+}: ChatProps) => {
   const [list, setList] = useState<List[]>([]);
-
   const [shopImg, setShopImg] = useState<string>('');
 
   const message = useSSE(role, seller.sellerId, user.userId);
-  console.log('chatListMessage', message);
 
-  // useEffect(() => {
-  //   setList([...message]);
-  // }, []);
-
+  //TODO: 리액트쿼리로 변경하기
   const loadUserChatList: () => Promise<void> = async () => {
-    const sellerId = seller.sellerId;
-    userChatList(sellerId)
+    userChatList(seller.sellerId)
       .then((resData) => {
         const data = resData.chatList;
+        console.log('list', data);
         const img = resData.shopImage;
         setList([...data]);
         setShopImg(img);
@@ -80,6 +75,7 @@ const ChatList = ({
     sellerChatList(sellerId, productId)
       .then((resData) => {
         const data = resData.chatList;
+        console.log('list', data);
         const img = resData.shopImage;
         setList([...data]);
         setShopImg(img);
@@ -95,10 +91,10 @@ const ChatList = ({
   }, [isSeller]);
 
   return (
-    <div>
+    <>
       <ChatHeader shopName={seller.shopName} shopImg={shopImg} handleOpen={handleOpen} />
-      <ChatBody chatList={list} clickListBox={clickListBox} />
-    </div>
+      <ChatBody chatList={list} clickListBox={clickListBox} newMessage={message} />
+    </>
   );
 };
 
