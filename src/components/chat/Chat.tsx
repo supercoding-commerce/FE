@@ -41,6 +41,7 @@ const Chat = ({
   isUser,
   shopImageUrl,
 }: ChatProps) => {
+  // TODO: 커스텀 훅으로 빼기.
   const seller: SellerInfo = { sellerId: sellerId, shopName: sellerName };
   const product: ProductInfo = { productId: productId, productName: productName };
   const [user, setUser] = useState<UserInfo>({ userId: userId, userName: userName });
@@ -84,7 +85,10 @@ const Chat = ({
 
   const handleOpen = () => {
     setIsModalOpen((prev) => !prev);
+    setIsNowChatRoom(false);
   };
+
+  console.log('isNowChatRoom', isNowChatRoom);
 
   return (
     <>
