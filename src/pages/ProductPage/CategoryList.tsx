@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from 'react-query';
 
 import { getCategoryProducts } from '@/apis/categoryProduct';
 import * as S from '@/components/MainPage/ListItemComponent/AllProductList.styles';
@@ -34,7 +34,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
 
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } =
     useInfiniteQuery(
-      ['categoryProducts', category, age, gender, filter, searchWord],
+      ['categoryProducts'],
       async ({ pageParam = 1 }) =>
         getCategoryProducts(category, pageParam, age, gender, filter, searchWord),
       {

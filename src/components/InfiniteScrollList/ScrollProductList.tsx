@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from 'react-query';
+import { QueryKey } from '@tanstack/react-query';
 
-import { getScrollProducts } from '@/apis/product';
+import * as S from '@/components/MainPage/ListItemComponent/AllProductList.styles';
 import ListItem from '@/components/MainPage/ListItemComponent/ListItem';
-import * as S from '../ListItemComponent/AllProductList.styles';
 
 interface Product {
   productId: number;
@@ -14,10 +14,15 @@ interface Product {
   shopName: string;
 }
 
-const AllProductList: React.FC = () => {
+interface InfiniteScrollListProps {
+  queryKey: QueryKey;
+  fetchData: (params: { pageParam?: number }) => Promise<Product[]>;
+}
+
+const InfiniteScrollList: React.FC<InfiniteScrollListProps> = ({ queryKey, fetchData }) => {
   const [ref, inView] = useInView();
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } =
-    useInfiniteQuery('products', async ({ pageParam = 1 }) => getScrollProducts(pageParam), {
+    useInfiniteQuery(queryKey, fetchData, {
       getNextPageParam: (lastPage, pages) => {
         if (lastPage.length === 0) {
           return undefined;
@@ -37,8 +42,8 @@ const AllProductList: React.FC = () => {
       {data?.pages.map((page) =>
         page.map((product: Product) => (
           <ListItem
-            productId={product.productId}
             key={product.productId}
+            productId={product.productId}
             imageUrl={product.imageUrl}
             name={product.name}
             price={product.price}
@@ -47,13 +52,13 @@ const AllProductList: React.FC = () => {
         )),
       )}
       {isFetching ? (
-        <p>🔎Loading...</p>
+        <p>🔎 Loading...</p>
       ) : status === 'error' ? (
-        <p>😥데이터를 불러오는데 실패했습니다</p>
+        <p>😥 데이터를 불러오는데 실패했습니다</p>
       ) : null}
       {hasNextPage && !isFetchingNextPage && <div ref={ref}></div>}
     </S.ListContainer>
   );
 };
 
-export default AllProductList;
+export default InfiniteScrollList;
