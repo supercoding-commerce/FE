@@ -1,13 +1,15 @@
+import { getScrollProducts } from '@/apis/product';
 import Footer from '@/components/common/Footer/Footer';
-import AllProductList from '@/components/MainPage/ListItemComponent/AllProductList';
+import InfiniteScrollList from '@/components/InfiniteScrollList/ScrollProductList';
 import BannerSwiper from '@/components/MainPage/Swiper/BannerSwiper';
 import { MainPageContainer } from './MainPage.styles';
 
 const MainPage = () => {
+  const fetchData = ({ pageParam = 1 }) => getScrollProducts(pageParam);
   return (
     <MainPageContainer>
       <BannerSwiper />
-      <AllProductList />
+      <InfiniteScrollList queryKey={['products']} fetchData={fetchData} />
       <Footer />
     </MainPageContainer>
   );
