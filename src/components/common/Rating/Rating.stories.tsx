@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 
@@ -45,13 +44,11 @@ export const Custom = {
   },
 
   render: function Render() {
+    // state 방식과 storybook 은 useArgs 로 처리?
     // const [count, setCount] = useState(0);
 
     // @link https://storybook.js.org/docs/writing-stories/args#setting-args-from-within-a-story
-
     const [args, setArgs] = useArgs();
-
-    console.log('args', args);
 
     const handleChange = (count: number) => {
       // setCount(count);
@@ -63,7 +60,7 @@ export const Custom = {
     return (
       <div>
         <Rating onChange={handleChange} />
-        <span>count: ${args.count}</span>
+        <span>count: {args.count}</span>
       </div>
     );
   },
