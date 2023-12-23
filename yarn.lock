@@ -3009,6 +3009,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-a11y@npm:^7.6.6":
+  version: 7.6.6
+  resolution: "@storybook/addon-a11y@npm:7.6.6"
+  dependencies:
+    "@storybook/addon-highlight": "npm:7.6.6"
+    axe-core: "npm:^4.2.0"
+  checksum: b6adc0c90a49909c03bb288f376ba9560f55928f7a4a5441bc1965bbe95a5a7d29ade323743698ec1ca03271dbf07d818aba79100ab300642bf07c5f75e033d9
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-actions@npm:7.6.6":
   version: 7.6.6
   resolution: "@storybook/addon-actions@npm:7.6.6"
@@ -5218,6 +5228,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axe-core@npm:^4.2.0":
+  version: 4.8.3
+  resolution: "axe-core@npm:4.8.3"
+  checksum: 762392d03e49b5613e0d58c19bfe0bb0df253a56d6296b07d6d968729acef4ad25822e560f067c563368ac52a62c48cb341e6940b58252ca573334cd74cf8622
+  languageName: node
+  linkType: hard
+
 "axios@npm:^1.5.0":
   version: 1.5.0
   resolution: "axios@npm:1.5.0"
@@ -6967,6 +6984,7 @@ __metadata:
     "@emotion/react": "npm:^11.11.1"
     "@emotion/styled": "npm:^11.11.0"
     "@stomp/stompjs": "npm:^7.0.0"
+    "@storybook/addon-a11y": "npm:^7.6.6"
     "@storybook/addon-essentials": "npm:^7.6.6"
     "@storybook/addon-interactions": "npm:^7.6.6"
     "@storybook/addon-links": "npm:^7.6.6"
@@ -7008,6 +7026,8 @@ __metadata:
     recoil-persist: "npm:^5.1.0"
     sockjs-client: "npm:^1.6.1"
     storybook: "npm:^7.6.6"
+    storybook-addon-pseudo-states: "npm:^2.1.2"
+    storybook-addon-root-attributes: "npm:^2.0.3"
     swiper: "npm:^10.2.0"
     typescript: "npm:^5.0.2"
     vite: "npm:^4.4.5"
@@ -10844,6 +10864,47 @@ __metadata:
   version: 2.14.2
   resolution: "store2@npm:2.14.2"
   checksum: 2f27c3eaa7207b81410e170e7c41379816d22c1566308a9d97fbf853c4facff531fcb2a85f085c7503c578736570972f747c26018ebeaba7d1341fb82a7b6d52
+  languageName: node
+  linkType: hard
+
+"storybook-addon-pseudo-states@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "storybook-addon-pseudo-states@npm:2.1.2"
+  peerDependencies:
+    "@storybook/components": ^7.4.6
+    "@storybook/core-events": ^7.4.6
+    "@storybook/manager-api": ^7.4.6
+    "@storybook/preview-api": ^7.4.6
+    "@storybook/theming": ^7.4.6
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 6b13365a4756e2f51d35661d3397ba744e33930c1f3d23580a408e0455e2a0709de2787ac1b794db8690a8ed96e6bdeede99f86c51956fa75a83e559b212920f
+  languageName: node
+  linkType: hard
+
+"storybook-addon-root-attributes@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "storybook-addon-root-attributes@npm:2.0.3"
+  peerDependencies:
+    "@storybook/api": ^7.0.0
+    "@storybook/components": ^7.0.0
+    "@storybook/core-events": ^7.0.0
+    "@storybook/manager-api": ^7.0.0
+    "@storybook/preview-api": ^7.0.0
+    "@storybook/theming": ^7.0.0
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: a0ed6fe1cbdb8078bbb0dea706937e627bd6d2d4ca2e64e7e7dac7c51ba191ac277b402e17f9e743c81b76feb7275b47351d61343faf28c51849e541d89d7aca
   languageName: node
   linkType: hard
 
