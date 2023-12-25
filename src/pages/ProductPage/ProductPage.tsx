@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import { getCategoryProducts } from '@/apis/categoryProduct';
 import Button from '@/components/common/Button/Button';
 import CategoryHeader from '@/components/common/Header/CategoryHeader';
 import DefaultHeader from '@/components/common/Header/DefaultHeader';
 import FilterModal from '@/components/FilterModal/FilterModal';
-import CategoryList from '@/pages/ProductPage/CategoryList';
+import InfiniteScrollList from '@/components/InfiniteScrollList/ScrollProductList';
 import * as S from '../ProductPage/ProductPage.styles';
 
 type FilterOption = '필터옵션' | '나이' | '성별';
@@ -17,8 +18,11 @@ const ProductPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<FilterOption>();
   const [filter, setFilter] = useState<string>('필터옵션');
-  const [ageCategory, setAgeCategory] = useState<string>('나이');
-  const [genderCategory, setGenderCategory] = useState<string>('성별');
+  const [age, setAge] = useState<string>('나이');
+  const [gender, setGender] = useState<string>('성별');
+
+  const fetchData = ({ pageParam = 1 }) =>
+    getCategoryProducts(subcategory, pageParam, age, gender, filter, searchWord);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -32,13 +36,13 @@ const ProductPage: React.FC = () => {
     closeModal();
     switch (selectedOption) {
       case '필터옵션':
-        setFilter(option as FilterOption); 
+        setFilter(option as FilterOption);
         break;
       case '나이':
-        setAgeCategory(option as FilterOption);
+        setAge(option as FilterOption);
         break;
       case '성별':
-        setGenderCategory(option as FilterOption);
+        setGender(option as FilterOption);
         break;
       default:
         break;
@@ -87,7 +91,7 @@ const ProductPage: React.FC = () => {
             icon="IconArrowDown"
             onClick={() => handleFilterButtonClick('나이')}
           >
-            {ageCategory}
+            {age}
           </Button>
           <Button
             variant="contained"
@@ -97,17 +101,16 @@ const ProductPage: React.FC = () => {
             icon="IconArrowDown"
             onClick={() => handleFilterButtonClick('성별')}
           >
-            {genderCategory}
+            {gender}
           </Button>
         </S.FilterContainer>
-        <CategoryList
+        <InfiniteScrollList
+          queryKey={['categoryProducts']}
+          fetchData={fetchData}
           filter={filter}
-          category={subcategory}
-          age={ageCategory}
-          gender={genderCategory}
-          searchWord={searchWord}
+          age={age}
+          gender={gender}
         />
-
         <FilterModal
           isOpen={isModalOpen}
           options={
