@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from 'react-query';
-import { QueryKey } from '@tanstack/react-query';
 
+import { getCategoryProducts } from '@/apis/categoryProduct';
 import * as S from '@/components/MainPage/ListItemComponent/AllProductList.styles';
 import ListItem from '@/components/MainPage/ListItemComponent/ListItem';
 
@@ -12,24 +12,47 @@ interface Product {
   name: string;
   price: number;
   shopName: string;
+  filter: string;
 }
 
-interface InfiniteScrollListProps {
-  queryKey: QueryKey;
-  fetchData: (params: { pageParam?: number }) => Promise<Product[]>;
+interface CategoryListProps {
+  filter: string | null;
+  category: string | null;
+  age: string | null;
+  gender: string | null;
+  searchWord: string | null;
 }
 
-const InfiniteScrollList: React.FC<InfiniteScrollListProps> = ({ queryKey, fetchData }) => {
+const CategoryList: React.FC<CategoryListProps> = ({
+  filter,
+  category,
+  age,
+  gender,
+  searchWord,
+}) => {
   const [ref, inView] = useInView();
+
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } =
-    useInfiniteQuery(queryKey, fetchData, {
-      getNextPageParam: (lastPage, pages) => {
-        if (lastPage.length === 0) {
-          return undefined;
-        }
-        return pages.length + 1;
+    useInfiniteQuery(
+      ['categoryProducts'],
+      async ({ pageParam = 1 }) =>
+        getCategoryProducts(category, pageParam, age, gender, filter, searchWord),
+      {
+        getNextPageParam: (lastPage, pages) => {
+          if (lastPage.length === 0) {
+            return undefined;
+          }
+          return pages.length + 1;
+        },
       },
-    });
+    );
+
+  useEffect(() => {
+    // 불필요 통신 막기 위함
+    if (filter === '필터옵션' && age === '나이' && gender === '성별') return;
+
+    fetchNextPage();
+  }, [filter, age, gender, fetchNextPage]);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -40,9 +63,9 @@ const InfiniteScrollList: React.FC<InfiniteScrollListProps> = ({ queryKey, fetch
   return (
     <S.ListContainer>
       {data?.pages.map((page) =>
-        page.map((product: Product) => (
+        page.map((product: Product, index: number) => (
           <ListItem
-            key={product.productId}
+            key={index}
             productId={product.productId}
             imageUrl={product.imageUrl}
             name={product.name}
@@ -52,7 +75,7 @@ const InfiniteScrollList: React.FC<InfiniteScrollListProps> = ({ queryKey, fetch
         )),
       )}
       {isFetching ? (
-        <p>🔎 Loading...</p>
+        <p>🔎 로딩 중...</p>
       ) : status === 'error' ? (
         <p>😥 데이터를 불러오는데 실패했습니다</p>
       ) : null}
@@ -61,4 +84,4 @@ const InfiniteScrollList: React.FC<InfiniteScrollListProps> = ({ queryKey, fetch
   );
 };
 
-export default InfiniteScrollList;
+export default CategoryList;
