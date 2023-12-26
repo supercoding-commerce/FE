@@ -22,7 +22,11 @@ const styles = css`
 
   @font-face {
     font-family: 'SUIT';
-    src: url('/fonts/SUIT-Bold.ttf');
+    src:
+      url('/fonts/SUIT-Bold.woff2') format('woff2'),
+      url('/fonts/SUIT-Bold.woff') format('woff'),
+      url('/fonts/SUIT-Bold.ttf') format('truetype');
+    font-display: optional;
   }
 
   body {
