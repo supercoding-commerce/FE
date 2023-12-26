@@ -108,6 +108,7 @@ const ProductPage: React.FC = () => {
           queryKey={['categoryProducts', subcategory, age, gender, filter, searchWord]}
           fetchData={fetchData}
         />
+
         <FilterModal
           isOpen={isModalOpen}
           options={
