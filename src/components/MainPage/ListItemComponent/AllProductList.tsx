@@ -3,6 +3,8 @@ import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from 'react-query';
 
 import { getScrollProducts } from '@/apis/product';
+import { Flex } from '@/components/common/Flex/Flex';
+import Skeleton from '@/components/common/Skeleton/Skeleton';
 import ListItem from '@/components/MainPage/ListItemComponent/ListItem';
 import * as S from '../ListItemComponent/AllProductList.styles';
 
@@ -31,6 +33,24 @@ const AllProductList: React.FC = () => {
       fetchNextPage();
     }
   }, [inView, hasNextPage, fetchNextPage]);
+
+  if (isFetching) {
+    return (
+      <S.ListContainer>
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+          <Flex direction="column" gap="10px" key={item}>
+            <Skeleton width={171} height={207} />
+
+            <Flex direction="column" gap="2px">
+              <Skeleton width={100} height={22.5} />
+              <Skeleton width={50} height={17.5} />
+              <Skeleton width={35} height={16} />
+            </Flex>
+          </Flex>
+        ))}
+      </S.ListContainer>
+    );
+  }
 
   return (
     <S.ListContainer>
