@@ -18,9 +18,11 @@ export const getCategoryProducts = async (
   if (age !== null && age !== undefined) {
     url += `&ageCategory=${age}`;
   }
+
   if (gender !== null && gender !== undefined) {
     url += `&genderCategory=${gender}`;
   }
+
   if (filter !== null && filter !== undefined) {
     if (filter === '저가순') {
       url += `&sortBy=price`;
@@ -28,6 +30,7 @@ export const getCategoryProducts = async (
       url += `&sortBy=createdAt`;
     }
   }
+
   const response = await axios.get(url);
   return response.data;
 };
