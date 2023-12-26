@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 export const getCategoryProducts = async (
-  category: string | null,
+  subcategory: string | null,
   pageParam: number,
   age: string | null,
   gender: string | null,
   filter: string | null,
   searchWord: string | null,
 ) => {
-  let url = `https://pet-commerce.shop/v1/api/product/category/${category}?pageNumber=${pageParam}`;
+  let url = `https://pet-commerce.shop/v1/api/product/category/${subcategory}?pageNumber=${pageParam}`;
 
   if (searchWord !== null && searchWord !== undefined) {
     url = `https://pet-commerce.shop/v1/api/product/search?pageNumber=${pageParam}&searchWord=${encodeURIComponent(
