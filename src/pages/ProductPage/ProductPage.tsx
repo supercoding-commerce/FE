@@ -105,11 +105,8 @@ const ProductPage: React.FC = () => {
           </Button>
         </S.FilterContainer>
         <InfiniteScrollList
-          queryKey={['categoryProducts']}
+          queryKey={['categoryProducts', subcategory, age, gender, filter, searchWord]}
           fetchData={fetchData}
-          filter={filter}
-          age={age}
-          gender={gender}
         />
         <FilterModal
           isOpen={isModalOpen}

@@ -17,19 +17,9 @@ interface Product {
 interface InfiniteScrollListProps {
   queryKey: QueryKey;
   fetchData: (params: { pageParam?: number }) => Promise<Product[]>;
-  filter?: string | null;
-  category?: string | null;
-  age?: string | null;
-  gender?: string | null;
 }
 
-const InfiniteScrollList: React.FC<InfiniteScrollListProps> = ({
-  queryKey,
-  fetchData,
-  filter,
-  age,
-  gender,
-}) => {
+const InfiniteScrollList: React.FC<InfiniteScrollListProps> = ({ queryKey, fetchData }) => {
   const [ref, inView] = useInView();
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } =
     useInfiniteQuery(queryKey, fetchData, {
@@ -40,13 +30,6 @@ const InfiniteScrollList: React.FC<InfiniteScrollListProps> = ({
         return pages.length + 1;
       },
     });
-
-  useEffect(() => {
-    // 불필요 통신 막기 위함
-    if (filter === '필터옵션' && age === '나이' && gender === '성별') return;
-
-    fetchNextPage();
-  }, [filter, age, gender, fetchNextPage]);
 
   useEffect(() => {
     if (inView && hasNextPage) {
