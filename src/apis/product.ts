@@ -41,7 +41,9 @@ export async function deleteProduct(productId: number) {
 }
 
 export const getScrollProducts = async (pageParam: number) => {
-  const response = await client.get(`/v1/api/product?pageNumber=${pageParam}&sortBy=createdAt`);
+  const response = await client.get(
+    `https://pet-commerce.shop${BASE_URL}?pageNumber=${pageParam}&sortBy=createdAt`,
+  );
   return response.data;
 };
 
