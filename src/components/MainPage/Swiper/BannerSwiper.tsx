@@ -12,15 +12,15 @@ interface Slide {
 
 const slideData: Slide[] = [
   {
-    srcWebp: 'https://i.postimg.cc/T16SBK4t/23231-2.webp',
+    srcWebp: 'https://res.cloudinary.com/du4w00gvm/image/upload/v1704560751/swiper1_tshxjo.webp',
     srcPng: 'https://i.postimg.cc/8PzLM1h3/23231.png',
   },
   {
-    srcWebp: 'https://i.postimg.cc/vZVrx0B6/wewe-1.webp',
+    srcWebp: 'https://res.cloudinary.com/du4w00gvm/image/upload/v1704598085/swiper2_p1gtjc.webp',
     srcPng: 'https://i.postimg.cc/mD7KY3Gb/wewe.png',
   },
   {
-    srcWebp: 'https://i.postimg.cc/DZjJMG0T/529f73b41a06cd4951aaea5a9b0bcc28-1.webp',
+    srcWebp: 'https://res.cloudinary.com/du4w00gvm/image/upload/v1704598085/swiper3_dteszd.webp',
     srcPng: 'https://i.postimg.cc/qqkD29LL/529f73b41a06cd4951aaea5a9b0bcc28.png',
   },
 ];
@@ -44,7 +44,6 @@ const BannerSwiper: React.FC = () => {
                 src={image.srcPng}
                 alt={`EventBanner-${index + 1}`}
                 style={{ width: '100%', aspectRatio: '16/9' }}
-                loading="lazy"
               />
             </picture>
           </S.CustomSwiperSlide>
