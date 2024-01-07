@@ -46,7 +46,18 @@ export const getScrollProducts = async (pageParam: number) => {
       pageParam === 1 ? 4 : 15
     }&sortBy=createdAt`,
   );
-  return response.data;
+
+  const data = response.data.map((item: any) => {
+    const imageUrl = item.imageUrl as any[];
+
+    const thumbnail = imageUrl[0];
+    const covertThumbnail = thumbnail.split('/upload').join('/upload/w_169,h_205');
+    // GYU-TODO: 레티나까지 고려하면 169 * 2, 205 * 2 인 w_338, h_410 으로 해야함!
+
+    return { ...item, imageUrl: [covertThumbnail, ...item.imageUrl.slice(1)] };
+  });
+
+  return data;
 };
 
 export const getSearchProducts = async (currentSearchTerm: string) => {
