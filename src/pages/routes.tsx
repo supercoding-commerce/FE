@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import { Purchase } from '@/components/Mypage-Purchase/Purchase';
@@ -5,30 +6,45 @@ import { SoldPage } from '@/components/Mypage-Sold/SoldPage';
 import { WishPage } from '@/components/Mypage-Wish/WishPage';
 import { AddProduct } from '@/pages/AddProduct/AddProduct.tsx';
 import { CartPage } from '@/pages/CartPage/CartPage';
-import Menu from '@/pages/Category/Menu';
-import Coupon from '@/pages/Coupon/Coupon';
+// import Menu from '@/pages/Category/Menu';
+const Menu = lazy(() => import('@/pages/Category/Menu'));
+// import Coupon from '@/pages/Coupon/Coupon';
+const Coupon = lazy(() => import('@/pages/Coupon/Coupon'));
 import { DefaultLayout } from '@/pages/DefaultLayout/DefaultLayout.tsx';
-import DetailPage from '@/pages/DetailPage/DetailPage';
+// import DetailPage from '@/pages/DetailPage/DetailPage';
+const DetailPage = lazy(() => import('@/pages/DetailPage/DetailPage'));
 import Home from '@/pages/Home/Home.tsx';
-import KakaoCallbackPage from '@/pages/KakaoCallbackPage/KakaoCallbackPage';
+// import KakaoCallbackPage from '@/pages/KakaoCallbackPage/KakaoCallbackPage';
+const KakaoCallbackPage = lazy(() => import('@/pages/KakaoCallbackPage/KakaoCallbackPage'));
 import { MyPage } from '@/pages/MyPage/MyPage.tsx';
 import { Payment } from '@/pages/Payment/Payment';
 import { PayMoneyPage } from '@/pages/PayMoney/PayMoneyPage';
 import { PointHistory } from '@/pages/PointHistory/PointHistory.tsx';
-import ProductPage from '@/pages/ProductPage/ProductPage';
+// import ProductPage from '@/pages/ProductPage/ProductPage';
+const ProductPage = lazy(() => import('@/pages/ProductPage/ProductPage'));
 import { ProtectedRoute } from '@/pages/ProtectedRoute.tsx';
-import Search from '@/pages/Search/Search';
-import SearchProduct from '@/pages/Search/SearchProduct';
+// import Search from '@/pages/Search/Search';
+const Search = lazy(() => import('@/pages/Search/Search'));
+// import SearchProduct from '@/pages/Search/SearchProduct';
+const SearchProduct = lazy(() => import('@/pages/Search/SearchProduct'));
 import { SellingProduct } from '@/pages/SellingProduct/SellingProduct.tsx';
-import SignInPage from '@/pages/SignInPage/SignInPage';
-import SignUpPage from '@/pages/SignUpPage/SignUpPage';
-import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
+// import SignInPage from '@/pages/SignInPage/SignInPage';
+const SignInPage = lazy(() => import('@/pages/SignInPage/SignInPage'));
+const SignUpPage = lazy(() => import('@/pages/SignUpPage/SignUpPage'));
+const SignUpUserPage = lazy(() => import('@/pages/SignUpUserPage/SignUpUserPage'));
+
+// import SignUpPage from '@/pages/SignUpPage/SignUpPage';
+// import SignUpUserPage from '@/pages/SignUpUserPage/SignUpUserPage';
 import { UpdateProduct } from '@/pages/UpdateProduct/UpdateProduct.tsx';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <DefaultLayout />,
+    element: (
+      <Suspense fallback={<div>loading...</div>}>
+        <DefaultLayout />
+      </Suspense>
+    ),
     // errorElement: <div>Not Found Page</div>,
     children: [
       // 제품 및 검색

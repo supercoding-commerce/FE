@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 import { purchase, PurchasePayload } from '@/apis/payment.ts';
 import { queryKeys } from '@/queries/queryKeys.ts';

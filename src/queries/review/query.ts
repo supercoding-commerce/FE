@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions } from 'react-query';
 
 import { getReview } from '@/apis/product';
 import { DetailReview } from '@/components/Detail/detailReview/Review';

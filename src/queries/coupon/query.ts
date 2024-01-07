@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions } from 'react-query';
 
 import { getCoupon } from '@/apis/coupon.ts';
 import { queryKeys } from '@/queries/queryKeys.ts';
