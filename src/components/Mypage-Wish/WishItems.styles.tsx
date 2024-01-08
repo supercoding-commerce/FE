@@ -42,11 +42,14 @@ export const BrandName = styled.div`
 `;
 
 export const ProductName = styled.div`
-  font: ${theme.font.body1};
-  width: 100%;
+  font: ${theme.font.body2};
+  width: 180px;
   height: 22px;
   display: flex;
   align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   padding-left: 2px;
 `;
 

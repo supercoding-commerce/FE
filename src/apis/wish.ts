@@ -1,11 +1,11 @@
 import { client } from '@/apis/index.ts';
-// import { OnlyProductId } from '@/components/DetailFooter/DetailFooter';
+import { Wish } from '@/components/Mypage-Wish/WishPage';
 
 const WISH_URL = 'v1/api/wishlist';
 
-export async function getWish() {
+export async function getWish(): Promise<Wish[]> {
   const response = await client.get(WISH_URL);
-  return response.data;
+  return response.data.data;
 }
 
 export async function postWish(productId: number) {

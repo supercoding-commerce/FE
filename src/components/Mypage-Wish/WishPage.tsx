@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getWish } from '@/apis/wish';
 import Button from '@/components/common/Button/Button';
-// import { IconNameType } from '@/components/common/Icon';
 import { WishItems } from '@/components/Mypage-Wish/WishItems';
+import { useGetWish } from '@/queries/mypage-wishList/query';
 import * as S from './WishPage.styles';
 
 export type Wish = {
@@ -17,19 +15,9 @@ export type Wish = {
 };
 
 export function WishPage() {
-  const [wishItem, setWishItem] = useState<Wish[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getWish()
-      .then((result) => {
-        setWishItem(result.data);
-        console.log(result.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  const { data: wishItem } = useGetWish();
 
   return (
     <>

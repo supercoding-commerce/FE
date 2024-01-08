@@ -4,13 +4,14 @@ import { useRecoilValue } from 'recoil';
 
 import { OrderNCartItemAPI, postCart, postPayment } from '@/apis/product';
 import { getInfo } from '@/apis/user';
-import { deleteWish, getWish, postWish } from '@/apis/wish';
+import { getWish } from '@/apis/wish';
 import Button from '@/components/common/Button/Button';
 import Icon, { IconNameType } from '@/components/common/Icon';
 import { Toast } from '@/components/common/Toastify/Toastify';
 import { CartModal } from '@/components/DetailFooter/CartModal/CartModal';
 import { Wish } from '@/components/Mypage-Wish/WishPage';
 import { DetailProduct } from '@/pages/DetailPage/DetailPage';
+import { useDeleteWish, usePostWish } from '@/queries/mypage-wishList/mutation';
 import { userState } from '@/recoil/userState';
 import * as S from './DetailFooter.styles';
 
@@ -34,15 +35,18 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userState);
 
+  const { postWishMutate } = usePostWish();
+  const { deleteWishMutate } = useDeleteWish();
+
   const changeHeartHandler = (productId: number) => {
     setHeart(heart === 'IconEmptyHeart' ? 'IconFullHeart' : 'IconEmptyHeart');
     if (heart === 'IconEmptyHeart') {
-      postWish(productId);
+      postWishMutate(productId);
       Toast.success('찜한 상품에 추가했습니다', {
         icon: <Icon name="IconFullHeart" size={24} />,
       });
     } else {
-      deleteWish(productId);
+      deleteWishMutate(productId);
       Toast.success('찜한 상품에서 삭제했습니다', {
         icon: <Icon name="IconEmptyHeart" size={24} />,
       });
@@ -84,7 +88,7 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
       try {
         const result = await getWish();
         const wishCheck = productId;
-        const hasProductId = result.data.some((item: Wish) => item.productId === wishCheck);
+        const hasProductId = result.some((item: Wish) => item.productId === wishCheck);
         if (hasProductId) {
           setHeart('IconFullHeart');
         }
