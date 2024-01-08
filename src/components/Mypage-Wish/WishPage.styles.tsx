@@ -14,6 +14,7 @@ export const WishPage = styled.div`
   display: grid;
   grid-gap: 10px;
   grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  padding-bottom: 20px;
 `;
 
 export const NoneWish = styled.div`
