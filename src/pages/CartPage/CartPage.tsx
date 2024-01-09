@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { deleteAll, deleteCartItem, getCart, postPayment, putCart } from '@/apis/cart';
+import { deleteAll, deleteCartItem, postPayment, putCart } from '@/apis/cart';
 import Button from '@/components/common/Button/Button';
+import { useGetCart } from '@/queries/cart/query';
 import { CartItem } from './CartItem';
 import * as S from './CartPage.styles';
 
@@ -27,28 +28,19 @@ export type OrderCart = {
 };
 
 export function CartPage() {
-  const [cartItems, setCartItems] = useState<Cart[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getCart().then((result) => {
-      if (result.status === 200) {
-        let data = result.data
-          .map((item) => Object.values(item).flat())
-          .flat() as unknown as Cart[];
+  const { data: cart } = useGetCart();
 
-        data = data.map((item) => ({
-          ...item,
-          option: JSON.parse(item.option as unknown as string),
-          productOptionList: JSON.parse(item.productOptionList as unknown as string),
-        }));
-        setCartItems(data);
-      }
-    });
-  }, []);
+  let cartItem = cart?.map((item) => Object.values(item).flat()).flat() as unknown as Cart[];
+  cartItem = cartItem.map((item) => ({
+    ...item,
+    option: JSON.parse(item.option as unknown as string),
+    productOptionList: JSON.parse(item.productOptionList as unknown as string),
+  }));
 
   const cartQuantityChangeHandler = (index: number, newQuantity: number) => {
-    const updatedItem = cartItems[index];
+    const updatedItem = cartItem[index];
     putCart([
       {
         productId: updatedItem.productId,
@@ -56,20 +48,21 @@ export function CartPage() {
         quantity: newQuantity,
         options: updatedItem.option,
       },
-    ]).then(() => {
-      const newCartItemArray = cartItems.map((item, idx) => {
-        if (idx === index) {
-          item.quantity = newQuantity;
-          return item;
-        }
-        return item;
-      });
-      setCartItems(newCartItemArray);
-    });
+    ]);
+    // .then(() => {
+    //   const newCartItemArray = cartItem.map((item, idx) => {
+    //     if (idx === index) {
+    //       item.quantity = newQuantity;
+    //       return item;
+    //     }
+    //     return item;
+    //   });
+    //   setCartItems(newCartItemArray);
+    // });
   };
 
   const cartOptionChangeHandler = (index: number, newOption: string) => {
-    const updatedItem = cartItems[index];
+    const updatedItem = cartItem[index];
     putCart([
       {
         productId: updatedItem.productId,
@@ -77,30 +70,31 @@ export function CartPage() {
         quantity: updatedItem.quantity,
         options: [newOption],
       },
-    ]).then(() => {
-      const newCartItemArray = cartItems.map((item, idx) => {
-        if (idx === index) {
-          item.option = [newOption];
-          return item;
-        }
-        return item;
-      });
-      setCartItems(newCartItemArray);
-    });
+    ]);
+    // .then(() => {
+    //   const newCartItemArray = cartItem.map((item, idx) => {
+    //     if (idx === index) {
+    //       item.option = [newOption];
+    //       return item;
+    //     }
+    //     return item;
+    //   });
+    //   setCartItems(newCartItemArray);
+    // });
   };
 
   const deleteItemHandler = (cartId: number) => {
     deleteCartItem(cartId);
-    setCartItems((prev) => prev.filter((item) => item.cartId !== cartId));
+    // setCartItems((prev) => prev.filter((item) => item.cartId !== cartId));
   };
 
   const deleteAllHandler = () => {
     deleteAll();
-    setCartItems([]);
+    // setCartItems([]);
   };
 
   const postCartItemPayment = () => {
-    const cartIds = cartItems.map((item) => item.cartId);
+    const cartIds = cartItem.map((item) => item.cartId);
     postPayment({ cartIdList: cartIds }).then((data) => {
       navigate('/pay', {
         state: {
@@ -111,7 +105,7 @@ export function CartPage() {
     });
   };
 
-  const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const totalPrice = cartItem.reduce((total, item) => total + item.price * item.quantity, 0);
 
   let deliveryPrice;
   if (totalPrice === 0) {
@@ -126,17 +120,17 @@ export function CartPage() {
   if (deliveryPrice === '3,000원') {
     finalTotalPrice += 3000;
   }
-  const noneCartItem = cartItems.length === 0;
+  const noneCartItem = cartItem.length === 0;
 
   return (
     <S.CartPageContainer>
-      {cartItems && cartItems.length > 0 ? (
+      {cartItem && cartItem.length > 0 ? (
         <>
           <S.AllDelete>
             <p onClick={deleteAllHandler}>전체삭제</p>
           </S.AllDelete>
           <CartItem
-            cartItems={cartItems}
+            cartItems={cartItem}
             onDelete={deleteItemHandler}
             onQuantityChange={cartQuantityChangeHandler}
             onOptionChange={cartOptionChangeHandler}
@@ -163,7 +157,7 @@ export function CartPage() {
               onClick={postCartItemPayment}
               disabled={noneCartItem}
             >
-              구매하기({cartItems.length})
+              구매하기({cartItem.length})
             </Button>
           </S.GoToPay>
         </>

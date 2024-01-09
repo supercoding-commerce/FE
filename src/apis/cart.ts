@@ -1,13 +1,11 @@
-import { AxiosResponse } from 'axios';
-
 import { client } from '@/apis/index.ts';
 import { Cart, OrderCart } from '@/pages/CartPage/CartPage';
 
 const CART_URL = '/v1/api/cart';
 
-export async function getCart(): Promise<AxiosResponse<Cart[]>> {
+export async function getCart(): Promise<Cart[]> {
   const response = await client.get(CART_URL);
-  return response;
+  return response.data;
 }
 
 export async function putCart(payload: OrderCart[]): Promise<OrderCart> {
