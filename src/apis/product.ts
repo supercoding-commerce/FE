@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 
 import { client } from '@/apis/index.ts';
+import { Toast } from '@/components/common/Toastify/Toastify';
 import { DetailReview } from '@/components/Detail/detailReview/Review';
 
 const BASE_URL = '/v1/api/product';
@@ -26,8 +27,11 @@ export async function getProduct(productId: number) {
 
 export async function postCart(
   payload: OrderNCartItemAPI[],
-): Promise<AxiosResponse<OrderNCartItemAPI>> {
+): Promise<AxiosResponse<OrderNCartItemAPI[]>> {
   const response = await client.post('/v1/api/cart', payload);
+  if (response.status === 409) {
+    Toast.error('이미 장바구니에 담긴 상품입니다.');
+  }
   return response;
 }
 

@@ -6,8 +6,6 @@ const CART_URL = '/v1/api/cart';
 
 export async function getCart(): Promise<CartPromise[]> {
   const response = await client.get(CART_URL);
-  console.log(response.data);
-
   return response.data;
 }
 
@@ -29,7 +27,7 @@ export async function deleteAll() {
 export type PaymentItem = {
   cartIdList: number[];
 };
-export async function postPayment(payload: PaymentItem): Promise<string> {
+export async function postCartToPayment(payload: PaymentItem) {
   const response = await client.post('/v1/api/order/cart', payload);
-  return response.data;
+  return response;
 }

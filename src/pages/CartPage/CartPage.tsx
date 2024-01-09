@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
-import { deleteAll, deleteCartItem, postPayment } from '@/apis/cart';
+import { deleteAll, deleteCartItem } from '@/apis/cart';
 import Button from '@/components/common/Button/Button';
-import { usePutCart } from '@/queries/cart/mutation';
+import { usePostCartToPayment, usePutCart } from '@/queries/cart/mutation';
 import { useGetCart } from '@/queries/cart/query';
 import { CartItem } from './CartItem';
 import * as S from './CartPage.styles';
@@ -31,6 +31,7 @@ export function CartPage() {
   const navigate = useNavigate();
   const { cartItems: cart = [] } = useGetCart();
   const { putCartMutate } = usePutCart();
+  const { postCToPMutate } = usePostCartToPayment();
 
   const cartQuantityChangeHandler = (index: number, newQuantity: number) => {
     const updatedItem = cart[index];
@@ -68,14 +69,19 @@ export function CartPage() {
 
   const postCartItemPayment = () => {
     const cartIds = cart.map((item) => item.cartId);
-    postPayment({ cartIdList: cartIds }).then((data) => {
-      navigate('/pay', {
-        state: {
-          type: 'CART',
-          payload: data,
+    postCToPMutate(
+      { cartIdList: cartIds },
+      {
+        onSuccess: () => {
+          navigate('/pay', {
+            state: {
+              type: 'CART',
+              payload: cartIds,
+            },
+          });
         },
-      });
-    });
+      },
+    );
   };
 
   const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
