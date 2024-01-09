@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
-import { deleteAll, deleteCartItem, postPayment, putCart } from '@/apis/cart';
+import { deleteAll, deleteCartItem, postPayment } from '@/apis/cart';
 import Button from '@/components/common/Button/Button';
+import { usePutCart } from '@/queries/cart/mutation';
 import { useGetCart } from '@/queries/cart/query';
 import { CartItem } from './CartItem';
 import * as S from './CartPage.styles';
@@ -29,10 +30,11 @@ export type OrderCart = {
 export function CartPage() {
   const navigate = useNavigate();
   const { cartItems: cart = [] } = useGetCart();
+  const { putCartMutate } = usePutCart();
 
   const cartQuantityChangeHandler = (index: number, newQuantity: number) => {
     const updatedItem = cart[index];
-    putCart([
+    putCartMutate([
       {
         productId: updatedItem.productId,
         cartId: updatedItem.cartId,
@@ -40,21 +42,11 @@ export function CartPage() {
         options: updatedItem.option,
       },
     ]);
-    // .then(() => {
-    //   const newCartItemArray = cartItem.map((item, idx) => {
-    //     if (idx === index) {
-    //       item.quantity = newQuantity;
-    //       return item;
-    //     }
-    //     return item;
-    //   });
-    //   setCartItems(newCartItemArray);
-    // });
   };
 
   const cartOptionChangeHandler = (index: number, newOption: string) => {
     const updatedItem = cart[index];
-    putCart([
+    putCartMutate([
       {
         productId: updatedItem.productId,
         cartId: updatedItem.cartId,
@@ -62,16 +54,6 @@ export function CartPage() {
         options: [newOption],
       },
     ]);
-    // .then(() => {
-    //   const newCartItemArray = cartItem.map((item, idx) => {
-    //     if (idx === index) {
-    //       item.option = [newOption];
-    //       return item;
-    //     }
-    //     return item;
-    //   });
-    //   setCartItems(newCartItemArray);
-    // });
   };
 
   const deleteItemHandler = (cartId: number) => {
