@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import Counter from '@/components/common/Counter/Counter';
 import Icon from '@/components/common/Icon';
 import SelectBox from '@/components/common/SelectBox/SelectBox';
@@ -6,12 +8,14 @@ import * as S from './CartItem.styles';
 
 type CartItemProps = {
   cartItems: Cart[];
-  onDelete: (index: number) => void;
+  onDelete: (cartId: number) => void;
   onQuantityChange?: (index: number, newQuantity: number) => void;
   onOptionChange?: (index: number, newOption: string) => void;
 };
 
 export function CartItem({ cartItems, onDelete, onQuantityChange, onOptionChange }: CartItemProps) {
+  const navigate = useNavigate();
+
   return (
     <S.CartItemContainer>
       {cartItems.map((item, idx: number) => (
@@ -26,7 +30,7 @@ export function CartItem({ cartItems, onDelete, onQuantityChange, onOptionChange
           </S.CartItemHeader>
           <S.CartItemBodyContainer>
             <S.CartItemBody>
-              <S.Image src={item.imageUrl} />
+              <S.Image src={item.imageUrl} onClick={() => navigate(`/product/${item.productId}`)} />
               <S.ItemInfoWrapper>
                 <S.ItemNameWrapper>
                   <S.ItemName>{item.productName}</S.ItemName>
