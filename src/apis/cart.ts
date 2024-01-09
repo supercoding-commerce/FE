@@ -1,10 +1,13 @@
 import { client } from '@/apis/index.ts';
-import { Cart, OrderCart } from '@/pages/CartPage/CartPage';
+import { OrderCart } from '@/pages/CartPage/CartPage';
+import { CartPromise } from '@/queries/cart/query';
 
 const CART_URL = '/v1/api/cart';
 
-export async function getCart(): Promise<Cart[]> {
+export async function getCart(): Promise<CartPromise[]> {
   const response = await client.get(CART_URL);
+  console.log(response.data);
+
   return response.data;
 }
 

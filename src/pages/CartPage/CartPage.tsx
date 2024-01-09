@@ -1,4 +1,3 @@
-// import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { deleteAll, deleteCartItem, postPayment, putCart } from '@/apis/cart';
@@ -29,18 +28,10 @@ export type OrderCart = {
 
 export function CartPage() {
   const navigate = useNavigate();
-
-  const { data: cart } = useGetCart();
-
-  let cartItem = cart?.map((item) => Object.values(item).flat()).flat() as unknown as Cart[];
-  cartItem = cartItem.map((item) => ({
-    ...item,
-    option: JSON.parse(item.option as unknown as string),
-    productOptionList: JSON.parse(item.productOptionList as unknown as string),
-  }));
+  const { cartItems: cart = [] } = useGetCart();
 
   const cartQuantityChangeHandler = (index: number, newQuantity: number) => {
-    const updatedItem = cartItem[index];
+    const updatedItem = cart[index];
     putCart([
       {
         productId: updatedItem.productId,
@@ -62,7 +53,7 @@ export function CartPage() {
   };
 
   const cartOptionChangeHandler = (index: number, newOption: string) => {
-    const updatedItem = cartItem[index];
+    const updatedItem = cart[index];
     putCart([
       {
         productId: updatedItem.productId,
@@ -94,7 +85,7 @@ export function CartPage() {
   };
 
   const postCartItemPayment = () => {
-    const cartIds = cartItem.map((item) => item.cartId);
+    const cartIds = cart.map((item) => item.cartId);
     postPayment({ cartIdList: cartIds }).then((data) => {
       navigate('/pay', {
         state: {
@@ -105,7 +96,7 @@ export function CartPage() {
     });
   };
 
-  const totalPrice = cartItem.reduce((total, item) => total + item.price * item.quantity, 0);
+  const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
   let deliveryPrice;
   if (totalPrice === 0) {
@@ -120,17 +111,17 @@ export function CartPage() {
   if (deliveryPrice === '3,000원') {
     finalTotalPrice += 3000;
   }
-  const noneCartItem = cartItem.length === 0;
+  const noneCartItem = cart.length === 0;
 
   return (
     <S.CartPageContainer>
-      {cartItem && cartItem.length > 0 ? (
+      {cart && cart.length > 0 ? (
         <>
           <S.AllDelete>
             <p onClick={deleteAllHandler}>전체삭제</p>
           </S.AllDelete>
           <CartItem
-            cartItems={cartItem}
+            cartItems={cart}
             onDelete={deleteItemHandler}
             onQuantityChange={cartQuantityChangeHandler}
             onOptionChange={cartOptionChangeHandler}
@@ -157,7 +148,7 @@ export function CartPage() {
               onClick={postCartItemPayment}
               disabled={noneCartItem}
             >
-              구매하기({cartItem.length})
+              구매하기({cart.length})
             </Button>
           </S.GoToPay>
         </>
