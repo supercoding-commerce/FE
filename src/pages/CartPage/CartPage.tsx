@@ -1,8 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 
-import { deleteAll, deleteCartItem } from '@/apis/cart';
 import Button from '@/components/common/Button/Button';
-import { usePostCartToPayment, usePutCart } from '@/queries/cart/mutation';
+import {
+  useDeleteAllCart,
+  useDeleteCart,
+  usePostCartToPayment,
+  usePutCart,
+} from '@/queries/cart/mutation';
 import { useGetCart } from '@/queries/cart/query';
 import { CartItem } from './CartItem';
 import * as S from './CartPage.styles';
@@ -32,6 +36,8 @@ export function CartPage() {
   const { cartItems: cart = [] } = useGetCart();
   const { putCartMutate } = usePutCart();
   const { postCToPMutate } = usePostCartToPayment();
+  const { deleteCartMutate } = useDeleteCart();
+  const { deleteAllCartMutate } = useDeleteAllCart();
 
   const cartQuantityChangeHandler = (index: number, newQuantity: number) => {
     const updatedItem = cart[index];
@@ -55,16 +61,6 @@ export function CartPage() {
         options: [newOption],
       },
     ]);
-  };
-
-  const deleteItemHandler = (cartId: number) => {
-    deleteCartItem(cartId);
-    // setCartItems((prev) => prev.filter((item) => item.cartId !== cartId));
-  };
-
-  const deleteAllHandler = () => {
-    deleteAll();
-    // setCartItems([]);
   };
 
   const postCartItemPayment = () => {
@@ -99,18 +95,19 @@ export function CartPage() {
   if (deliveryPrice === '3,000원') {
     finalTotalPrice += 3000;
   }
-  const noneCartItem = cart.length === 0;
 
   return (
     <S.CartPageContainer>
       {cart && cart.length > 0 ? (
         <>
           <S.AllDelete>
-            <p onClick={deleteAllHandler}>전체삭제</p>
+            <p onClick={() => deleteAllCartMutate()}>전체삭제</p>
           </S.AllDelete>
           <CartItem
             cartItems={cart}
-            onDelete={deleteItemHandler}
+            onDelete={(cartId: number) => {
+              deleteCartMutate(cartId);
+            }}
             onQuantityChange={cartQuantityChangeHandler}
             onOptionChange={cartOptionChangeHandler}
           />
@@ -129,13 +126,7 @@ export function CartPage() {
               <S.FinalPriceTitle>총 결제 금액</S.FinalPriceTitle>
               <S.FinalPriceValue>{finalTotalPrice.toLocaleString()}원</S.FinalPriceValue>
             </S.FinalPrice>
-            <Button
-              variant="main"
-              size="medium"
-              isFullWidth
-              onClick={postCartItemPayment}
-              disabled={noneCartItem}
-            >
+            <Button variant="main" size="medium" isFullWidth onClick={postCartItemPayment}>
               구매하기({cart.length})
             </Button>
           </S.GoToPay>
