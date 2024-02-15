@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
-import { OrderNCartItemAPI, postCart, postPayment } from '@/apis/product';
+import { OrderNCartItemAPI, postPayment } from '@/apis/product';
 import { getInfo } from '@/apis/user';
 import { getWish } from '@/apis/wish';
 import Button from '@/components/common/Button/Button';
@@ -11,6 +11,7 @@ import { Toast } from '@/components/common/Toastify/Toastify';
 import { CartModal } from '@/components/DetailFooter/CartModal/CartModal';
 import { Wish } from '@/components/Mypage-Wish/WishPage';
 import { DetailProduct } from '@/pages/DetailPage/DetailPage';
+import { usePostCart } from '@/queries/cart/mutation';
 import { useDeleteWish, usePostWish } from '@/queries/mypage-wishList/mutation';
 import { userState } from '@/recoil/userState';
 import * as S from './DetailFooter.styles';
@@ -37,6 +38,7 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
 
   const { postWishMutate } = usePostWish();
   const { deleteWishMutate } = useDeleteWish();
+  const { postCartMutate } = usePostCart();
 
   const changeHeartHandler = (productId: number) => {
     setHeart(heart === 'IconEmptyHeart' ? 'IconFullHeart' : 'IconEmptyHeart');
@@ -69,18 +71,15 @@ const DetailFooter = ({ orderNCartProduct, productId, shopName }: FooterProps) =
   };
 
   const postCartProduct = () => {
-    postCart(orderNCartProduct)
-      .then((result) => {
-        if (result.status === 200) {
-          setShowModal(true);
-          setTimeout(() => setShowModal(false), 3000);
-        }
-      })
-      .catch((error) => {
-        if (error.response.status === 409) {
-          Toast.error('이미 장바구니에 담긴 상품입니다.');
-        }
-      });
+    postCartMutate(orderNCartProduct, {
+      onSuccess: () => {
+        setShowModal(true);
+        setTimeout(() => setShowModal(false), 3000);
+      },
+      onError: () => {
+        Toast.error('이미 장바구니에 담긴 상품입니다.');
+      },
+    });
   };
 
   useEffect(() => {

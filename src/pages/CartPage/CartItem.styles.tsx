@@ -33,6 +33,7 @@ export const Image = styled.img`
   width: 135px;
   height: 150px;
   margin-right: 15px;
+  cursor: pointer;
 `;
 
 export const ItemInfoWrapper = styled.div`

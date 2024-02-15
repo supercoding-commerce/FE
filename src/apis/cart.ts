@@ -1,13 +1,12 @@
-import { AxiosResponse } from 'axios';
-
 import { client } from '@/apis/index.ts';
-import { Cart, OrderCart } from '@/pages/CartPage/CartPage';
+import { OrderCart } from '@/pages/CartPage/CartPage';
+import { CartPromise } from '@/queries/cart/query';
 
 const CART_URL = '/v1/api/cart';
 
-export async function getCart(): Promise<AxiosResponse<Cart[]>> {
+export async function getCart(): Promise<CartPromise[]> {
   const response = await client.get(CART_URL);
-  return response;
+  return response.data;
 }
 
 export async function putCart(payload: OrderCart[]): Promise<OrderCart> {
@@ -28,7 +27,7 @@ export async function deleteAll() {
 export type PaymentItem = {
   cartIdList: number[];
 };
-export async function postPayment(payload: PaymentItem): Promise<string> {
+export async function postCartToPayment(payload: PaymentItem) {
   const response = await client.post('/v1/api/order/cart', payload);
-  return response.data;
+  return response;
 }
