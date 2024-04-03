@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { sellerChatList, userChatList } from '@/apis/chat';
 import ChatBody from '@/components/chat/chatList/ChatBody';
 import ChatHeader from '@/components/chat/chatList/ChatHeader';
-import { Message } from '@/models/chat';
+import { useSSE } from '@/hooks/useSSE';
+import { Message, UserInfo } from '@/models/chat';
 
 export type Chat = {
   [timestamp: string]: Message;
@@ -23,30 +24,42 @@ export type List = {
   lastChat: Message;
 };
 
-type chatProps = {
+type ChatProps = {
   clickListBox: (customRoomId: string, userId: number, userName: string) => void;
   handleOpen: () => void;
   seller: {
     sellerId: number;
     shopName: string;
   };
+  user: UserInfo;
   product: {
     productId: number;
     productName: string;
   };
   isSeller: boolean;
+  role: string;
 };
 
-const ChatList = ({ handleOpen, clickListBox, seller, isSeller, product }: chatProps) => {
+const ChatList = ({
+  handleOpen,
+  clickListBox,
+  seller,
+  user,
+  isSeller,
+  product,
+  role,
+}: ChatProps) => {
   const [list, setList] = useState<List[]>([]);
-
   const [shopImg, setShopImg] = useState<string>('');
 
+  const message = useSSE(role, seller.sellerId, user.userId);
+
+  //TODO: 리액트쿼리로 변경하기
   const loadUserChatList: () => Promise<void> = async () => {
-    const sellerId = seller.sellerId;
-    userChatList(sellerId)
+    userChatList(seller.sellerId)
       .then((resData) => {
         const data = resData.chatList;
+        console.log('list', data);
         const img = resData.shopImage;
         setList([...data]);
         setShopImg(img);
@@ -62,6 +75,7 @@ const ChatList = ({ handleOpen, clickListBox, seller, isSeller, product }: chatP
     sellerChatList(sellerId, productId)
       .then((resData) => {
         const data = resData.chatList;
+        console.log('list', data);
         const img = resData.shopImage;
         setList([...data]);
         setShopImg(img);
@@ -77,10 +91,10 @@ const ChatList = ({ handleOpen, clickListBox, seller, isSeller, product }: chatP
   }, [isSeller]);
 
   return (
-    <div>
+    <>
       <ChatHeader shopName={seller.shopName} shopImg={shopImg} handleOpen={handleOpen} />
-      <ChatBody chatList={list} clickListBox={clickListBox} />
-    </div>
+      <ChatBody chatList={list} clickListBox={clickListBox} newMessage={message} />
+    </>
   );
 };
 

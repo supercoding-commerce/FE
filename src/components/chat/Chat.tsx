@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import ChatButton from '@/components/chat/ChatButton';
 import ChatDetail from '@/components/chat/ChatDetail';
@@ -41,10 +41,11 @@ const Chat = ({
   isUser,
   shopImageUrl,
 }: ChatProps) => {
+  // TODO: 커스텀 훅으로 빼기.
   const seller: SellerInfo = { sellerId: sellerId, shopName: sellerName };
   const product: ProductInfo = { productId: productId, productName: productName };
   const [user, setUser] = useState<UserInfo>({ userId: userId, userName: userName });
-  const [isCustomRoomId, setIsCustomRoomId] = useState<boolean>(true);
+  const [isNowChatRoom, setIsNowChatRoom] = useState<boolean>(false);
 
   const isSeller = isUser;
   const role = isSeller ? 'seller' : 'user';
@@ -65,45 +66,43 @@ const Chat = ({
     return customRoomId;
   }
 
-  /** clickPrevButton() : 채팅방에서 뒤로가기 버튼 누르면
-   * 1. 분기처리를 위해 customRoomId값을 빈 스트링을 넣는다. */
+  /** clickPrevButton() : 채팅방에서 뒤로가기 버튼 */
   const clickPrevButton = () => {
-    setCustomRoomId('');
+    setIsNowChatRoom((prev) => !prev);
   };
 
   /** clickListBox() : 채팅list에서 해당 채팅방으로 들어가기 위해
-   * 1. isCustomRoomId를 false,
+   * 1. isNowChatRoom로 분기처리,
    * 2. ChatBody.tsx에서 custumroomId를 받아와서 ChatList.tsx로 넘겨줌.
    * 3. seller일때 현재 디테일에서 넘어오는 userId, userName값은 판매자의 정보여서 ChatList.tsx에서
         문의한 구매자의 userId값, userName값을 가져옴.
    */
   const clickListBox = (customRoomId: string, userId: number, userName: string) => {
-    setIsCustomRoomId((prev) => !prev);
+    setIsNowChatRoom((prev) => !prev);
     setCustomRoomId(customRoomId);
     setUser({ ...user, userId, userName });
   };
 
   const handleOpen = () => {
     setIsModalOpen((prev) => !prev);
+    setIsNowChatRoom(false);
   };
 
-  useEffect(() => {
-    if (customRoomId.length === 0) {
-      setIsCustomRoomId((prev) => !prev);
-    }
-  }, [customRoomId]);
+  console.log('isNowChatRoom', isNowChatRoom);
 
   return (
     <>
       <ChatButton handleOpen={handleOpen} />
       {isModalOpen && isSeller && (
         <S.Chat>
-          {isCustomRoomId ? (
+          {!isNowChatRoom ? (
             <ChatList
               handleOpen={handleOpen}
               clickListBox={clickListBox}
               seller={seller}
+              user={user}
               isSeller={isSeller}
+              role={role}
               product={product}
             />
           ) : (
@@ -122,12 +121,14 @@ const Chat = ({
       )}
       {isModalOpen && !isSeller && (
         <S.Chat>
-          {!isCustomRoomId ? (
+          {isNowChatRoom ? (
             <ChatList
               handleOpen={handleOpen}
               clickListBox={clickListBox}
               seller={seller}
+              user={user}
               isSeller={isSeller}
+              role={role}
               product={product}
             />
           ) : (
